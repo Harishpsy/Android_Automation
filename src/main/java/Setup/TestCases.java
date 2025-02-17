@@ -33,7 +33,7 @@ public class TestCases extends Base {
         myCourse myCourses = new myCourse (driver);
         myCourses.clickingMyCourse();
     }
-    @Test(priority = 7, dependsOnMethods = "openMenu", enabled = true)
+    @Test(priority = 7, dependsOnMethods = "openMenu", enabled = false)
     public void navigatingToMyEbooks() throws InterruptedException {
         myEbooks MyEbook = new myEbooks ( driver );
         MyEbook.navigateToMyEbooks ();

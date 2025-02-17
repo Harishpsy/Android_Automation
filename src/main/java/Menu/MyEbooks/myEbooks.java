@@ -2,61 +2,98 @@ package Menu.MyEbooks;
 
 import Menu.menubase;
 import Setup.Base;
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static io.appium.java_client.AppiumBy.id;
+import static org.openqa.selenium.By.className;
 import static org.openqa.selenium.By.xpath;
 
 public class myEbooks extends menubase {
 
     private Map<String, String> beforeClickingEbook = new HashMap<>();
+    private Map<String, String> collectEbookListData = new HashMap<>();
 
+    // Constructor to initialize the driver
     public myEbooks(AndroidDriver driver) {
         Base.driver = driver;
     }
 
     /**
-     * Performs the following operations in sequence:
-     * 1. Clicks the menu button.
-     * 2. Clicks the "My-ebook" button in the side drawer.
-     * 3. Scrolls the page to fetch all the data.
-     * 4. Calls the {@link #collectEbookListData()} method to collect the data.
-     * 5. Clicks an ebook to see its details.
+     * Navigates to the My Ebooks section, performs scrolling, collects ebook data, clicks an ebook,
+     * verifies the ebook name, and performs additional actions like downloading and sharing.
      *
      * @throws InterruptedException if the thread is interrupted while waiting.
      */
+    @Test(enabled = true)
     public void navigateToMyEbooks() throws InterruptedException {
-        clickMenu();
-        clickElement(id("com.affairscloud:id/item_my_ebooks"));
-        System.out.println("Successfully clicked the My-ebook button and the list page is displayed.");
 
-        // Method Calling
-        scrollMyEbookList(); //Scrolling The ebook list page
-        collectEbookListData(); // Getting the ebook data in the list page to find duplicate
-        clickEbook(); // clicking the ebook
-        afterClickingEbook(); // Getting the ebook name in the ebook detail page to verify
-        verifyEbookNames(); // Verifying ebooks name match befor and after click
-        clickingDownloadButton (); // clicking the download button
-        pdfViewerActions(); // Pdf-viewer action performing
+        clickMenu (); // Click the menu button
+        clickingMyEbook (); //Clicking The My Ebook
+        ebookListPageEmpty (); //Ebook list page is empty navigate to back calling that method
     }
 
+    public void clickingMyEbook(){
+
+        // Click the "My Ebooks" button in the side drawer (using ID: com.affairscloud:id/item_my_ebooks)
+        clickElement(id("com.affairscloud:id/item_my_ebooks"));
+        System.out.println("Successfully clicked the My-ebook button and the list page is displayed.");
+    }
+
+    @Test
+    public void ebookListPageEmpty() throws InterruptedException {
+        try {
+            WebElement emptyList = driver.findElement(By.id("com.affairscloud:id/tv_empty_data"));
+            System.out.println("Checking if the My Ebook List page is empty...");
+
+            if (emptyList.isDisplayed()) {
+                System.out.println("No saved ebooks found. Navigating back...");
+                navigateBack(); // Calling the back method
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Ebooks are available. Proceeding with actions...");
+            ebookActions(); // Perform actions if ebooks are present
+        }
+    }
+
+    @Test(enabled = true)
+    public void ebookActions() throws InterruptedException {
+
+        // Scroll the ebook list and collect data
+        scrollList();
+        collectEbookListData();
+
+        // Click an ebook and verify its name
+        clickEbook();
+        afterClickingEbook();
+        verifyEbookNames();
+
+        // Perform additional actions like downloading, reading, and sharing
+        performEbookActions();
+    }
+
+
+    /**
+     * Collects and prints the names of all ebooks in the list.
+     *
+     * @return
+     */
     @Test(enabled = true, dependsOnMethods = "navigateToMyEbooks")
-    public void collectEbookListData() {
+    public List<String> collectEbookListData() {
         new WebDriverWait(driver, Duration.ofSeconds(30));
+
+        // Locate all ebook elements using XPath: EBOOK_LIST_XPATH
         List<WebElement> ebookElements = driver.findElements(xpath("//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/root_rl\"]/*[@resource-id=\"com.affairscloud:id/details_rl\"]/*[@resource-id=\"com.affairscloud:id/tv_sub_courses_title\"]"));
-        List<String> ebookNames = new ArrayList<>();
+        List<String> ebookNames = new ArrayList<> ();
 
         try {
             for (WebElement ebook : ebookElements) {
@@ -66,44 +103,47 @@ public class myEbooks extends menubase {
         } catch (NoSuchElementException e) {
             System.out.println("Error in collectEbookListData: " + e.getMessage());
         }
+        return ebookNames;
     }
 
-    @Test(dependsOnMethods = "navigateToMyEbooks", enabled = true)
-    public void scrollMyEbookList() {
-        try {
-            WebElement scroll = driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(30)"));
-            System.out.println("Successfully scrolled to the bottom of the My Ebook List page.");
-        } catch (Exception e) {
-            System.out.println("Error while scrolling down: " + e.getMessage());
-        }
-
-        try {
-            WebElement scroll = driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(30)"));
-            System.out.println("Successfully scrolled back to the top of the My Ebook List page.");
-        } catch (Exception e) {
-            System.out.println("Error while scrolling to the initial position: " + e.getMessage());
-        }
-    }
-
+    /**
+     * Clicks the first ebook in the list.
+     */
     @Test(enabled = true, dependsOnMethods = "navigateToMyEbooks")
-    protected void clickEbook() {
+    protected void clickEbook() throws InterruptedException {
         beforeClickingEbook();
+        Thread.sleep ( 7000 );
         clickElement(xpath("(//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/root_rl\"])[1]"));
         System.out.println("Successfully clicked the ebook.");
 
     }
-@Test(dependsOnMethods = "navigateToMyEbooks")
+
+    /**
+     * Stores the ebook title before clicking on it.
+     */
+    @Test(dependsOnMethods = "navigateToMyEbooks")
     public void beforeClickingEbook() {
         String ebookTitle = getText(xpath("(//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/details_rl\"])[1]/*[@resource-id=\"com.affairscloud:id/tv_courses_title\"]"));
         beforeClickingEbook.put("ebookTitle", ebookTitle); // We are storing the ebook name in the hashmap
         System.out.println ( "Ebook Title Before Click: " + ebookTitle ); // Additional conformation of the ebook name
     }
-@Test(dependsOnMethods = "clickEbook")
-    public void afterClickingEbook() {
+
+    /**
+     * Stores the ebook title after clicking on it.
+     *
+     * @return
+     */
+    @Test(dependsOnMethods = "clickEbook")
+    public String afterClickingEbook() {
         String ebookTitle = getText(xpath("//android.widget.TextView[@resource-id=\"com.affairscloud:id/ebook_title\"]"));
         beforeClickingEbook.put("ebookTitleAfterClick", ebookTitle); // We are storing the ebook name in the hashmap
         System.out.println ( "Ebook Title After Click: " + ebookTitle ); // Additional conformation of the ebook name
+        return ebookTitle;
     }
+
+    /**
+     * Verifies if the ebook title before and after clicking matches.
+     */
     @Test(dependsOnMethods = "clickEbook")
     private void verifyEbookNames() {
         Map<String, String> afterClickingEbook = new HashMap<>();
@@ -116,67 +156,327 @@ public class myEbooks extends menubase {
             System.out.println("🔹 Before: [" + beforeClickingEbook.get("ebookTitle") + "], After: [" + afterClickingEbook.get("ebookTitleAfterClick") + "]");
         }
     }
-    @Test(dependsOnMethods = "clickEbook")
-    public void clickingDownloadButton() throws InterruptedException {
 
-        //Clicking The Download button in the Ebook detail page
-        clickElement ( xpath ( "(//android.widget.ImageButton[@content-desc=\"Download\"])[1]" ) );
-        System.out.println ( "Successfully clicked the Download button." );
+    /**
+     * Performs additional actions like downloading, reading, and sharing the ebook.
+     */
+    @Test(enabled = true)
+    private void performEbookActions() throws InterruptedException {
+        System.out.println("Clicking download button...");
+        clickingDownloadButton(); /* Calling download button method */
+
+        System.out.println("Performing PDF viewer actions...");
+        pdfViewerActions(); /* calling the pdf viewer method */
+
+        System.out.println("Clicking read icon...");
+        clickingReadIcon(); /* Calling The Read method  */
+
+        System.out.println("Performing PDF viewer actions...");
+        pdfViewerActions(); /* calling the pdf viewer method */
+
+        System.out.println("Clicking three dots...");
+        threedots(); /* Calling The Threedots Method*/
+
+        System.out.println("Sharing...");
+        share(); /* Calling The Share Method */
+
+        System.out.println("Clicking three dots...");
+        threedots(); /* Calling The Threedots Method*/
+
+        System.out.println("Reporting...");
+        report(); /* Calling The Report Method */
+
+        System.out.println("Canceling...");
+        cancel(); /* Calling The Cancel Method */
+
+        System.out.println("Clicking three dots...");
+        threedots(); /* Calling The Threedots Method*/
+
+        System.out.println("Reporting...");
+        report(); /* Calling The Report Method */
+
+        System.out.println("Generating reports...");
+        reports(); /* Calling The Report Method */
+
+        System.out.println("Performing footer common actions...");
+        footerCommonActions(); /* Calling The Footer Common Method */
+
+        System.out.println("Clicking three dots...");
+        threedots(); /* Calling The Threedots Method*/
+
+        System.out.println("Removing saved item...");
+        removedSaved(); /* Calling The Remove Method*/
+
+        System.out.println("Navigating back...");
+        navigateBack(); /* Calling The Back Method */
+
+        System.out.println("Verifying ebook names in list page...");
+        verifyEbookNamesInListPage(); /* Calling The Verify Method For The List Page And removed */
+
+        System.out.println("Navigating back...");
+        navigateBack(); /* Calling The Back Method */
+    }
+
+    /**
+     * Clicks the download button for the ebook.
+     */
+    @Test(dependsOnMethods = "clickEbook", enabled = true)
+    public void clickingDownloadButton() {
+        // Click the download button using XPath: (//android.widget.ImageButton[@content-desc="Download"])[1]
+        clickElement(xpath("(//android.widget.ImageButton[@content-desc=\"Download\"])[1]"));
+        System.out.println("Successfully clicked the Download button.");
+    }
+
+    /**
+     * Performs actions in the PDF viewer, such as toggling orientation and navigating back.
+     */
+    @Test(dependsOnMethods = "clickingDownloadButton")
+    public void pdfViewerActions() throws InterruptedException {
+        toggleOrientation();
+
+        // Click the "More" button using ID: com.affairscloud:id/ivMore
+        clickElement(id("com.affairscloud:id/ivMore"));
+
+        // Click the "Share" button using ID: com.affairscloud:id/title
+        clickElement(id("com.affairscloud:id/title"));
+
+        // Click the "Cancel" button using ID: android:id/button2
+        clickElement(id("android:id/button2"));
+
+        // Click the PDF viewer using XPath: //android.widget.RelativeLayout[@resource-id="com.affairscloud:id/pdfView"]
+        clickElement(xpath("//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/pdfView\"]"));
+
+        // Click the back arrow using ID: com.affairscloud:id/ivArrowBack
+        clickElement(id("com.affairscloud:id/ivArrowBack"));
+    }
+
+    /**
+     * Toggles the PDF viewer orientation between portrait and landscape.
+     */
+    private void toggleOrientation() throws InterruptedException {
+        // Click the orientation button using ID: com.affairscloud:id/orientation
+        Thread.sleep(5000);
+        clickElement(id("com.affairscloud:id/orientation"));
+        Thread.sleep(5000);
+        clickElement(id("com.affairscloud:id/orientation"));
 
     }
 
-    //This was Not working Need to find some other way
-    public void scrollPDFViewer() {
+    /**
+     * Clicks the read icon for the ebook.
+     */
+    @Test(dependsOnMethods = "pdfViewerActions", enabled = false)
+    public void clickingReadIcon() throws InterruptedException {
+        Thread.sleep(5000);
+        // Click the read icon using ID: com.affairscloud:id/btn_read
+        clickElement(By.id("com.affairscloud:id/btn_read"));
+        System.out.println("Successfully clicked the Read icon.");
+    }
+
+    /**
+     * Clicks the three dots menu.
+     */
+    @Test(enabled = true)
+    public void threedots() {
+        // Click the three dots menu using ID: com.affairscloud:id/iv_more
+        new WebDriverWait ( driver, Duration.ofSeconds ( 40 ) );
+        clickElement(id("com.affairscloud:id/iv_more"));
+        System.out.println("Successfully Clicked The three Dots");
+    }
+
+    /**
+     * Clicks the remove form my-ebooks.
+     */
+    public void removedSaved(){
+        clickElement ( xpath ( "(//*[@resource-id=\"com.affairscloud:id/content\"])[1]" ) );
+        System.out.println ("Successfully Removed From Saved");
+        afterClickingEbook();
+    }
+
+
+    /**
+     * Clicks the share button and then cancels the share action.
+     */
+    public void share() {
+        // Click the "Share" button using XPath: //*[@text="Share"]
+        new WebDriverWait ( driver, Duration.ofSeconds ( 50 ) );
+        clickElement(xpath("//*[@text=\"Share\"]"));
+        System.out.println("Successfully Clicked The Share Button");
+
+        // Click the "Cancel" button using XPath: //*[@text="Cancel"]
+        clickElement(xpath("//*[@text=\"Cancel\"]"));
+        System.out.println("Successfully Clicked The Cancel Buttons In The three Dots");
+    }
+
+    /**
+     * Reports an issue with the ebook by selecting a checkbox, entering text, and canceling the action.
+     */
+    public void report() {
+        // Click the "Report" button using XPath: //*[@text="Report"]
+        clickElement(xpath("//*[@text=\"Report\"]"));
+
+        // Click the second checkbox using XPath: (//*[@resource-id="com.affairscloud:id/cbReport"])[2]
+        clickElement(xpath("(//*[@resource-id=\"com.affairscloud:id/cbReport\"])[2]"));
+
+        // Enter text in the text field using ClassName: android.widget.EditText
+        enteringText(By.className("android.widget.EditText"));
+        System.out.println("Successfully Clicked The Report, Checkbox");
+
+    }
+
+    public void cancel(){
+        // Click the "Cancel" button using ID: com.affairscloud:id/tv_cancel
+        clickElement(id("com.affairscloud:id/tv_cancel"));
+        System.out.println("Successfully Clicked The Cancel Button");
+
+    }
+
+    public void reports(){
+
+        new WebDriverWait ( driver, Duration.ofSeconds ( 40 ) );
+
+        // Click the "Cancel" button using ID: com.affairscloud:id/tv_cancel
+        clickElement(id("com.affairscloud:id/tv_report"));
+        System.out.println("Successfully Clicked The Report Button");
+
+    }
+
+    public void footerCommonActions() {
+        // Perform the "Like" action
+        performLikeAction(); // This method handles liking the content (e.g., a post or ebook)
+
+        // Perform the "Comment" action
+        performCommentAction(); // This method allows the user to add a comment to the content
+
+        // Perform the "Reply" action if the reply button is present
+        performReplyActionIfPresent(); // This method checks for the presence of a reply button and performs the reply action if available
+
+        // Navigate back to the previous screen
+        navigateBack(); // This method navigates the user back to the previous screen or page
+
+        // Call the share function
+        share(); // This method handles sharing the content with others (e.g., via social media or messaging apps)
+    }
+
+    private void performLikeAction() {
+        // Click the "Like" button using its ID
+        clickElement(id("com.affairscloud:id/like_layout"));
+    }
+
+    private void performCommentAction() {
+        // Click the "Comment" button using its ID
+        clickElement(id("com.affairscloud:id/comment_layout"));
+
+        // Enter text into the comment input field using its class name
+        enteringText(className("android.widget.EditText"));
+
+        // Click the "Send" button using its ID to post the comment
+        clickElement(id("com.affairscloud:id/iv_send"));
+    }
+
+    private void performReplyActionIfPresent() {
+        // Locate the "Reply" button using its XPath
+        WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
+        WebElement clickingReply = driver.findElement(xpath("(//android.widget.TextView[@resource-id=\"com.affairscloud:id/tv_replay\"])[1]"));
+
         try {
-            new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
-            WebElement scroll = driver.findElement(new AppiumBy.ByAndroidUIAutomator( "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceId(\"com.affairscloud:id/pdfView\"))" ));
-            System.out.println("Successfully scrolled to the bottom of the PDF Viewer.");
-        } catch (Exception e) {
-            System.out.println("Error while scrolling to the bottom: " + e.getMessage());
+
+            // Check if the "Reply" button is displayed
+            if (clickingReply.isDisplayed ()) {
+                // Click the "Reply" button using its XPath
+                clickElement ( xpath ( "(//android.widget.TextView[@resource-id=\"com.affairscloud:id/tv_replay\"])[1]" ) );
+
+                // Enter text into the reply input field using its class name
+                Thread.sleep ( 5000 );
+                enteringText ( className ( "android.widget.EditText" ) );
+
+                // Click the "Send" button using its ID to post the reply
+                clickElement ( id ( "com.affairscloud:id/iv_send" ) );
+
+                // Navigate back to the previous screen after replying
+                navigateBack ();
+            } else {
+                // Log a message if the "Reply" button is not present
+                System.out.println ( "There is no reply button" );
+            }
+        }catch (NoSuchElementException | InterruptedException e) {
+            System.out.println ( "There is no reply button" );
         }
     }
-    @Test(dependsOnMethods = "clickingDownloadButton")
-    public void pdfViewerActions() {
 
-        //Switching From Potriate to Landscape
-        clickElement ( id ( "com.affairscloud:id/orientation" ) );
-        System.out.println ("Successfully Pdf turned to landscape mode");
+    private void navigateBack() {
+        try {
+            // Attempt to click the first back button using its ID
+            WebElement backButton1 = driver.findElement(By.id("com.affairscloud:id/btn_back"));
+            if (backButton1.isDisplayed()) {
+                backButton1.click();
+                System.out.println("Clicked the first back button.");
+                return; // Exit the method after successful click
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("First back button not found. Trying the second back button...");
+        }
 
-        //Switching From Landscape to Potriate
-        clickElement ( id ( "com.affairscloud:id/orientation" ) );
-        System.out.println ("Successfully Pdf turned to potriate mode");
+        try {
+            // Attempt to click the second back button using its XPath
+            WebElement backButton2 = driver.findElement(By.xpath("//*[@resource-id=\"com.affairscloud:id/img_back_press\"]"));
+            if (backButton2.isDisplayed()) {
+                backButton2.click();
+                System.out.println("Clicked the second back button.");
+                return; // Exit the method after successful click
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Second back button not found.");
+        }
 
-        //Clicking The threedot
-        clickElement ( id ( "com.affairscloud:id/ivMore" ) );
-        System.out.println ("Successfully clicked The Threedots");
-
-        // Clicking The share Button
-        clickElement ( id ( "com.affairscloud:id/title" ) );
-        System.out.println ("SuccessFully Clicked The Share Button");
-
-        //Clicking The cancel Button in the share popup
-        clickElement ( id ( "android:id/button2" ) );
-        System.out.println ("Successfully CLicked The Cancel Button");
-
-        // Clicking the PDF viewer to see the full screen
-         clickElement (xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/pdfView\"]" ) );
-         System.out.println ("Successfully Clicked The Pdf Viewer");
-
-        // Clicking the PDF viewer to see the full screen
-        clickElement (xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/pdfView\"]" ) );
-        System.out.println ("Successfully Clicked The Pdf Viewer");
-
-        //Clicking The Back arrow In The PDF Viewer
-        clickElement ( id ( "com.affairscloud:id/ivArrowBack" ) );
-        System.out.println ("Successfully clicked the back arrow");
-
-
-
+        // If neither button is found or clickable, log an error
+        System.out.println("Error: Neither back button could be clicked.");
     }
 
+    private void verifyEbookNamesInListPage() throws InterruptedException {
+        Thread.sleep(5000);
+        // Simulating the retrieval of ebook names before and after clicking
+        List<String> afterClickingEbook = collectEbookListData();
 
+        if (!afterClickingEbook.contains(collectEbookListData)) {
+            System.out.println("✅ Ebook details do not match before and after clicking.");
+        } else {
+            System.out.println("❌ Ebook details match!");
+            System.out.println("🔹 Before: " + afterClickingEbook + ", After: " + collectEbookListData);
+        }
+    }
 
+    @Test(enabled = true, dependsOnMethods = "navigateToMyEbooks")
+    private List<String> verifyDupicateInListPage() {
+        new WebDriverWait(driver, Duration.ofSeconds(30));
 
+        // Locate all ebook elements using XPath
+        List<WebElement> ebookElements = driver.findElements(xpath("//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/root_rl\"]/*[@resource-id=\"com.affairscloud:id/details_rl\"]/*[@resource-id=\"com.affairscloud:id/tv_sub_courses_title\"]"));
+        List<String> ebookNames = new ArrayList<>();
+        Set<String> uniqueEbookNames = new HashSet<>();
+        Set<String> duplicateEbookNames = new HashSet<>();
 
+        try {
+            for (WebElement ebook : ebookElements) {
+                String ebookName = ebook.getText();
+                if (!uniqueEbookNames.add(ebookName)) {
+                    duplicateEbookNames.add(ebookName);
+                }
+                ebookNames.add(ebookName);
+            }
 
+            System.out.println("List of Ebook Names: " + ebookNames);
+
+            if (!duplicateEbookNames.isEmpty()) {
+                System.out.println("Duplicate Ebook Names Found: " + duplicateEbookNames);
+            } else {
+                System.out.println("No duplicate ebooks found.");
+            }
+
+        } catch (NoSuchElementException e) {
+            System.out.println("Error in collectEbookListData: " + e.getMessage());
+        }
+        return ebookNames;
+    }
 }
+
