@@ -1,6 +1,7 @@
 package Setup;
 
 import io.appium.java_client.AppiumBy;
+import io.appium.java_client.Setting;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -27,9 +28,14 @@ public class Base {
         caps.setCapability("appium:appPackage", "com.affairscloud");
         caps.setCapability("appium:appActivity", "com.affairscloud.SplashScreenActivity");
         caps.setCapability("appium:udid", "94054b3d");
+        caps.setCapability("appium:ensureWebviewsHavePages", true);
+        caps.setCapability("appium:nativeWebScreenshot", true);
+
 
         URL url = new URL("http://localhost:4723");
         driver = new AndroidDriver(url, caps);
+        driver.setSetting("enforceXPath1", true);  // Set this after driver initialization
+
     }
 
     // Getter method to provide driver access
@@ -48,6 +54,7 @@ public class Base {
         WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         WebElement gettingText = wait.until ( ExpectedConditions.elementToBeClickable ( locator ) );
         String text = gettingText.getText ();
+        System.out.println ( "Text Name : " + text );
         return text;
     }
 

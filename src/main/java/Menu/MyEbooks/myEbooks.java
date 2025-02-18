@@ -60,10 +60,12 @@ public class myEbooks extends menubase {
                 System.out.println ( "Navigating back..." );
                 navigateBack (); /* Calling The Back Method */
             } else {
-                ebookActions ();
+                System.out.println ( "There is no empty list" );
+
             }
         } catch (NoSuchElementException e) {
-            System.out.println ( "There is no empty list" );
+            ebookActions ();
+            System.out.println ("Performing The Ebook Actions");
         }
     }
 
@@ -89,7 +91,7 @@ public class myEbooks extends menubase {
      *
      * @return
      */
-    @Test(enabled = true, dependsOnMethods = "navigateToMyEbooks")
+    @Test(enabled = true)
     public List<String> collectEbookListData() {
         new WebDriverWait(driver, Duration.ofSeconds(30));
 
@@ -111,7 +113,7 @@ public class myEbooks extends menubase {
     /**
      * Clicks the first ebook in the list.
      */
-    @Test(enabled = true, dependsOnMethods = "navigateToMyEbooks")
+    @Test(enabled = true)
     protected void clickEbook() throws InterruptedException {
         beforeClickingEbook();
         Thread.sleep ( 7000 );
@@ -123,7 +125,7 @@ public class myEbooks extends menubase {
     /**
      * Stores the ebook title before clicking on it.
      */
-    @Test(dependsOnMethods = "navigateToMyEbooks")
+    @Test()
     public void beforeClickingEbook() {
         String ebookTitle = getText(xpath("(//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/details_rl\"])[1]/*[@resource-id=\"com.affairscloud:id/tv_courses_title\"]"));
         beforeClickingEbook.put("ebookTitle", ebookTitle); // We are storing the ebook name in the hashmap
@@ -135,10 +137,9 @@ public class myEbooks extends menubase {
      *
      * @return
      */
-    @Test(dependsOnMethods = "clickEbook")
+    @Test()
     public String afterClickingEbook() {
         String ebookTitle = getText(xpath("//android.widget.TextView[@resource-id=\"com.affairscloud:id/ebook_title\"]"));
-        beforeClickingEbook.put("ebookTitleAfterClick", ebookTitle); // We are storing the ebook name in the hashmap
         System.out.println ( "Ebook Title After Click: " + ebookTitle ); // Additional conformation of the ebook name
         return ebookTitle;
     }
@@ -146,7 +147,7 @@ public class myEbooks extends menubase {
     /**
      * Verifies if the ebook title before and after clicking matches.
      */
-    @Test(dependsOnMethods = "clickEbook")
+    @Test()
     private void verifyEbookNames() {
         Map<String, String> afterClickingEbook = new HashMap<>();
         afterClickingEbook.put("ebookTitleAfterClick", beforeClickingEbook.get("ebookTitleAfterClick"));
@@ -172,6 +173,9 @@ public class myEbooks extends menubase {
 
         System.out.println("Clicking read icon...");
         clickingReadIcon(); /* Calling The Read method  */
+
+        /*Calling The ebook name method*/
+        afterClickingEbook();
 
         System.out.println("Performing PDF viewer actions...");
         pdfViewerActions(); /* calling the pdf viewer method */
@@ -251,9 +255,11 @@ public class myEbooks extends menubase {
         // Click the read icon using ID: com.affairscloud:id/btn_read
         clickElement(By.id("com.affairscloud:id/btn_read"));
         System.out.println("Successfully clicked the Read icon.");
+
+
     }
 
-    public void threeDotsActions(){
+    public void threeDotsActions() throws InterruptedException {
 
         System.out.println("Clicking three dots...");
         threedots(); /* Calling The Threedots Method*/
@@ -291,12 +297,13 @@ public class myEbooks extends menubase {
      * Clicks the three dots menu.
      */
     @Test(enabled = true)
-    public void threedots() {
+    public void threedots() throws  InterruptedException{
         // Click the three dots menu using ID: com.affairscloud:id/iv_more
 
         /*First*/
         try {
             // Attempt to click the first back button using its ID
+            Thread.sleep ( 5000 );
             WebElement threeDots1 = driver.findElement(By.id("com.affairscloud:id/iv_more"));
             if (threeDots1.isDisplayed()) {
                 threeDots1.click();
@@ -310,6 +317,7 @@ public class myEbooks extends menubase {
         /*Second*/
         try {
             // Attempt to click the first back button using its ID
+            Thread.sleep ( 5000 );
             WebElement threeDots2 = driver.findElement(By.id("com.affairscloud:id/more_btn"));
             if (threeDots2.isDisplayed()) {
                 threeDots2.click();
@@ -328,7 +336,7 @@ public class myEbooks extends menubase {
     public void removedSaved(){
         clickElement ( xpath ( "(//*[@resource-id=\"com.affairscloud:id/content\"])[1]" ) );
         System.out.println ("Successfully Removed From Saved");
-        afterClickingEbook();
+
     }
 
 
@@ -381,7 +389,9 @@ public class myEbooks extends menubase {
 
     public void footerCommonActions() {
         // Perform the "Like" action
+/*
         performLikeAction(); // This method handles liking the content (e.g., a post or ebook)
+*/
 
         // Perform the "Comment" action
         performCommentAction(); // This method allows the user to add a comment to the content

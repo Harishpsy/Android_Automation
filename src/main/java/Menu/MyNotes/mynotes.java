@@ -46,7 +46,7 @@ public class mynotes extends menubase {
     @Test
     public void setArticleModule() throws InterruptedException {
         /* Calling The Article Method and Course Title Method */
-        articleModule.articleActions ();
+        articleModule.performArticleActions();
     }
 }
 
