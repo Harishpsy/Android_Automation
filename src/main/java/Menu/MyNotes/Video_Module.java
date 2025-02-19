@@ -6,14 +6,28 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WebElement;
 
-import java.time.Duration;
+public class Video_Module extends myEbooks {
 
-public class video_Module extends myEbooks {
-
-    public video_Module(AndroidDriver driver) {
+    public Video_Module(AndroidDriver driver) {
         super ( driver );
+    }
+
+    public void performVideoActions() throws InterruptedException {
+
+        try{
+
+            WebElement video = driver.findElement ( By.id( "com.affairscloud:id/card_view_videos" ) );
+
+            if (video.isDisplayed ()) {
+                videoActions();
+            }
+
+        }catch (NoSuchElementException e){
+            System.out.println ("No Video is present in the list page");
+        }
+
     }
 
     public void videoActions() throws InterruptedException {

@@ -6,16 +6,19 @@ import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 
-public class mynotes extends menubase {
+public class MyNotes extends menubase {
 
-    private video_Module videoModule; // Declare video_Module instance
+    private Video_Module videoModule; // Declare video_Module instance
     private Article_Module articleModule;
+    private Quiz_Module quizModule;
 
-    public mynotes(AndroidDriver driver) {
+    public MyNotes(AndroidDriver driver) {
         super(driver);
         Base.driver = driver;
-        videoModule = new video_Module(driver); // Initialize video_Module
+        videoModule = new Video_Module (driver); // Initialize video_Module
         articleModule = new Article_Module ( driver );
+        quizModule = new Quiz_Module ( driver );
+
     }
 
     @Test
@@ -28,25 +31,35 @@ public class mynotes extends menubase {
         /* Clicking The My Notes Button In The Menu */
         clickElement(By.id("com.affairscloud:id/item_my_notes"));
         System.out.println("Successfully Clicked The My Notes Button In The Side Menu");
+/*
+       //  Calling The Video Module
+        setVideoModule();
 
-        /* *//*Calling The Video Module*//*
-        setVideoModule();     */
-
-        /*Calling The Article Method */
+        *//*Calling The Article Method *//*
         setArticleModule();
 
+*/
+        /*Calling The Quiz Module*/
+        setQuizModule ();
+
     }
 
-    @Test
+    @Test (enabled = false)
     public void setVideoModule() throws InterruptedException {
         /* Calling The play Button Method and Course Title Method */
-        videoModule.videoActions (); // Calling video actions before navigating to My Notes
+        videoModule.performVideoActions (); // Calling video actions before navigating to My Notes
     }
 
-    @Test
+    @Test (enabled = false)
     public void setArticleModule() throws InterruptedException {
         /* Calling The Article Method and Course Title Method */
         articleModule.performArticleActions();
+    }
+
+    @Test(enabled = true)
+    public void setQuizModule() throws InterruptedException {
+        /* Calling The Article Method and Course Title Method */
+        quizModule.performQuizActions();
     }
 }
 

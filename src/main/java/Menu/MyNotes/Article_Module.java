@@ -5,8 +5,10 @@ import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +24,7 @@ public class Article_Module extends myEbooks {
     public void performArticleActions() throws InterruptedException {
 
         try{
+            WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
             WebElement article = driver.findElement (By.id ( "com.affairscloud:id/card_view_article" ));
             System.out.println ("Article Was found in The My Notes List Page ");
 
@@ -29,20 +32,31 @@ public class Article_Module extends myEbooks {
 
                 /*Calling the course title method */
                 clickCourseTitle();
+
                 /*Calling The Getting Article Name Method*/
                 storeArticleNameBeforeClick ();
+
                 /*Calling the article method*/
                 clickArticle();
-                /*Calling The Getting Article Name Method*/
-                storeArticleNameAfterClick();
-                /*Calling The Verify Article Method*/
-                verifyArticleNames();
-                /*Calling The Scroll Method*/
-                scrollArticleList ();
-                /* Calling The threeDots Method*/
-                threeDotsActions();
+
                 /*Calling The Navigate Back Method */
                 navigateBack ();
+
+                /*Calling The Getting Article Name Method*/
+                storeArticleNameAfterClick();
+
+                /*Calling The Verify Article Method*/
+                verifyArticleNames();
+
+                /*Calling The Scroll Method*/
+                scrollArticleList ();
+
+                /* Calling The threeDots Method*/
+                threeDotsActions();
+
+                /*Calling The Navigate Back Method */
+                navigateBack ();
+
                 /*Calling The Footer Common Method*/
                 footerCommonActions ();
 
@@ -55,14 +69,16 @@ public class Article_Module extends myEbooks {
     }
 
     private void clickCourseTitle() throws InterruptedException {
+
+        Thread.sleep(4000);
         clickElement(By.xpath("//*[@resource-id=\"com.affairscloud:id/card_view_article\"]//child::*[@resource-id=\"com.affairscloud:id/user_details\"][1]"));
         System.out.println("Successfully clicked the course title.");
-        Thread.sleep(4000);
         navigateBack();
     }
 
-    private void clickArticle() {
-        clickElement ( By.xpath ( "(//*[@resource-id=\"com.affairscloud:id/iv_article\"])[1]" ) );
+    private void clickArticle() throws InterruptedException {
+        Thread.sleep ( 4000 );
+        clickElement ( By.xpath ( "(//*[@resource-id=\"com.affairscloud:id/courses_type\"])[1]" ) );
         System.out.println("Successfully clicked the article.");
     }
 

@@ -165,6 +165,7 @@ public class myEbooks extends menubase {
      */
     @Test(enabled = true)
     private void performEbookActions() throws InterruptedException {
+
         System.out.println("Clicking download button...");
         clickingDownloadButton(); /* Calling download button method */
 
@@ -174,12 +175,10 @@ public class myEbooks extends menubase {
         System.out.println("Clicking read icon...");
         clickingReadIcon(); /* Calling The Read method  */
 
-        /*Calling The ebook name method*/
-        afterClickingEbook();
-
         System.out.println("Performing PDF viewer actions...");
         pdfViewerActions(); /* calling the pdf viewer method */
 
+        /*Three-Dot Actions Method*/
         threeDotsActions();
 
         System.out.println("Performing footer common actions...");
@@ -216,6 +215,8 @@ public class myEbooks extends menubase {
      */
     @Test(dependsOnMethods = "clickingDownloadButton")
     public void pdfViewerActions() throws InterruptedException {
+
+        /*Rotating The ebook */
         toggleOrientation();
 
         // Click the "More" button using ID: com.affairscloud:id/ivMore
@@ -455,8 +456,9 @@ public class myEbooks extends menubase {
     protected void navigateBack() {
         try {
             // Attempt to click the first back button using its ID
-            WebElement backButton1 = driver.findElement(By.id("com.affairscloud:id/btn_back"));
+            WebElement backButton1 = driver.findElement(By.id ( "com.affairscloud:id/btn_back" ));
             if (backButton1.isDisplayed()) {
+                WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 40 ) );
                 backButton1.click();
                 System.out.println("Clicked the first back button.");
                 return; // Exit after clicking the first button
@@ -469,6 +471,7 @@ public class myEbooks extends menubase {
             // Attempt to click the second back button using its XPath
             WebElement backButton2 = driver.findElement(By.xpath("//*[@resource-id=\"com.affairscloud:id/img_back_press\"]"));
             if (backButton2.isDisplayed()) {
+                WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 40 ) );
                 backButton2.click();
                 System.out.println("Clicked the second back button.");
                 return; // Exit after clicking the second button

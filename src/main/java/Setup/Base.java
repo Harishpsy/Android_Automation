@@ -1,7 +1,6 @@
 package Setup;
 
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.Setting;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -17,6 +16,9 @@ import java.time.Duration;
 public class Base {
 
     protected static AndroidDriver driver;  // Use protected for inheritance
+
+    public Base() {
+    }
 
     @Test(priority = 1)
     protected void initializeDriver() throws MalformedURLException {

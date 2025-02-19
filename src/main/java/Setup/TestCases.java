@@ -5,7 +5,7 @@ import LoginPage.*;
 import Menu.AllCourse.*;
 import Menu.MyCourse.*;
 import Menu.MyEbooks.myEbooks;
-import Menu.MyNotes.mynotes;
+import Menu.MyNotes.MyNotes;
 import org.testng.annotations.Test;
 
 public class TestCases extends Base {
@@ -41,7 +41,7 @@ public class TestCases extends Base {
     }
     @Test(priority = 8, dependsOnMethods = "openMenu", enabled = true)
     public void navigatingToMyNotes() throws InterruptedException {
-        mynotes MyNotes = new mynotes ( driver );
+        MyNotes MyNotes = new MyNotes ( driver );
         MyNotes.navigateToMyNotes ();
 
     }

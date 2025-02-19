@@ -134,6 +134,7 @@ public class ProfileActions extends menubase {
         WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
         WebElement textfield = wait.until ( ExpectedConditions.elementToBeClickable ( locator ) );
         textfield.clear ();
+        wait = new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
         textfield.sendKeys ( text );
         driver.hideKeyboard ();
         System.out.println ( "Successfully entered " + text );
