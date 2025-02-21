@@ -15,21 +15,21 @@ public class LoginPage extends Base {
 
     // Constructor to initialize WebDriver instance
     public LoginPage(AndroidDriver driver) {
-        this.driver = driver;
+        Base.driver = driver;
     }
 
     /**
      * Performs the "Login with Google" functionality in the application.
-
+     * <p>
      * This method waits for the "Login with Google" button to be clickable and subsequently
      * interacts with the button to initiate the Google login process. The method handles
      * switching the context between Native App and WebView for handling Google login. After
      * processing the WebView interaction for Google login, the context is switched back to
      * Native App.
-
+     * <p>
      * Exception handling is implemented to handle any errors during the process, and logs
      * are printed to track the steps during execution.
-
+     * <p>
      * Key operations:
      * - Waits for the "Login with Google" button to be clickable and clicks it.
      * - Identifies and switches to WebView context for Google login interaction.
@@ -37,12 +37,12 @@ public class LoginPage extends Base {
      * - Switches back to Native App context after completing the WebView process.
      * - Displays log messages for successful steps and errors, if any.
      */
-    public void loginWithGoogle(){
+    public void loginWithGoogle() {
 
         try {
-                // Wait for the login button to be clickable
-                WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-                WebElement loginButton = wait.until ( ExpectedConditions.elementToBeClickable ( By.id ( "com.affairscloud:id/btn_login" ) ) );
+            // Wait for the login button to be clickable
+            WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
+            WebElement loginButton = wait.until ( ExpectedConditions.elementToBeClickable ( By.id ( "com.affairscloud:id/btn_login" ) ) );
 
             if (loginButton.isDisplayed ()) {
                 // Click the login button
@@ -69,12 +69,12 @@ public class LoginPage extends Base {
                 driver.context ( "NATIVE_APP" ); // Switch back to the native app
                 System.out.println ( "Switched back to native app context." );
 
-            }else {
-                System.out.println ("Login with Google Button Not Found");
+            } else {
+                System.out.println ( "Login with Google Button Not Found" );
             }
 
         } catch (Exception e) {
-            System.out.println ("Error While Login: " + e.getMessage());
+            System.out.println ( "Error While Login: " + e.getMessage () );
         }
 
     }

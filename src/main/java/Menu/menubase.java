@@ -9,14 +9,12 @@ public class menubase extends Base {
 
     // Constructor - Receive the driver from the test class
     public menubase(AndroidDriver driver) {
+
         Base.driver = driver;
     }
 
-    public menubase() {
-    }
-
     public void clickMenu() throws InterruptedException {
-        Thread.sleep ( 5000 ); // Adding a delay for stability, consider using WebDriverWait for better synchronization
+        Thread.sleep ( 7000 ); // Adding a delay for stability, consider using WebDriverWait for better synchronization
         System.out.println ( "Attempting to open the Menu..." );
 
         WebElement menuButton = driver.findElement ( By.xpath ( "//android.widget.ImageButton[@resource-id='com.affairscloud:id/menu_btn']" ) );

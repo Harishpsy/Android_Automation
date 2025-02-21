@@ -1,7 +1,7 @@
 package Menu;
 
 import Setup.Base;
-import com.google.common.base.Verify;
+import Setup.BaseActions;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -9,7 +9,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -17,11 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class ProfileActions extends menubase {
+public class ProfileActions extends BaseActions {
 
     private static Map<String, String> userDetailsBefore;
 
     public ProfileActions(AndroidDriver driver) {
+        super ( driver );
         Base.driver = driver;
     }
 
@@ -70,7 +70,7 @@ public class ProfileActions extends menubase {
 
         //Application Back Butoon
         clickElement ( By.id ( "com.affairscloud:id/btn_back" ) );
-        System.out.println ("Successfully Fully Clicked The Application Back Arrow");
+        System.out.println ( "Successfully Fully Clicked The Application Back Arrow" );
 
     }
 
@@ -102,6 +102,7 @@ public class ProfileActions extends menubase {
     public void verifyUserDetailsAfter() {
         captureUserDetails ( "after" );
     }
+
     private void captureUserDetails(String when) {
         Map<String, String> userDetails = new HashMap<> ();
         userDetails.put ( "First Name" , getElementText ( By.xpath ( "//android.widget.EditText[@resource-id='com.affairscloud:id/et_first_name']" ) ) );
