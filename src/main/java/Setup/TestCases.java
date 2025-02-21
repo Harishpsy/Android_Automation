@@ -6,6 +6,7 @@ import Menu.MyCourse.myCourse;
 import Menu.MyEbooks.myEbooks;
 import Menu.MyNotes.MyNotes;
 import Menu.MyPoints.myPoints;
+import Menu.MyPurchase.myPurchase;
 import Menu.Mycoins.myCoin;
 import Menu.ProfileActions;
 import Menu.menubase;
@@ -60,10 +61,16 @@ public class TestCases extends Base {
         myCoins.navigateToMyCoins ();
     }
 
-    @Test(priority = 10, enabled = true)
+    @Test(priority = 10, enabled = false)
     public void navigateToMyPoints() throws InterruptedException {
         myPoints myPoints = new myPoints ( driver );
         myPoints.navigateToMyPoints ();
+    }
+
+    @Test(priority = 11,enabled = true)
+    public void navigateToMyPurchase() throws InterruptedException {
+        myPurchase myPurchases = new myPurchase ( driver );
+        myPurchases.navigateToMyPurchase ();
     }
 
 
