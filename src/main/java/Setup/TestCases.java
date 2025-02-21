@@ -2,6 +2,7 @@ package Setup;
 
 import LoginPage.LoginPage;
 import Menu.AllCourse.allCourse;
+import Menu.AppSettings.appSetting;
 import Menu.MyCourse.myCourse;
 import Menu.MyEbooks.myEbooks;
 import Menu.MyNotes.MyNotes;
@@ -67,10 +68,16 @@ public class TestCases extends Base {
         myPoints.navigateToMyPoints ();
     }
 
-    @Test(priority = 11,enabled = true)
+    @Test(priority = 11,enabled = false)
     public void navigateToMyPurchase() throws InterruptedException {
         myPurchase myPurchases = new myPurchase ( driver );
         myPurchases.navigateToMyPurchase ();
+    }
+
+    @Test(priority = 12,enabled = true)
+    public void navigateToAppSettings() throws InterruptedException {
+        appSetting appSettings = new appSetting ( driver );
+        appSettings.navigateToAppSettings ();
     }
 
 
