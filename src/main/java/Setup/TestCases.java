@@ -4,6 +4,7 @@ import LoginPage.LoginPage;
 import Menu.AboutsUs.aboutUs;
 import Menu.AllCourse.allCourse;
 import Menu.AppSettings.appSetting;
+import Menu.ContactUs.contactUs;
 import Menu.InviteFriends.invite;
 import Menu.MyCourse.myCourse;
 import Menu.MyEbooks.myEbooks;
@@ -82,17 +83,22 @@ public class TestCases extends Base {
         appSettings.navigateToAppSettings ();
     }
 
-    @Test(priority = 13,enabled = true)
+    @Test(priority = 13,enabled = false)
     public void navigateToInviteFriends() throws InterruptedException {
         invite invite = new invite ( driver );
         invite.navigateToInviteFriends ();
     }
 
+    @Test(priority = 14, enabled = false)
     public void navigateToAboutUs() throws InterruptedException {
-
         aboutUs aboutUs = new aboutUs ( driver );
         aboutUs.navigateToAboutUs ();
+    }
 
+    @Test(priority = 15, enabled = true)
+    public void navigateTOContactUs() throws InterruptedException {
+        contactUs contactUs = new contactUs ( driver );
+        contactUs.navigateToContactUs ();
     }
 
    
