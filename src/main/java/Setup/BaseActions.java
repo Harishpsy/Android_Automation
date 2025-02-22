@@ -167,8 +167,7 @@ public class BaseActions extends Base {
         clickElement ( xpath ( "//*[@text=\"Share\"]" ) );
         System.out.println ( "Successfully Clicked The Share Button" );
 
-        // Click the "Cancel" button using XPath: //*[@text="Cancel"]
-        clickElement ( xpath ( "//*[@text=\"Cancel\"]" ) );
+        commonCancel();
         System.out.println ( "Successfully Clicked The Cancel Buttons In The three Dots" );
     }
 
@@ -186,6 +185,11 @@ public class BaseActions extends Base {
         enteringText ( By.className ( "android.widget.EditText" ) );
         System.out.println ( "Successfully Clicked The Report, Checkbox" );
 
+    }
+
+    public void commonCancel() {
+        // Click the "Cancel" button using XPath: //*[@text="Cancel"]
+        clickElement ( xpath ( "//*[@text=\"Cancel\"]" ) );
     }
 
     public void cancel() {

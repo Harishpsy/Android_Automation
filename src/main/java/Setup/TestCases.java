@@ -3,6 +3,7 @@ package Setup;
 import LoginPage.LoginPage;
 import Menu.AllCourse.allCourse;
 import Menu.AppSettings.appSetting;
+import Menu.InviteFriends.invite;
 import Menu.MyCourse.myCourse;
 import Menu.MyEbooks.myEbooks;
 import Menu.MyNotes.MyNotes;
@@ -74,12 +75,18 @@ public class TestCases extends Base {
         myPurchases.navigateToMyPurchase ();
     }
 
-    @Test(priority = 12,enabled = true)
+    @Test(priority = 12,enabled = false)
     public void navigateToAppSettings() throws InterruptedException {
         appSetting appSettings = new appSetting ( driver );
         appSettings.navigateToAppSettings ();
     }
 
+    @Test(priority = 13,enabled = true)
+    public void navigateToInviteFriends() throws InterruptedException {
+        invite invite = new invite ( driver );
+        invite.navigateToInviteFriends ();
+    }
 
+   
 }
 
