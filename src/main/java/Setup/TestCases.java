@@ -1,6 +1,7 @@
 package Setup;
 
 import LoginPage.LoginPage;
+import Menu.AboutsUs.aboutUs;
 import Menu.AllCourse.allCourse;
 import Menu.AppSettings.appSetting;
 import Menu.InviteFriends.invite;
@@ -85,6 +86,13 @@ public class TestCases extends Base {
     public void navigateToInviteFriends() throws InterruptedException {
         invite invite = new invite ( driver );
         invite.navigateToInviteFriends ();
+    }
+
+    public void navigateToAboutUs() throws InterruptedException {
+
+        aboutUs aboutUs = new aboutUs ( driver );
+        aboutUs.navigateToAboutUs ();
+
     }
 
    
