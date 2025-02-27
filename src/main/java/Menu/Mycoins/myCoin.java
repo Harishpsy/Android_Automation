@@ -66,6 +66,7 @@ public class myCoin extends BaseActions {
     private void exploreProduct() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
         clickElement ( By.xpath ( "//android.widget.TextView[@text=\"EXPLORE PRODUCTS\"]" ) );
+        Thread.sleep ( 3000 );
         navigateBack ();
 
     }
@@ -73,6 +74,7 @@ public class myCoin extends BaseActions {
     private void viewFaqs() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
         clickElement ( By.xpath ( "//android.widget.TextView[@text=\"VIEW FAQs\"]" ) );
+        Thread.sleep ( 3000 );
         navigateBack ();
     }
 

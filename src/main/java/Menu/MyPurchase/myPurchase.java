@@ -17,10 +17,11 @@ public class myPurchase extends BaseActions {
 
     }
 
-    protected void performingMyPurchaseActions() {
+    protected void performingMyPurchaseActions() throws InterruptedException {
         clickMyPurchase();
         scrollList ();
         performingNothificationActions();
+        Thread.sleep ( 3000 );
         navigateBack ();
 
     }

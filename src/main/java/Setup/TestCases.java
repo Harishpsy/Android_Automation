@@ -1,5 +1,6 @@
 package Setup;
 
+import Homepage.preference;
 import LoginPage.LoginPage;
 import Menu.AboutsUs.aboutUs;
 import Menu.AllCourse.allCourse;
@@ -23,7 +24,7 @@ public class TestCases extends Base {
         loginPage.loginWithGoogle ();
     }
 
-    @Test(priority = 3, dependsOnMethods = "loginpage", enabled = true)
+    @Test(priority = 3, dependsOnMethods = "loginpage", enabled = false)
     public void openMenu() throws InterruptedException {
         menubase menu = new menubase ( driver );
         menu.clickMenu ();
@@ -95,10 +96,16 @@ public class TestCases extends Base {
         aboutUs.navigateToAboutUs ();
     }
 
-    @Test(priority = 15, enabled = true)
+    @Test(priority = 15, enabled = false)
     public void navigateTOContactUs() throws InterruptedException {
         contactUs contactUs = new contactUs ( driver );
         contactUs.navigateToContactUs ();
+    }
+
+    @Test(priority = 16, enabled = true)
+    public void preference(){
+        preference preference = new preference ( driver );
+        preference.navigateToPreference ();
     }
 
    
