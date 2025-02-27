@@ -1,4 +1,4 @@
-package Homepage;
+package Homepage.Preference;
 
 import Setup.BaseActions;
 import io.appium.java_client.android.AndroidDriver;
@@ -33,8 +33,8 @@ public class preference extends BaseActions {
     }
 
     protected void clickDropDown(){
-         clickElement ( By.xpath ( "//android.widget.TextView[@resource-id=\"com.affairscloud:id/menu_title\" and @text=\"Railway\"]" ) );
-         System.out.println ("Successfully Clicked The Railway Button");
+        clickElement ( By.xpath ( "//android.widget.TextView[@resource-id=\"com.affairscloud:id/menu_title\" and @text=\"Railway\"]" ) );
+        System.out.println ("Successfully Clicked The Railway Button");
     }
 
     protected void clickDropDowns(){
@@ -61,5 +61,4 @@ public class preference extends BaseActions {
         clickElement ( By.id ( "com.affairscloud:id/btn_save_preference" ) );
         System.out.println ("Successfully Clicked The Save Preference");
     }
-
 }
