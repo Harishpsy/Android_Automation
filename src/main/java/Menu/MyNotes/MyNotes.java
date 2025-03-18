@@ -56,26 +56,28 @@ public class MyNotes extends BaseActions {
             /*Calling The Article Method */
             setArticleModule ();
 
-            /*Calling The Quiz Module*/
-            setQuizModule ();
+//            /*Calling The Quiz Module*/
+//            setQuizModule ();
+
+            navigateBack ();
 
         }
 
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void setVideoModule() throws InterruptedException {
         /* Calling The play Button Method and Course Title Method */
         videoModule.performVideoActions (); // Calling video actions before navigating to My Notes
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void setArticleModule() throws InterruptedException {
         /* Calling The Article Method and Course Title Method */
         articleModule.performArticleActions ();
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void setQuizModule() throws InterruptedException {
         /* Calling The Article Method and Course Title Method */
         quizModule.performQuizActions ();

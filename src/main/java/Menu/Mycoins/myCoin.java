@@ -60,6 +60,7 @@ public class myCoin extends BaseActions {
         WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         clickElement ( By.xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/rl_coinsspend\"]" ) );
         scrollList ();
+        Thread.sleep ( 3000 );
         navigateBack ();
     }
 

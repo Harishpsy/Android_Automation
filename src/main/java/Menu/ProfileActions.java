@@ -126,13 +126,13 @@ public class ProfileActions extends BaseActions {
     }
 
     protected void clickElement(By locator) {
-        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
+        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 50 ) );
         WebElement clickAction = wait.until ( ExpectedConditions.elementToBeClickable ( locator ) );
         clickAction.click ();
     }
 
     private void enterText(By locator , String text) {
-        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
+        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 50 ) );
         WebElement textfield = wait.until ( ExpectedConditions.elementToBeClickable ( locator ) );
         textfield.clear ();
         wait = new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );

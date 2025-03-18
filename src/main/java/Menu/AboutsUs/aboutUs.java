@@ -22,6 +22,7 @@ public class aboutUs extends BaseActions {
 
     public void performingAboutUsActions(){
         clickAboutUs();
+        WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 40 ) );
         navigateBack ();
     }
 

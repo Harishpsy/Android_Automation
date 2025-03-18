@@ -48,7 +48,8 @@ public class BaseActions extends Base {
     /**
      * Scrolls the list to the bottom and then back to the top.
      */
-    public void scrollList() {
+    public void scrollList() throws InterruptedException {
+        Thread.sleep ( 3000 );
         scrollToEnd ();
         scrollToBeginning ();
     }

@@ -164,7 +164,7 @@ public class myEbooks extends BaseActions {
      * Performs additional actions like downloading, reading, and sharing the ebook.
      */
     @Test(enabled = true)
-    private void performEbookActions() throws InterruptedException {
+    public void performEbookActions() throws InterruptedException {
 
         System.out.println ( "Clicking download button..." );
         clickingDownloadButton (); /* Calling download button method */

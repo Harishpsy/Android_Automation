@@ -11,7 +11,7 @@ public class notification extends BaseActions {
         super ( driver );
     }
 
-    public void performingNothificationActions() {
+    public void performingNotificationActions() {
         clickNotification();
         clickPromotion();
         clickGeneral();

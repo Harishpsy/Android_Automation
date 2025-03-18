@@ -18,7 +18,7 @@ public class myPoints extends BaseActions {
         myPointsActions();
     }
 
-    protected void myPointsActions() {
+    protected void myPointsActions() throws InterruptedException {
         clickMyPoints();
         clickViewEarnedPoints();
         scrollList ();
@@ -30,7 +30,7 @@ public class myPoints extends BaseActions {
         System.out.println ("Successfully Clicked The My Points Button In The Menu ");
     }
 
-    private void clickViewEarnedPoints(){
+    private void clickViewEarnedPoints() throws InterruptedException {
         clickElement ( By.id ( "com.affairscloud:id/tv_view_earn_points" ) );
         System.out.println ("Successfully Clicked The View Earned Points Button ");
         scrollList ();

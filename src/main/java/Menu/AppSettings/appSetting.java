@@ -45,10 +45,10 @@ public class appSetting extends BaseActions {
         System.out.println ( "Successfully Clicked The Notification Sound Toggle" );
      }
 
-     private void termsAndConditions() {
+     private void termsAndConditions() throws InterruptedException {
         clickElement ( By.id ( "com.affairscloud:id/tv_terms" ) );
         System.out.println ( "Successfully Clicked The Terms And Conditions" );
-        new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
+        Thread.sleep ( 3000 );
         navigateBack ();
      }
 
