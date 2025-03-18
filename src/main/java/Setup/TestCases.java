@@ -1,5 +1,6 @@
 package Setup;
 
+import Homepage.Article.articles;
 import Homepage.Ebooks.ebooks;
 import Homepage.Notification.notification;
 import Homepage.Preference.preference;
@@ -129,12 +130,21 @@ public class TestCases extends Base {
         preferenceBanner.performPreferenceBannerAction();
     }
 
-    // Article-related tests In the Homepage
+    // Ebooks-related tests In the Homepage
     @Test(priority = 19, enabled = true, groups = {"Homepage"})
-    public void HomepageArticles() throws InterruptedException {
+    public void HomepageEbooks() throws InterruptedException {
         ebooks ebooksaction = new ebooks (driver);
         ebooksaction.performingEbooksActions ();
     }
+
+    @Test(priority = 20, enabled = true, groups = {"Homepage"})
+    // Article-related tests In the Homepage
+    public void HomepageArticle() throws InterruptedException {
+        articles ariclesaction = new articles (driver);
+        ariclesaction.performingArticlesActions ();
+    }
+
+
 
 
 

@@ -21,6 +21,7 @@ public class ebooks extends BaseActions {
         Thread.sleep(5000); // Reduce wait time
         clickingEbook();  // Directly try to find & click the Ebook
         myEbookActions.performEbookActions();
+        scrollToBeginning ();
     }
 
     private void clickingEbook() {
