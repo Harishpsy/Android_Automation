@@ -1,5 +1,6 @@
 package Setup;
 
+import Homepage.Ebooks.ebooks;
 import Homepage.Notification.notification;
 import Homepage.Preference.preference;
 import Homepage.PreferenceBanner.PreferenceBanner;
@@ -118,7 +119,7 @@ public class TestCases extends Base {
     @Test(priority = 17, enabled = false, groups = {"notification"})
     public void notification() {
         notification notification = new notification(driver);
-        notification.performingNothificationActions();
+        notification.performingNotificationActions();
     }
 
     // Preference Banner-related tests
@@ -127,4 +128,18 @@ public class TestCases extends Base {
         PreferenceBanner preferenceBanner = new PreferenceBanner(driver);
         preferenceBanner.performPreferenceBannerAction();
     }
+
+    // Article-related tests In the Homepage
+    @Test(priority = 19, enabled = true, groups = {"Homepage"})
+    public void HomepageArticles() throws InterruptedException {
+        ebooks ebooksaction = new ebooks (driver);
+        ebooksaction.performingEbooksActions ();
+    }
+
+
+
+
+
+
+
 }
