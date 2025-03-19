@@ -1,5 +1,6 @@
 package Setup;
 
+import AllCourse.allCoursetab;
 import Homepage.Article.articles;
 import Homepage.Ebooks.ebooks;
 import Homepage.Notification.notification;
@@ -131,17 +132,24 @@ public class TestCases extends Base {
     }
 
     // Ebooks-related tests In the Homepage
-    @Test(priority = 19, enabled = true, groups = {"Homepage"})
+    @Test(priority = 19, enabled = false, groups = {"Homepage"})
     public void HomepageEbooks() throws InterruptedException {
         ebooks ebooksaction = new ebooks (driver);
         ebooksaction.performingEbooksActions ();
     }
 
-    @Test(priority = 20, enabled = true, groups = {"Homepage"})
+    @Test(priority = 20, enabled = false, groups = {"Homepage"})
     // Article-related tests In the Homepage
     public void HomepageArticle() throws InterruptedException {
         articles ariclesaction = new articles (driver);
         ariclesaction.performingArticlesActions ();
+    }
+
+
+    @Test(priority = 21, enabled = true)
+    public void AllCourse() throws InterruptedException {
+        allCoursetab allCourse = new allCoursetab ( driver );
+        allCourse.performingAllCourseActions();
     }
 
 
