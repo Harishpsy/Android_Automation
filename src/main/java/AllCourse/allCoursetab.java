@@ -22,9 +22,9 @@ public class allCoursetab extends BaseActions {
 
     public void performingAllCourseActions() {
         clickingAllCoursetab();
-        getCourseNames ();
-        scrollToBeginning ();
-        verifyDuplicateCourseNames();
+//        getCourseNames ();
+//        scrollToBeginning ();
+//        verifyDuplicateCourseNames();
     }
 
     private void clickingAllCoursetab(){

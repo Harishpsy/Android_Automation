@@ -1,5 +1,6 @@
 package Setup;
 
+import AllCourse.Filter.filter;
 import AllCourse.allCoursetab;
 import Homepage.Article.articles;
 import Homepage.Ebooks.ebooks;
@@ -150,6 +151,11 @@ public class TestCases extends Base {
     public void AllCourse() throws InterruptedException {
         allCoursetab allCourse = new allCoursetab ( driver );
         allCourse.performingAllCourseActions();
+    }
+    @Test(priority = 22, enabled = true)
+    public void Filter() throws InterruptedException {
+        filter filteraction = new filter ( driver );
+        filteraction.performFilterAction();
     }
 
 
