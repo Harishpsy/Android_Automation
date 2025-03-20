@@ -1,7 +1,9 @@
 package Setup;
 
+import AllCourse.AllCourseTab.AllCourseActions;
+import AllCourse.AllCourseTab.allCourseTab;
 import AllCourse.Filter.filter;
-import AllCourse.allCoursetab;
+import AllCourse.SubscribedAndNonSubscribed;
 import Homepage.Article.articles;
 import Homepage.Ebooks.ebooks;
 import Homepage.Notification.notification;
@@ -145,17 +147,26 @@ public class TestCases extends Base {
         articles ariclesaction = new articles (driver);
         ariclesaction.performingArticlesActions ();
     }
-
-
     @Test(priority = 21, enabled = true)
-    public void AllCourse() throws InterruptedException {
-        allCoursetab allCourse = new allCoursetab ( driver );
-        allCourse.performingAllCourseActions();
+    public void AllCourseTab() throws InterruptedException {
+        allCourseTab allCourse = new allCourseTab ( driver );
+        allCourse.clickingAllCoursetab();
     }
-    @Test(priority = 22, enabled = true)
+
+    @Test(priority = 22, enabled = false)
+    public void AllCourseActions() throws InterruptedException {
+        AllCourseActions allCourse = new AllCourseActions ( driver );
+        allCourse.performingAllCourseActions() ;
+    }
+    @Test(priority = 23, enabled = false)
     public void Filter() throws InterruptedException {
         filter filteraction = new filter ( driver );
         filteraction.performFilterAction();
+    }
+    @Test(priority = 24, enabled = true)
+    public void SubscribeAndUnsubscribe() throws InterruptedException {
+        SubscribedAndNonSubscribed subscribeAndUnsubscribe = new SubscribedAndNonSubscribed ( driver );
+        subscribeAndUnsubscribe.performingSubscribeAndUnsubscribeActions();
     }
 
 
