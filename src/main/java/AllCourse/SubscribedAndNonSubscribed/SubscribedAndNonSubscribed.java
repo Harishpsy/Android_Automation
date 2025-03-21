@@ -1,11 +1,9 @@
-package AllCourse;
+package AllCourse.SubscribedAndNonSubscribed;
 
 import Setup.BaseActions;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.HashSet;
@@ -24,7 +22,7 @@ public class SubscribedAndNonSubscribed extends BaseActions {
     }
 
     public void performingSubscribeAndUnsubscribeActions() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait ( driver , WAIT_TIMEOUT );
+        Thread.sleep ( SCROLL_DELAY );
         gettingCourseList ( "Subscribed" , "(//android.widget.TextView[@resource-id=\"com.affairscloud:id/tv_subscribed\"])/parent::*//android.widget.TextView[@resource-id=\"com.affairscloud:id/courses_title\"]" );
         scrollToBeginning ();
         Thread.sleep ( SCROLL_DELAY );

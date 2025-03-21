@@ -155,8 +155,7 @@ public class BaseActions extends Base {
      */
     public void removedSaved() {
         clickElement ( xpath ( "(//*[@resource-id=\"com.affairscloud:id/content\"])[1]" ) );
-        System.out.println ( "Successfully Removed From Saved" );
-
+        System.out.println ( "Successfully Click the save or remove button" );
     }
 
     /**
@@ -184,7 +183,7 @@ public class BaseActions extends Base {
 
         // Enter text in the text field using ClassName: android.widget.EditText
         enteringText ( By.className ( "android.widget.EditText" ) );
-        System.out.println ( "Successfully Clicked The Report, Checkbox" );
+        System.out.println ( "Successfully Clicked The Report send, Checkbox" );
 
     }
 
@@ -208,6 +207,11 @@ public class BaseActions extends Base {
         clickElement ( id ( "com.affairscloud:id/tv_report" ) );
         System.out.println ( "Successfully Clicked The Report Button" );
 
+    }
+
+    public void reportAction() {
+        report();
+        reportButton();
     }
 
     public void footerCommonActions() {

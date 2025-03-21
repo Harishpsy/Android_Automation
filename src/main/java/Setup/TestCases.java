@@ -3,7 +3,8 @@ package Setup;
 import AllCourse.AllCourseTab.AllCourseActions;
 import AllCourse.AllCourseTab.allCourseTab;
 import AllCourse.Filter.filter;
-import AllCourse.SubscribedAndNonSubscribed;
+import AllCourse.SubscribedAndNonSubscribed.SubscribedAndNonSubscribed;
+import AllCourse.SubscribedCourse.CourseAction.SubscribedCourseModule;
 import Homepage.Article.articles;
 import Homepage.Ebooks.ebooks;
 import Homepage.Notification.notification;
@@ -163,10 +164,16 @@ public class TestCases extends Base {
         filter filteraction = new filter ( driver );
         filteraction.performFilterAction();
     }
-    @Test(priority = 24, enabled = true)
+    @Test(priority = 24, enabled = false)
     public void SubscribeAndUnsubscribe() throws InterruptedException {
         SubscribedAndNonSubscribed subscribeAndUnsubscribe = new SubscribedAndNonSubscribed ( driver );
         subscribeAndUnsubscribe.performingSubscribeAndUnsubscribeActions();
+    }
+
+    @Test(priority = 24, enabled = true)
+    public void SubscribedCourse() throws InterruptedException {
+        SubscribedCourseModule subscribedCourse = new SubscribedCourseModule ( driver );
+        subscribedCourse.performingSubscribedCourseAction();
     }
 
 
