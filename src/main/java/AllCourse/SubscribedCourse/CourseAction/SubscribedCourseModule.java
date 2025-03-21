@@ -1,6 +1,7 @@
 package AllCourse.SubscribedCourse.CourseAction;
 
 import AllCourse.SubscribedCourse.ArticleTab.Article;
+import AllCourse.SubscribedCourse.EbooksTab.Ebook;
 import AllCourse.SubscribedCourse.QuizzesTab.Quiz;
 import AllCourse.SubscribedCourse.VideoTab.Video;
 import Setup.BaseActions;
@@ -12,6 +13,7 @@ public class SubscribedCourseModule  extends BaseActions {
     private Article ArticleModule;
     private Video VideoModule;
     private Quiz QuizModule;
+    private Ebook EbookModule;
 
 
     public SubscribedCourseModule(AndroidDriver driver){
@@ -19,6 +21,7 @@ public class SubscribedCourseModule  extends BaseActions {
         ArticleModule = new Article(driver);
         VideoModule = new Video ( driver );
         QuizModule = new Quiz ( driver );
+        EbookModule = new Ebook ( driver );
 
     }
 
@@ -27,20 +30,22 @@ public class SubscribedCourseModule  extends BaseActions {
         Thread.sleep ( 3000 );
         navigateBack ();
         clickingParticularCourse ();
-        threedots ();
-        share ();
-        threedots ();
-        reportAction();
+//        threedots ();
+//        share ();
+//        threedots ();
+//        reportAction();
         tabsActions();
     }
 
     protected  void tabsActions() throws InterruptedException {
+//        Thread.sleep ( 3000 );
+//        ArticleModule.performArticleActions();
+//        Thread.sleep ( 3000 );
+//        VideoModule.performingVideoAction();
+//        Thread.sleep ( 3000 );
+//        QuizModule.performQuizActions();
         Thread.sleep ( 3000 );
-        ArticleModule.performArticleActions();
-        Thread.sleep ( 3000 );
-        VideoModule.performingVideoAction();
-        Thread.sleep ( 3000 );
-        QuizModule.performQuizActions();
+        EbookModule.performEbookActions ();
     }
 
     protected void clickingParticularCourse(){
