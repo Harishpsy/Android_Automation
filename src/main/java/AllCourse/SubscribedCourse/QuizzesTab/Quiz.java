@@ -1,49 +1,38 @@
-package AllCourse.SubscribedCourse.VideoTab;
+package AllCourse.SubscribedCourse.QuizzesTab;
 
-import Menu.MyNotes.Video_Module;
 import Setup.BaseActions;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Video extends BaseActions {
+public class Quiz extends BaseActions {
 
-    private static final String VIDEO_TITLE_XPATH = "//*[@resource-id=\"com.affairscloud:id/videos_list\"]/android.widget.RelativeLayout/child::*[@resource-id=\"com.affairscloud:id/txt_courses_title\"]";
+    private static final String QUIZ_TITLE_XPATH = "(//*[@resource-id=\"com.affairscloud:id/rlPublishedLayout\"])/child::*//android.widget.TextView[@resource-id=\"com.affairscloud:id/tvMockTestTittle\"]";
 
-    private Video_Module video;
-
-    public Video(AndroidDriver driver){
+    public Quiz(AndroidDriver driver){
         super(driver);
-        video = new Video_Module(driver);   // Initialize the video_Module
     }
 
-    public void performingVideoAction() throws InterruptedException {
-        clickingVideoTab();
-//        threedotsAction();
+    public void performQuizActions() throws InterruptedException {
+        clickingQuizTab();
+        threedotsAction();
         driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         getCourseNames();
         verifyDuplicateCourseNames();
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         scrollToBeginning ();
-        clickingvideo();
     }
 
-    protected void clickingVideoTab(){
-        clickElement ( By.xpath ( "//android.widget.LinearLayout[@content-desc=\"Videos\"]" ) );
-    }
-
-    protected void clickingvideo() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 60 ) );
-        clickElement ( By.xpath ( "//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.affairscloud:id/videos_list\"]/android.widget.RelativeLayout[1]" ) );
-        System.out.println ("Successfully Clicked The Video");
-        video.navigateBackToApp();
+    protected void clickingQuizTab(){
+        clickElement ( By.xpath ( "//android.widget.LinearLayout[@content-desc=\"Quizzes\"]" ) );
+        System.out.println ("Successfully Clicked The Quiz Tab");
     }
 
     // Getting all course names
@@ -53,7 +42,7 @@ public class Video extends BaseActions {
         int scrollCount = 0; // Counter to track the number of scrolls
 
         while (scrollCount < 5) { // Scroll exactly five times
-            List<WebElement> courseElements = driver.findElements(By.xpath(VIDEO_TITLE_XPATH));
+            List<WebElement> courseElements = driver.findElements(By.xpath(QUIZ_TITLE_XPATH));
             boolean newDataFound = false;
 
             for (WebElement courseElement : courseElements) {
@@ -85,7 +74,7 @@ public class Video extends BaseActions {
 
     protected void verifyDuplicateCourseNames() {
         try {
-            List<WebElement> allCourseElements = driver.findElements(By.xpath(VIDEO_TITLE_XPATH));
+            List<WebElement> allCourseElements = driver.findElements(By.xpath(QUIZ_TITLE_XPATH));
 
             if (allCourseElements.isEmpty()) {
                 System.out.println("No Video elements found on the list page.");
@@ -116,7 +105,7 @@ public class Video extends BaseActions {
     private void scrollDown() throws InterruptedException {
         // Ensure the scrollable container is correctly identified
         driver.findElement(new AppiumBy.ByAndroidUIAutomator(
-        "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"));
+                "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"));
 
         // Add a small delay to allow the scroll action to complete
         Thread.sleep(1000); // Adjust the delay as needed

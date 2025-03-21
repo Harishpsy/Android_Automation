@@ -1,6 +1,7 @@
 package AllCourse.SubscribedCourse.CourseAction;
 
 import AllCourse.SubscribedCourse.ArticleTab.Article;
+import AllCourse.SubscribedCourse.QuizzesTab.Quiz;
 import AllCourse.SubscribedCourse.VideoTab.Video;
 import Setup.BaseActions;
 import io.appium.java_client.android.AndroidDriver;
@@ -10,12 +11,15 @@ public class SubscribedCourseModule  extends BaseActions {
 
     private Article ArticleModule;
     private Video VideoModule;
+    private Quiz QuizModule;
 
 
     public SubscribedCourseModule(AndroidDriver driver){
         super(driver);
         ArticleModule = new Article(driver);
         VideoModule = new Video ( driver );
+        QuizModule = new Quiz ( driver );
+
     }
 
     public void performingSubscribedCourseAction() throws InterruptedException {
@@ -31,8 +35,12 @@ public class SubscribedCourseModule  extends BaseActions {
     }
 
     protected  void tabsActions() throws InterruptedException {
+        Thread.sleep ( 3000 );
         ArticleModule.performArticleActions();
+        Thread.sleep ( 3000 );
         VideoModule.performingVideoAction();
+        Thread.sleep ( 3000 );
+        QuizModule.performQuizActions();
     }
 
     protected void clickingParticularCourse(){

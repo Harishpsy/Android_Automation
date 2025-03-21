@@ -46,7 +46,7 @@ public class Article extends BaseActions {
     }
 
     protected void clickArticle() {
-        WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 60 ) );
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds(30));
         clickElement ( xpath ( "//android.widget.LinearLayout[@content-desc=\"Articles\"]" ) );
         System.out.println ("Successfully Clicked The Article Tab");
     }

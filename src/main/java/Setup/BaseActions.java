@@ -116,6 +116,20 @@ public class BaseActions extends Base {
 
     }
 
+    protected void threedotsTabAction(){
+        WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
+        clickElement ( By.xpath ( "(//android.widget.ImageView[@resource-id=\"com.affairscloud:id/ivMore\"])[1]" ) );
+    }
+    protected void threedotsAction(){
+        threedotsTabAction();
+        removedSaved ();
+        threedotsTabAction();
+        share ();
+        threedotsTabAction();
+        report ();
+        reportButton ();
+    }
+
     @Test(enabled = true)
     public void threedots() throws InterruptedException {
         // Click the three dots menu using ID: com.affairscloud:id/iv_more
@@ -224,6 +238,7 @@ public class BaseActions extends Base {
         performReplyActionIfPresent (); // This method checks for the presence of a reply button and performs the reply action if available
 
         // Navigate back to the previous screen
+        WebDriverWait wait  = new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
         navigateBack (); // This method navigates the user back to the previous screen or page
 
         // Call the share function
