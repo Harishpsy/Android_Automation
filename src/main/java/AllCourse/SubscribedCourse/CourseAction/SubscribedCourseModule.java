@@ -2,6 +2,7 @@ package AllCourse.SubscribedCourse.CourseAction;
 
 import AllCourse.SubscribedCourse.ArticleTab.Article;
 import AllCourse.SubscribedCourse.EbooksTab.Ebook;
+import AllCourse.SubscribedCourse.FreeTab.Free;
 import AllCourse.SubscribedCourse.QuizzesTab.Quiz;
 import AllCourse.SubscribedCourse.VideoTab.Video;
 import Setup.BaseActions;
@@ -14,6 +15,7 @@ public class SubscribedCourseModule  extends BaseActions {
     private Video VideoModule;
     private Quiz QuizModule;
     private Ebook EbookModule;
+    private Free FreeModule;
 
 
     public SubscribedCourseModule(AndroidDriver driver){
@@ -22,6 +24,7 @@ public class SubscribedCourseModule  extends BaseActions {
         VideoModule = new Video ( driver );
         QuizModule = new Quiz ( driver );
         EbookModule = new Ebook ( driver );
+        FreeModule = new Free ( driver );
 
     }
 
@@ -38,14 +41,16 @@ public class SubscribedCourseModule  extends BaseActions {
     }
 
     protected  void tabsActions() throws InterruptedException {
-//        Thread.sleep ( 3000 );
-//        ArticleModule.performArticleActions();
-//        Thread.sleep ( 3000 );
-//        VideoModule.performingVideoAction();
-//        Thread.sleep ( 3000 );
-//        QuizModule.performQuizActions();
+        Thread.sleep ( 3000 );
+        ArticleModule.performArticleActions();
+        Thread.sleep ( 3000 );
+        VideoModule.performingVideoAction();
+        Thread.sleep ( 3000 );
+        QuizModule.performQuizActions();
         Thread.sleep ( 3000 );
         EbookModule.performEbookActions ();
+        Thread.sleep ( 3000 );
+        FreeModule.performFreeActions ();
     }
 
     protected void clickingParticularCourse(){
