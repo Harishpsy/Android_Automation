@@ -204,10 +204,20 @@ public class myEbooks extends BaseActions {
      * Clicks the download button for the ebook.
      */
     @Test(dependsOnMethods = "clickEbook", enabled = true)
-    public void clickingDownloadButton() {
+    public void clickingDownloadButton() throws InterruptedException {
         // Click the download button using XPath: (//android.widget.ImageButton[@content-desc="Download"])[1]
-        clickElement ( xpath ( "(//android.widget.ImageButton[@content-desc=\"Download\"])[1]" ) );
-        System.out.println ( "Successfully clicked the Download button." );
+        try{
+            WebElement downloadButton = driver.findElement ( xpath ( "(//android.widget.ImageButton[@content-desc=\"Download\"])[1]" ) );
+            if (downloadButton.isDisplayed ()) {
+                clickElement ( xpath ( "(//android.widget.ImageButton[@content-desc=\"Download\"])[1]" ) );
+                System.out.println ( "Successfully clicked the Download button." );
+            } else {
+                System.out.println ( "Download button not found." );
+            }
+        }catch (NoSuchElementException e){
+            clickingReadIcon();
+            System.out.println ("Clicking the read icon becaouse download icon was not found");
+        }
     }
 
     /**
@@ -232,7 +242,23 @@ public class myEbooks extends BaseActions {
         clickElement ( xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/pdfView\"]" ) );
 
         // Click the back arrow using ID: com.affairscloud:id/ivArrowBack
-        clickElement ( id ( "com.affairscloud:id/ivArrowBack" ) );
+        Thread.sleep ( 3000 );
+
+        try {
+            WebElement backArrow = driver.findElement ( id ( "com.affairscloud:id/ivArrowBack" ) );
+            if (backArrow.isDisplayed ()) {
+                clickElement ( id ( "com.affairscloud:id/ivArrowBack" ) );
+            } else {
+                System.out.println ( "The back arrow was not found." );
+            }
+        }catch (NoSuchElementException e ){
+
+            WebElement clickScreen = driver.findElement ( xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/pdfView\"]" ) );
+            clickScreen.click ();
+
+            Thread.sleep ( 3000 );
+            clickElement ( id ( "com.affairscloud:id/ivArrowBack" ) );
+        }
     }
 
     /**

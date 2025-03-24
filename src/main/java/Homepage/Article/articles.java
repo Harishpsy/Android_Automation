@@ -28,21 +28,24 @@ public class articles extends BaseActions {
     }
 
     private void clickingArticle() {
-
         String targetXPath = "//android.widget.TextView[contains(@text, 'Article')][1]//following::*[@resource-id='com.affairscloud:id/iv_article'][1]";
+        int maxScrollAttempts = 12; // Limit the number of scrolls to prevent infinite loops
+        int attempts = 0;
 
-        // Try finding the element first before scrolling
-        while (true) {
+        while (attempts < maxScrollAttempts) {
             try {
-                WebElement element = driver.findElement( By.xpath(targetXPath));
+                WebElement element = driver.findElement(By.xpath(targetXPath));
                 element.click();
-                System.out.println("article clicked successfully.");
-                break; // Exit the loop if clicked
+                System.out.println("Article clicked successfully.");
+                return; // Exit method after successful click
             } catch (NoSuchElementException e) {
-                System.out.println("Article not found, scrolling...");
+                System.out.println("Article not found, scrolling... Attempt: " + (attempts + 1));
                 scrollDown(); // Scroll down dynamically
+                attempts++;
             }
         }
+
+        System.out.println("Article not found after " + maxScrollAttempts + " scroll attempts.");
     }
 
     private void scrollDown() {

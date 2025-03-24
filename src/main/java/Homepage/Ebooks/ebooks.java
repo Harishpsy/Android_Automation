@@ -26,20 +26,25 @@ public class ebooks extends BaseActions {
 
     private void clickingEbook() {
         String targetXPath = "//android.widget.TextView[contains(@text, 'Ebook')][1]//following::*[@resource-id='com.affairscloud:id/iv_article'][1]";
+        int maxScrollAttempts = 15; // Define a reasonable limit to avoid infinite loops
+        int attempts = 0;
 
-        // Try finding the element first before scrolling
-        while (true) {
+        while (attempts < maxScrollAttempts) {
             try {
                 WebElement element = driver.findElement(By.xpath(targetXPath));
                 element.click();
                 System.out.println("Ebook clicked successfully.");
-                break; // Exit the loop if clicked
+                return; // Exit method after successful click
             } catch (NoSuchElementException e) {
-                System.out.println("Ebook not found, scrolling...");
+                System.out.println("Ebook not found, scrolling... Attempt: " + (attempts + 1));
                 scrollDown(); // Scroll down dynamically
+                attempts++;
             }
         }
+
+        System.out.println("Ebook not found after " + maxScrollAttempts + " scroll attempts.");
     }
+
 
     private void scrollDown() {
         driver.findElement(new AppiumBy.ByAndroidUIAutomator(

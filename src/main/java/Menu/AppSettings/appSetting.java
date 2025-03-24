@@ -3,9 +3,7 @@ package Menu.AppSettings;
 import Setup.BaseActions;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 
 public class appSetting extends BaseActions {
 
@@ -27,6 +25,7 @@ public class appSetting extends BaseActions {
          termsAndConditions();
          privacyPolicy();
 //         logout();
+         Thread.sleep ( 3000 );
          navigateBack ();
      }
 

@@ -40,6 +40,7 @@ public class Article_Module extends BaseActions {
                 clickArticle ();
 
                 /*Calling The Navigate Back Method */
+                Thread.sleep ( 3000 );
                 navigateBack ();
 
                 /*Calling The Getting Article Name Method*/
@@ -55,6 +56,7 @@ public class Article_Module extends BaseActions {
                 threeDotsActions ();
 
                 /*Calling The Navigate Back Method */
+                Thread.sleep ( 3000 );
                 navigateBack ();
 
                 /*Calling The Footer Common Method*/

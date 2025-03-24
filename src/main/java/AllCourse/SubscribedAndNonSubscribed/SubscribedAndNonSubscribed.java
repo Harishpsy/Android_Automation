@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.openqa.selenium.By.*;
+import static org.openqa.selenium.By.xpath;
 
 public class SubscribedAndNonSubscribed extends BaseActions {
 
@@ -30,16 +30,16 @@ public class SubscribedAndNonSubscribed extends BaseActions {
         scrollToBeginning ();
     }
 
-    private int gettingCourseList(String courseType, String xpathExpression) throws InterruptedException {
-        Set<String> courses = new HashSet<>(); // To track unique course names
+    private int gettingCourseList(String courseType , String xpathExpression) throws InterruptedException {
+        Set<String> courses = new HashSet<> (); // To track unique course names
         int uniqueCourseCount = 0;
         int previousElementCount = 0;
         int retryCount = 0; // To handle cases where new data takes time to load
         final int MAX_RETRIES = 3; // Maximum number of retries if no new data is found
 
         while (true) {
-            List<WebElement> courseElements = driver.findElements(xpath(xpathExpression));
-            int currentElementCount = courseElements.size();
+            List<WebElement> courseElements = driver.findElements ( xpath ( xpathExpression ) );
+            int currentElementCount = courseElements.size ();
 
             // If no new elements are found after scrolling, increment retry count
             if (currentElementCount == previousElementCount) {
@@ -55,20 +55,20 @@ public class SubscribedAndNonSubscribed extends BaseActions {
 
             // Process the current set of elements
             for (WebElement courseElement : courseElements) {
-                String courseName = courseElement.getText().trim(); // Trim to avoid whitespace issues
+                String courseName = courseElement.getText ().trim (); // Trim to avoid whitespace issues
 
-                if (!courseName.isEmpty() && courses.add(courseName)) { // Only adds if it's not already present
-                    System.out.println(courseType + " Course Name: " + courseName);
+                if (!courseName.isEmpty () && courses.add ( courseName )) { // Only adds if it's not already present
+                    System.out.println ( courseType + " Course Name: " + courseName );
                     uniqueCourseCount++;
                 }
             }
 
             // Scroll down to load more content
-            scrollDown();
+            scrollDown ();
         }
 
         // Print the count of unique courses
-        System.out.println("Total unique " + courseType.toLowerCase() + " courses: " + uniqueCourseCount);
+        System.out.println ( "Total unique " + courseType.toLowerCase () + " courses: " + uniqueCourseCount );
 
         return uniqueCourseCount;
     }

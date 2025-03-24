@@ -4,7 +4,7 @@ import AllCourse.AllCourseTab.AllCourseActions;
 import AllCourse.AllCourseTab.allCourseTab;
 import AllCourse.Filter.filter;
 import AllCourse.SubscribedAndNonSubscribed.SubscribedAndNonSubscribed;
-import AllCourse.SubscribedCourse.CourseAction.SubscribedCourseModule;
+import AllCourse.SubscribedCourse.CourseAction.subscribedcoursemodule;
 import Homepage.Article.articles;
 import Homepage.Ebooks.ebooks;
 import Homepage.Notification.notification;
@@ -22,8 +22,8 @@ import Menu.MyNotes.MyNotes;
 import Menu.MyPoints.myPoints;
 import Menu.MyPurchase.myPurchase;
 import Menu.Mycoins.myCoin;
-import Menu.ProfileActions;
-import Menu.menubase;
+import Menu.Profile.ProfileActions;
+import Menu.MenuIcon.menubase;
 import org.testng.annotations.Test;
 
 public class TestCases extends Base {
@@ -169,10 +169,9 @@ public class TestCases extends Base {
         SubscribedAndNonSubscribed subscribeAndUnsubscribe = new SubscribedAndNonSubscribed ( driver );
         subscribeAndUnsubscribe.performingSubscribeAndUnsubscribeActions();
     }
-
     @Test(priority = 24, enabled = true)
     public void SubscribedCourse() throws InterruptedException {
-        SubscribedCourseModule subscribedCourse = new SubscribedCourseModule ( driver );
+        subscribedcoursemodule subscribedCourse = new subscribedcoursemodule ( driver );
         subscribedCourse.performingSubscribedCourseAction();
     }
 

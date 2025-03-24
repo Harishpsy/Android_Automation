@@ -85,33 +85,43 @@ public class BaseActions extends Base {
     public void threeDotsActions() throws InterruptedException {
 
         System.out.println ( "Clicking three dots..." );
+        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         threedots (); /* Calling The Threedots Method*/
 
         System.out.println ( "Sharing..." );
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         share (); /* Calling The Share Method */
 
         System.out.println ( "Clicking three dots..." );
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         threedots (); /* Calling The Threedots Method*/
 
         System.out.println ( "Reporting..." );
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         report (); /* Calling The Report Method */
 
         System.out.println ( "Canceling..." );
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         cancel (); /* Calling The Cancel Method */
 
         System.out.println ( "Clicking three dots..." );
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         threedots (); /* Calling The Threedots Method*/
 
         System.out.println ( "Reporting..." );
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         report (); /* Calling The Report Method */
 
         System.out.println ( "Generating reports..." );
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         reportButton (); /* Calling The Report Method */
 
         System.out.println ( "Clicking three dots..." );
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         threedots ();  //Calling The Threedots Method
 
         System.out.println ( "Removing saved item..." );
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         removedSaved (); // Calling The Remove Method
 
     }
@@ -294,10 +304,10 @@ public class BaseActions extends Base {
     protected void navigateBack() {
         try {
             // Attempt to click the first back button using its ID
-            WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
+            driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 40 ) );
             WebElement backButton1 = driver.findElement ( By.id ( "com.affairscloud:id/btn_back" ) );
             if (backButton1.isDisplayed ()) {
-                new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
+                driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 40 ) );
                 backButton1.click ();
                 System.out.println ( "Clicked the first back button." );
                 return; // Exit after clicking the first button
@@ -308,9 +318,10 @@ public class BaseActions extends Base {
 
         try {
             // Attempt to click the second back button using its XPath
+            driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 40 ) );
             WebElement backButton2 = driver.findElement ( By.xpath ( "//*[@resource-id=\"com.affairscloud:id/img_back_press\"]" ) );
             if (backButton2.isDisplayed ()) {
-                WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
+                driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 40 ) );
                 backButton2.click ();
                 System.out.println ( "Clicked the second back button." );
                 return; // Exit after clicking the second button
