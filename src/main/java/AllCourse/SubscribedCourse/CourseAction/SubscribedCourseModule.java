@@ -1,6 +1,7 @@
 package AllCourse.SubscribedCourse.CourseAction;
 
 import AllCourse.SubscribedCourse.ArticleTab.Article;
+import AllCourse.SubscribedCourse.DetailsTab.Details;
 import AllCourse.SubscribedCourse.EbooksTab.Ebook;
 import AllCourse.SubscribedCourse.FreeTab.Free;
 import AllCourse.SubscribedCourse.QuizzesTab.Quiz;
@@ -16,6 +17,7 @@ public class SubscribedCourseModule  extends BaseActions {
     private Quiz QuizModule;
     private Ebook EbookModule;
     private Free FreeModule;
+    private final Details DetailsModule;
 
 
     public SubscribedCourseModule(AndroidDriver driver){
@@ -25,7 +27,7 @@ public class SubscribedCourseModule  extends BaseActions {
         QuizModule = new Quiz ( driver );
         EbookModule = new Ebook ( driver );
         FreeModule = new Free ( driver );
-
+        DetailsModule = new Details ( driver );
     }
 
     public void performingSubscribedCourseAction() throws InterruptedException {
@@ -51,6 +53,8 @@ public class SubscribedCourseModule  extends BaseActions {
         EbookModule.performEbookActions ();
         Thread.sleep ( 3000 );
         FreeModule.performFreeActions ();
+        Thread.sleep ( 3000 );
+        DetailsModule.performDetailsActions ();
     }
 
     protected void clickingParticularCourse(){
