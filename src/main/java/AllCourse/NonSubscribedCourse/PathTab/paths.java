@@ -35,13 +35,15 @@ public class paths extends BaseActions {
     private void testTab(String tabName)  {
         try {
             // Find and click the tab if it exists
+            Thread.sleep ( 1000 );
             WebElement tab = driver.findElement( By.xpath(String.format("//android.widget.LinearLayout[@content-desc=\"%s\"]", tabName)));
             if (tab.isDisplayed()) {
+                Thread.sleep ( 1000 );
                 tab.click();
                 System.out.println("Successfully clicked the " + tabName + " tab");
                 tabActionInPath();
             }
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | InterruptedException e) {
             System.out.println(tabName + " tab not found");
             tabActionInPath();
         }

@@ -1,6 +1,7 @@
 package AllCourse.NonSubscribedCourse.NonSubscribedCourseAction;
 
 import AllCourse.NonSubscribedCourse.PathTab.paths;
+import AllCourse.NonSubscribedCourse.SubscribeNow.SubscribeNow;
 import AllCourse.SubscribedAndNonSubscribed.SubscribedAndNonSubscribed;
 import AllCourse.SubscribedCourse.DetailsTab.Details;
 import AllCourse.SubscribedCourse.FreeTab.Free;
@@ -20,12 +21,14 @@ public class NonSubscribed extends BaseActions {
       private Details detailModule;
       private Free freeModule;
       private paths pathsModule;
+      private SubscribeNow SubscribeNowModule;
 
 
     public NonSubscribed(AndroidDriver driver) {
         super(driver);
         course = new SubscribedAndNonSubscribed ( driver );
         detailModule = new Details ( driver );
+        SubscribeNowModule = new SubscribeNow ( driver );
         pathsModule = new paths ( driver );
         freeModule = new Free ( driver );
     }
@@ -38,6 +41,7 @@ public class NonSubscribed extends BaseActions {
         pathActions ();
         driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         freeActions();
+        navigateBack ();
     }
 
     private void clickingCourse() throws InterruptedException {
@@ -60,15 +64,26 @@ public class NonSubscribed extends BaseActions {
         scrollToEnd ();
         detailModule.faqPlusIcon();
         scrollToBeginning ();
+        SubscribeNowModule.performSubscribeNowAction ();
+
+
     }
 
     private void pathActions () throws InterruptedException {
         pathsModule.performPathActions ();
+        Thread.sleep ( 2000 );
+        backAction();
+
     }
 
     private void freeActions() throws InterruptedException {
         // Calling The Free Method Here
         freeModule.performFreeActions ();
+    }
+
+    private void backAction() {
+        clickElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/ivArrowBack\"]" ) );
+        System.out.println ("Successfully Clicked The Back Button");
     }
 
 }
