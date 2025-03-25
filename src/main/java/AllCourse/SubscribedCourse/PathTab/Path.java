@@ -56,7 +56,7 @@ public class Path extends BaseActions {
      * Tests all available tabs (Monthly, Weekly, Daily, PIB News)
      * @throws InterruptedException if thread sleep is interrupted
      */
-    private void testAllTabs() throws InterruptedException {
+    public void testAllTabs() throws InterruptedException {
         Thread.sleep ( 2000 );
         testTab("Monthly");
         testTab("Weekly");
@@ -84,20 +84,22 @@ public class Path extends BaseActions {
             if (tab.isDisplayed()) {
                 tab.click();
                 System.out.println("Successfully clicked the " + tabName + " tab");
-                Thread.sleep(2000); // Brief pause for UI to stabilize
-                verifyActions(); // Verify content in this tab
-                tabActionInPath(); // Perform actions specific to this tab
-                Thread.sleep(1000); // Brief pause for UI to stabilize
+                Thread.sleep ( 2000 ); // Brief pause for UI to stabilize
+                verifyActions (); // Verify content in this tab
+                tabActionInPath (); // Perform actions specific to this tab
+                Thread.sleep ( 1000 ); // Brief pause for UI to stabilize
             }
         } catch (NoSuchElementException e) {
             System.out.println(tabName + " tab not found");
+            clickingEbook();
+            clickingArticle();
         }
     }
 
     /**
      * Clicks the main Path tab
      */
-    private void clickPath() {
+    public void clickPath() {
         clickElement(By.xpath(PATH_TAB_XPATH));
         System.out.println("Successfully clicked the path tab");
     }
@@ -105,19 +107,37 @@ public class Path extends BaseActions {
     /**
      * Clicks the first sub-path under the main Path tab
      */
-    private void clickSubPath() {
-        clickElement(By.xpath(SUB_PATH_XPATH));
-        System.out.println("Successfully clicked the sub path");
+    public void clickSubPath() {
+        try {
+
+            WebElement subPath = driver.findElement (By.xpath ( SUB_PATH_XPATH ));
+            if(subPath.isDisplayed ()) {
+                clickElement ( By.xpath ( SUB_PATH_XPATH ) );
+                System.out.println ( "Successfully clicked the sub path" );
+            }
+        }catch (NoSuchElementException e){
+            System.out.println ("Sub Path was not found");
+        }
     }
 
     /**
      * Clicks the first sub-sub-path under the sub-path
      * @throws InterruptedException if thread sleep is interrupted
      */
-    private void clickSubSubPath() throws InterruptedException {
-        Thread.sleep(3000); // Wait for content to load
-        clickElement(By.xpath(SUB_PATH_XPATH));
-        System.out.println("Successfully clicked the Sub Sub path");
+    public void clickSubSubPath() throws InterruptedException {
+        try {
+
+            WebElement subSubPath = driver.findElement ( By.xpath ( SUB_PATH_XPATH ) );
+
+            if (subSubPath.isDisplayed ()) {
+                Thread.sleep ( 3000 ); // Wait for content to load
+                clickElement ( By.xpath ( SUB_PATH_XPATH ) );
+                System.out.println ( "Successfully clicked the Sub Sub path" );
+            }
+
+        }catch (NoSuchElementException e){
+            System.out.println ("Sub-Sub Path was not found");
+        }
     }
 
     /**
@@ -173,10 +193,10 @@ public class Path extends BaseActions {
             if (article.isDisplayed()) {
                 article.click();
                 // Perform all article module actions
-                articleModule.scrollArticleList();
-                articleModule.threeDotsActions();
-                articleModule.footerCommonActions();
-                navigateBack(); // Return to previous screen
+                articleModule.scrollArticleList ();
+                articleModule.threeDotsActions ();
+                articleModule.footerCommonActions ();
+                navigateBack (); // Return to previous screen
             }
         } catch (NoSuchElementException e) {
             System.out.println("Article was not found in the path");

@@ -30,7 +30,7 @@ public class SubscribedAndNonSubscribed extends BaseActions {
         scrollToBeginning ();
     }
 
-    private int gettingCourseList(String courseType , String xpathExpression) throws InterruptedException {
+    public int gettingCourseList(String courseType , String xpathExpression) throws InterruptedException {
         Set<String> courses = new HashSet<> (); // To track unique course names
         int uniqueCourseCount = 0;
         int previousElementCount = 0;

@@ -6,6 +6,7 @@ import Setup.BaseActions;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
@@ -24,11 +25,11 @@ public class Details extends BaseActions {
     public void performDetailsActions() throws InterruptedException {
 
         try {
+
             scrollRight ();
             clickingDetailsTab ();
             Thread.sleep ( 1000 );
             email ();
-            emailActions ();
             Thread.sleep ( 2000 );
             message ();
             video.navigateBackToApp ();
@@ -39,6 +40,7 @@ public class Details extends BaseActions {
             faqPlusIcon ();
             faqPlusIcon ();
             scrollToBeginning ();
+
         } catch (NoSuchElementException e) {
             System.out.println ( "Error during the detailsActions" + e.getMessage () );
         }
@@ -61,9 +63,23 @@ public class Details extends BaseActions {
         clickElement ( By.xpath ( "//android.widget.LinearLayout[@content-desc=\"Details\"]" ) );
     }
 
-    protected void email() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 50 ) );
-        clickElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_email\"]" ) );
+    public void email() {
+
+        try {
+
+            WebElement emailTab = driver.findElement (By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_email\"]" ));
+
+             if (emailTab.isDisplayed ()) {
+                 driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 50 ) );
+                 clickElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_email\"]" ) );
+
+                 /* Performing The Email Actions */
+                 emailActions ();
+             }
+
+        } catch (NoSuchElementException e) {
+            System.out.println ( "Email Was Not Present In The Detail Tab" );
+        }
     }
 
     protected void emailActions() {
@@ -101,20 +117,37 @@ public class Details extends BaseActions {
         System.out.println ( "Successfully clicked the Cancel button" );
     }
 
-    protected void message() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 50 ) );
-        clickElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_msg\"]" ) );
-        System.out.println ( "Successfully clicked the msg button" );
+    public void message() {
 
+        try {
+            WebElement messageElement = driver.findElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_msg\"]" ) );
+            if (messageElement.isDisplayed ()) {
+                driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
+                clickElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_msg\"]" ) );
+                System.out.println ( "Successfully clicked the msg button" );
+            }
+        } catch (NoSuchElementException | TimeoutException e) {
+            System.out.println ( "Message Was Not Present In The Detail Tab" );
+        }
     }
 
-    protected void phone() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 50 ) );
-        clickElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_call\"]" ) );
-        System.out.println ( "Successfully clicked the phone button" );
+    public void phone() {
+
+        try {
+            WebElement phoneElement = driver.findElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_call\"]" ) );
+
+            if(phoneElement.isDisplayed ()) {
+                driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 50 ) );
+                clickElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_call\"]" ) );
+                System.out.println ( "Successfully clicked the phone button" );
+            }
+
+        } catch (NoSuchElementException e) {
+            System.out.println ( "Phone Was Not Present In The Detail Tab" );
+        }
     }
 
-    protected void faqPlusIcon() {
+    public void faqPlusIcon() {
         driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 50 ) );
         clickElement ( By.xpath ( "(//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_plus\"])[1]" ) );
     }
