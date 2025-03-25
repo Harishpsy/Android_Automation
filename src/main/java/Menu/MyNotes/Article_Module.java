@@ -97,7 +97,7 @@ public class Article_Module extends BaseActions {
         System.out.println ( "Article name after click: " + articleTitleAfterClick );
     }
 
-    private void scrollArticleList() throws InterruptedException {
+    public void scrollArticleList() throws InterruptedException {
         /* Calling The Scroll Method */
         scrollList ();
         System.out.println ( "Scrolling through the article list." );

@@ -38,34 +38,33 @@ public class subscribedcoursemodule extends BaseActions {
         Thread.sleep ( 3000 );
         navigateBack ();
         clickingParticularCourse ();
-//        threedots ();
-//        share ();
-//        threedots ();
-//        reportAction();
+        threedots ();
+        share ();
+        threedots ();
+        reportAction();
         tabsActions();
     }
 
     protected  void tabsActions() throws InterruptedException {
         Thread.sleep ( 3000 );
         PathModule.performPathAction();
-//        Thread.sleep ( 3000 );
-//        ArticleModule.performArticleActions();
-//        Thread.sleep ( 3000 );
-//        VideoModule.performingVideoAction();
-//        Thread.sleep ( 3000 );
-//        QuizModule.performQuizActions();
-//        Thread.sleep ( 3000 );
-//        EbookModule.performEbookActions ();
-//        Thread.sleep ( 3000 );
-//        FreeModule.performFreeActions ();
-//        Thread.sleep ( 3000 );
-//        DetailsModule.performDetailsActions ();
-
+        Thread.sleep ( 3000 );
+        ArticleModule.performArticleActions();
+        Thread.sleep ( 3000 );
+        VideoModule.performingVideoAction();
+        Thread.sleep ( 3000 );
+        QuizModule.performQuizActions();
+        Thread.sleep ( 3000 );
+        EbookModule.performEbookActions ();
+        Thread.sleep ( 3000 );
+        FreeModule.performFreeActions ();
+        Thread.sleep ( 3000 );
+        DetailsModule.performDetailsActions ();
     }
 
     protected void clickingParticularCourse(){
 
-         // Clicking The Crack Current Affairs Course
+        // Clicking The Crack Current Affairs Course
         clickElement ( By.xpath ( "//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.affairscloud:id/subject_list\"]/android.widget.RelativeLayout/child::*[@resource-id=\"com.affairscloud:id/courses_title\" and @text=\"Crack Current Affairs 2025 PDF\"]" ) );
         System.out.println ("Successfully Clicked The Crack Current Affairs Course");
     }
