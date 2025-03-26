@@ -155,6 +155,7 @@ public class Path extends BaseActions {
      */
     private void verifyActions() throws InterruptedException {
         getTitles();
+        scrollToBeginning ();
         verifyDuplicateNames();
     }
 
@@ -165,7 +166,7 @@ public class Path extends BaseActions {
         try {
             WebElement ebook = driver.findElement(By.xpath(EBOOK_XPATH));
             System.out.println("Ebook was found in the path");
-            if (ebook.isDisplayed()) {
+            if (ebook.isDisplayed() && ebook.isSelected ()) {
                 ebook.click();
                 // Perform all ebook module actions
                 ebookModule.clickingDownloadButton();
@@ -190,7 +191,7 @@ public class Path extends BaseActions {
         try {
             WebElement article = driver.findElement(By.xpath(ARTICLE_XPATH));
             System.out.println("Article was found in the path");
-            if (article.isDisplayed()) {
+            if (article.isDisplayed()  && article.isSelected ()) {
                 article.click();
                 // Perform all article module actions
                 articleModule.scrollArticleList ();

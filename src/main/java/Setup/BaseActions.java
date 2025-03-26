@@ -97,7 +97,7 @@ public class BaseActions extends Base {
         threedots (); /* Calling The Threedots Method*/
 
         System.out.println ( "Reporting..." );
-        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         report (); /* Calling The Report Method */
 
         System.out.println ( "Canceling..." );
@@ -109,7 +109,7 @@ public class BaseActions extends Base {
         threedots (); /* Calling The Threedots Method*/
 
         System.out.println ( "Reporting..." );
-        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         report (); /* Calling The Report Method */
 
         System.out.println ( "Generating reports..." );
@@ -330,12 +330,9 @@ public class BaseActions extends Base {
             System.out.println ( "Second back button not found." );
         }
 
-
-
         // If neither button is found or clickable, log an error
         System.out.println ( "Error: Neither back button could be clicked." );
     }
-
 
     public void clickMenu() throws InterruptedException {
         Thread.sleep ( 5000 ); // Adding a delay for stability, consider using WebDriverWait for better synchronization
@@ -351,6 +348,4 @@ public class BaseActions extends Base {
             System.out.println ( "Error: Menu button is not displayed on the screen or already clicked." );
         }
     }
-
-
 }

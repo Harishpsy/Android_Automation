@@ -6,6 +6,7 @@ import AllCourse.Filter.filter;
 import AllCourse.NonSubscribedCourse.NonSubscribedCourseAction.NonSubscribed;
 import AllCourse.SubscribedAndNonSubscribed.SubscribedAndNonSubscribed;
 import AllCourse.SubscribedCourse.CourseAction.subscribedcoursemodule;
+import Doubts.Doubt;
 import Homepage.Article.articles;
 import Homepage.Ebooks.ebooks;
 import Homepage.Notification.notification;
@@ -149,7 +150,7 @@ public class TestCases extends Base {
         articles ariclesaction = new articles (driver);
         ariclesaction.performingArticlesActions ();
     }
-    @Test(priority = 21, enabled = true)
+    @Test(priority = 21, enabled = false)
     public void AllCourseTab() throws InterruptedException {
         allCourseTab allCourse = new allCourseTab ( driver );
         allCourse.clickingAllCoursetab();
@@ -170,17 +171,26 @@ public class TestCases extends Base {
         SubscribedAndNonSubscribed subscribeAndUnsubscribe = new SubscribedAndNonSubscribed ( driver );
         subscribeAndUnsubscribe.performingSubscribeAndUnsubscribeActions();
     }
+
     @Test(priority = 25, enabled = false)
+    public void NonSubscribedCourseActions() throws InterruptedException {
+        NonSubscribed course = new NonSubscribed ( driver );
+        course.performNonSubscribedActions();
+    }
+
+    @Test(priority = 26, enabled = false)
     public void SubscribedCourse() throws InterruptedException {
         subscribedcoursemodule subscribedCourse = new subscribedcoursemodule ( driver );
         subscribedCourse.performingSubscribedCourseAction();
     }
 
-    @Test(priority = 26, enabled = true)
-    public void NonSubscribedCourseActions() throws InterruptedException {
-      NonSubscribed course = new NonSubscribed ( driver );
-      course.performNonSubscribedActions();
+    @Test(priority = 27, enabled = true)
+    public void Doubts() {
+        Doubt doubtActions = new Doubt ( driver );
+        doubtActions.peformDoubtsAction();
     }
+
+
 
 
 
