@@ -6,7 +6,9 @@ import AllCourse.Filter.filter;
 import AllCourse.NonSubscribedCourse.NonSubscribedCourseAction.NonSubscribed;
 import AllCourse.SubscribedAndNonSubscribed.SubscribedAndNonSubscribed;
 import AllCourse.SubscribedCourse.CourseAction.subscribedcoursemodule;
-import Doubts.Doubt;
+import Doubts.AllDoubts.AllDoubts;
+import Doubts.Doubt.Doubt;
+import Doubts.MyDoubts.myDoubts;
 import Homepage.Article.articles;
 import Homepage.Ebooks.ebooks;
 import Homepage.Notification.notification;
@@ -188,6 +190,18 @@ public class TestCases extends Base {
     public void Doubts() {
         Doubt doubtActions = new Doubt ( driver );
         doubtActions.peformDoubtsAction();
+    }
+
+    @Test(priority = 28, enabled = false)
+    public void AllDoubtsAction() throws InterruptedException {
+        AllDoubts allDoubts = new AllDoubts ( driver );
+        allDoubts.performAllDoubtsActions();
+    }
+
+    @Test(priority = 29, enabled = true)
+    public void MyDoubtsActions() {
+        myDoubts myDoubts = new myDoubts ( driver );
+        myDoubts.performMyDoubtsActions();
     }
 
 

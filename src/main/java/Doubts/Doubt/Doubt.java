@@ -1,4 +1,4 @@
-package Doubts;
+package Doubts.Doubt;
 
 import Doubts.CreatingDoubt.CreatingDoubt;
 import Setup.BaseActions;
@@ -17,7 +17,7 @@ public class Doubt extends BaseActions {
 
     public void peformDoubtsAction() {
         clickingDoubtsButton();
-        creatingDoubtModule.performCreatingDoubtActions();
+//        creatingDoubtModule.performCreatingDoubtActions();
     }
 
     private void clickingDoubtsButton() {

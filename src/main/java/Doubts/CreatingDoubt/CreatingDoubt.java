@@ -5,6 +5,8 @@ import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.time.Duration;
+
 public class CreatingDoubt extends BaseActions {
 
     // Locators as constants for better maintainability
@@ -79,15 +81,16 @@ public class CreatingDoubt extends BaseActions {
         System.out.println("Successfully clicked the searched course title");
     }
 
-    private void clickCancel() {
+    public void clickCancel() {
         clickElement(CANCEL_BUTTON);
     }
 
-    private void clickConfirm() {
+    public void clickConfirm() {
         clickElement(CONFIRM_BUTTON);
     }
 
     private void enterQuestionText() {
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         enteringText ( QUESTION_FIELD );
     }
 
@@ -107,30 +110,37 @@ public class CreatingDoubt extends BaseActions {
     }
 
     private void clickAddImage() {
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(ADD_IMAGE_BUTTON);
     }
 
-    private void selectFromGallery() {
+    public void selectFromGallery() {
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(GALLERY_OPTION);
     }
 
-    private void clickImage() {
+    public void clickImage() {
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(IMAGE_THUMBNAIL);
     }
 
-    private void clickCrop() {
+    public void clickCrop() {
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(CROP_BUTTON);
     }
 
-    private void clickDeleteImage() {
+    public void clickDeleteImage() {
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(DELETE_IMAGE_BUTTON);
     }
 
     private void clickNextButton() {
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(NEXT_BUTTON);
     }
 
     private void clickRules() {
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(RULES_LINK);
     }
 }
