@@ -20,14 +20,14 @@ public class AllCourseActions extends BaseActions {
         super(driver);
     }
 
-    public void performingAllCourseActions() {
+    public void performingAllCourseActions() throws InterruptedException {
         getCourseNames();
         scrollToBeginning();
         verifyDuplicateCourseNames();
     }
 
     // Getting all course names
-    private int getCourseNames() {
+    private int getCourseNames() throws InterruptedException {
         Set<String> seenCourses = new HashSet<>(); // To track unique course names
         int uniqueCourseCount = 0;
 
@@ -85,10 +85,5 @@ public class AllCourseActions extends BaseActions {
         } catch (NoSuchElementException e) {
             System.out.println("The course elements were not found: " + e.getMessage());
         }
-    }
-
-    private void scrollDown() {
-        driver.findElement(new AppiumBy.ByAndroidUIAutomator(
-                "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"));
     }
 }

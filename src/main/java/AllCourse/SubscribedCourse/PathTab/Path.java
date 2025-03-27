@@ -279,7 +279,7 @@ public class Path extends BaseActions {
     /**
      * Performs a scroll down action on the current screen
      */
-    private void scrollDown() {
+    public void scrollDown() {
         try {
             // Use Android UIAutomator to scroll
             driver.findElement(new AppiumBy.ByAndroidUIAutomator(

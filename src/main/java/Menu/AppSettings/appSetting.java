@@ -24,12 +24,11 @@ public class appSetting extends BaseActions {
          clickNotificationSoundtoogle();
          termsAndConditions();
          privacyPolicy();
-//         logout();
          Thread.sleep ( 3000 );
          navigateBack ();
      }
 
-     private void clickAppSettings() {
+     public void clickAppSettings() {
         clickElement ( By.id ( "com.affairscloud:id/item_app_setting" ) );
         System.out.println ( "Successfully Clicked The App Settings Button" );
      }

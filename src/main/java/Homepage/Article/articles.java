@@ -27,7 +27,7 @@ public class articles extends BaseActions {
         scrollToBeginning ();
     }
 
-    private void clickingArticle() {
+    private void clickingArticle() throws InterruptedException {
         String targetXPath = "//android.widget.TextView[contains(@text, 'Article')][1]//following::*[@resource-id='com.affairscloud:id/iv_article'][1]";
         int maxScrollAttempts = 12; // Limit the number of scrolls to prevent infinite loops
         int attempts = 0;
@@ -47,13 +47,4 @@ public class articles extends BaseActions {
 
         System.out.println("Article not found after " + maxScrollAttempts + " scroll attempts.");
     }
-
-    private void scrollDown() {
-        driver.findElement(new AppiumBy.ByAndroidUIAutomator(
-                "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"
-        ));
-    }
-
-
-
 }

@@ -8,13 +8,17 @@ import AllCourse.SubscribedAndNonSubscribed.SubscribedAndNonSubscribed;
 import AllCourse.SubscribedCourse.CourseAction.subscribedcoursemodule;
 import Doubts.AllDoubts.AllDoubts;
 import Doubts.Doubt.Doubt;
+import Doubts.Followed.followed;
+import Doubts.MyAnswered.MyAnswer;
 import Doubts.MyDoubts.myDoubts;
+import Doubts.Points.points;
 import Homepage.Article.articles;
 import Homepage.Ebooks.ebooks;
 import Homepage.Notification.notification;
 import Homepage.Preference.preference;
 import Homepage.PreferenceBanner.PreferenceBanner;
 import LoginPage.LoginPage;
+import Logout.Logout;
 import Menu.AboutsUs.aboutUs;
 import Menu.AllCourse.allCourse;
 import Menu.AppSettings.appSetting;
@@ -49,13 +53,13 @@ public class TestCases extends Base {
     @Test(priority = 4, dependsOnMethods = "openMenu", enabled = false, groups = {"menu", "profile"})
     public void navigateToProfile() throws InterruptedException {
         ProfileActions profileAction = new ProfileActions(driver);
-        profileAction.userDetails();
+        profileAction.performingProfile();
     }
 
     @Test(priority = 5, dependsOnMethods = "openMenu", enabled = false, groups = {"menu", "courses"})
     public void navigateToAllCourses() throws InterruptedException {
         allCourse allCourses = new allCourse(driver);
-        allCourses.clickingAllCourse();
+        allCourses.performingAllCourseActions();
     }
 
     @Test(priority = 6, dependsOnMethods = "openMenu", enabled = false, groups = {"menu", "courses"})
@@ -198,10 +202,33 @@ public class TestCases extends Base {
         allDoubts.performAllDoubtsActions();
     }
 
-    @Test(priority = 29, enabled = true)
-    public void MyDoubtsActions() {
+    @Test(priority = 29, enabled = false)
+    public void MyDoubtsActions() throws InterruptedException {
         myDoubts myDoubts = new myDoubts ( driver );
         myDoubts.performMyDoubtsActions();
+    }
+    @Test(priority = 30,enabled = false)
+    public void MyAnswerActions () throws InterruptedException {
+        MyAnswer myAnswer = new MyAnswer ( driver );
+        myAnswer.performMyAnswerActions();
+    }
+
+    @Test(priority = 31,enabled = false)
+    public void FollowedActions() {
+        followed followedActions = new followed ( driver );
+        followedActions.performFollowedAction();
+    }
+
+    @Test(priority = 32,enabled = true)
+    public void Points() throws InterruptedException {
+        points point = new points ( driver );
+        point.performPointsActions ();
+    }
+
+    @Test(priority = 33,enabled = true)
+    public void Logout() throws InterruptedException {
+        Logout logout = new Logout ( driver );
+        logout.performLogoutActions ();
     }
 
 

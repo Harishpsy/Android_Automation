@@ -37,7 +37,7 @@ public class AllDoubts extends BaseActions {
         scrollList ();
     }
 
-    private void clickingAnswer() {
+    public void clickingAnswer() {
         waitAndClick(By.xpath("(//android.widget.EditText[@resource-id=\"com.affairscloud:id/et_answer\"])[1]"));
     }
 
@@ -164,7 +164,7 @@ public class AllDoubts extends BaseActions {
         element.click();
     }
 
-    private void doubtfooterActions() {
+    public void doubtfooterActions() {
         clickFollow();
         clickShare();
         threeDotActions();
@@ -190,10 +190,5 @@ public class AllDoubts extends BaseActions {
     private void doubtThreeDots() {
         clickElement ( By.xpath ( "(//android.widget.ImageButton[@resource-id=\"com.affairscloud:id/more_btn\"])[1]" ) );
     }
-
-
-
-
-
 
 }

@@ -30,7 +30,7 @@ public class myPoints extends BaseActions {
         System.out.println ("Successfully Clicked The My Points Button In The Menu ");
     }
 
-    private void clickViewEarnedPoints() throws InterruptedException {
+    public void clickViewEarnedPoints() throws InterruptedException {
         clickElement ( By.id ( "com.affairscloud:id/tv_view_earn_points" ) );
         System.out.println ("Successfully Clicked The View Earned Points Button ");
         scrollList ();
@@ -38,7 +38,7 @@ public class myPoints extends BaseActions {
         navigateBack ();
     }
 
-    protected void navigatingBack(){
+    public void navigatingBack(){
         clickElement ( By.id ( "com.affairscloud:id/iv_back" ) );
         System.out.println ("Successfully Clicked The Back Button ");
     }

@@ -25,16 +25,23 @@ public class ProfileActions extends BaseActions {
         Base.driver = driver;
     }
 
+
+    public void performingProfile() throws InterruptedException {
+
+        usernameedit ();
+        userDetails();
+
+    }
     @Test(enabled = true)
-    public void userDetails() throws InterruptedException {
+    public Object userDetails() throws InterruptedException {
         String userName = getElementText ( By.id ( "com.affairscloud:id/nav_user_first_name" ) );
         String mailId = getElementText ( By.id ( "com.affairscloud:id/nav_email" ) );
 
         System.out.println ( "Login User Name: " + userName );
         System.out.println ( "Login User Mail Id: " + mailId );
 
-        usernameedit ();
         System.out.println ( "---------Successfully Completed the Edit Profile----------" );
+        return null;
     }
 
     @Test(enabled = true)

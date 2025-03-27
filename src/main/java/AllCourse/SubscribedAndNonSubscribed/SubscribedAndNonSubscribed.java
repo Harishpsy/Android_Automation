@@ -73,9 +73,4 @@ public class SubscribedAndNonSubscribed extends BaseActions {
         return uniqueCourseCount;
     }
 
-    private void scrollDown() throws InterruptedException {
-        Thread.sleep ( SCROLL_DELAY );
-        driver.findElement ( new AppiumBy.ByAndroidUIAutomator ( "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();" ) );
-    }
-
 }

@@ -161,7 +161,7 @@ public class Article extends BaseActions {
         }
     }
 
-    private void scrollDown() throws InterruptedException {
+    public void scrollDown() throws InterruptedException {
         // Ensure the scrollable container is correctly identified
         driver.findElement(new AppiumBy.ByAndroidUIAutomator(
                 "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"));

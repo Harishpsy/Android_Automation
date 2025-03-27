@@ -101,15 +101,4 @@ public class Quiz extends BaseActions {
             System.out.println("The Video elements were not found: " + e.getMessage());
         }
     }
-
-    private void scrollDown() throws InterruptedException {
-        // Ensure the scrollable container is correctly identified
-        driver.findElement(new AppiumBy.ByAndroidUIAutomator(
-                "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"));
-
-        // Add a small delay to allow the scroll action to complete
-        Thread.sleep(1000); // Adjust the delay as needed
-    }
-
-
 }

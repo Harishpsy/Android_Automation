@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import static io.appium.java_client.AppiumBy.id;
 import static org.openqa.selenium.By.className;
@@ -19,7 +20,9 @@ public class BaseActions extends Base {
 
 
     public BaseActions(AndroidDriver driver) {
+
         Base.driver = driver;
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ));
     }
 
     // Common Click Action From Here we are calling Click action to all
@@ -48,10 +51,19 @@ public class BaseActions extends Base {
     /**
      * Scrolls the list to the bottom and then back to the top.
      */
-    public void scrollList() throws InterruptedException {
-        Thread.sleep ( 3000 );
+    public void scrollList() {
         scrollToEnd ();
         scrollToBeginning ();
+    }
+
+    protected void scrollDown() throws InterruptedException {
+        // Ensure the scrollable container is correctly identified
+        Thread.sleep(1000); // Adjust the delay as needed
+        driver.findElement(new AppiumBy.ByAndroidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"));
+
+        // Add a small delay to allow the scroll action to complete
+        Thread.sleep(1000); // Adjust the delay as needed
     }
 
     /**

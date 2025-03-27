@@ -24,7 +24,7 @@ public class ebooks extends BaseActions {
         scrollToBeginning ();
     }
 
-    private void clickingEbook() {
+    private void clickingEbook() throws InterruptedException {
         String targetXPath = "//android.widget.TextView[contains(@text, 'Ebook')][1]//following::*[@resource-id='com.affairscloud:id/iv_article'][1]";
         int maxScrollAttempts = 15; // Define a reasonable limit to avoid infinite loops
         int attempts = 0;
@@ -44,12 +44,4 @@ public class ebooks extends BaseActions {
 
         System.out.println("Ebook not found after " + maxScrollAttempts + " scroll attempts.");
     }
-
-
-    private void scrollDown() {
-        driver.findElement(new AppiumBy.ByAndroidUIAutomator(
-                "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"
-        ));
-    }
-
 }
