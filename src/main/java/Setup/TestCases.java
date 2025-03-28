@@ -250,7 +250,7 @@ public class TestCases extends Base {
     /**
      * Test to verify All Course tab functionality
      */
-    @Test(priority = 21, enabled = false)
+    @Test(priority = 21, enabled = true)
     public void allCourseTabTest() throws InterruptedException {
         new allCourseTab(driver).clickingAllCoursetab();
     }
@@ -266,7 +266,7 @@ public class TestCases extends Base {
     /**
      * Test to verify filter functionality in courses
      */
-    @Test(priority = 23, enabled = false)
+    @Test(priority = 23, enabled = true)
     public void filterTest() throws InterruptedException {
         new filter(driver).performFilterAction();
     }
@@ -290,7 +290,7 @@ public class TestCases extends Base {
     /**
      * Test to verify actions on subscribed courses
      */
-    @Test(priority = 26, enabled = false)
+    @Test(priority = 26, enabled = true)
     public void subscribedCourseTest() throws InterruptedException {
         new subscribedcoursemodule(driver).performingSubscribedCourseAction();
     }
@@ -301,7 +301,7 @@ public class TestCases extends Base {
      * Test to verify basic doubts functionality
      * Enabled: true (active test)
      */
-    @Test(priority = 27, enabled = true)
+    @Test(priority = 27, enabled = false)
     public void doubtsTest() {
         new Doubt(driver).peformDoubtsAction();
     }
@@ -343,7 +343,7 @@ public class TestCases extends Base {
     /**
      * Test to verify points functionality
      */
-    @Test(priority = 32, enabled = true)
+    @Test(priority = 32, enabled = false)
     public void pointsTest() throws InterruptedException {
         new points(driver).performPointsActions();
     }
@@ -353,7 +353,7 @@ public class TestCases extends Base {
     /**
      * Test to verify logout functionality
      */
-    @Test(priority = 33, enabled = true)
+    @Test(priority = 33, enabled = false)
     public void logoutTest() throws InterruptedException {
         new Logout(driver).performLogoutActions();
     }

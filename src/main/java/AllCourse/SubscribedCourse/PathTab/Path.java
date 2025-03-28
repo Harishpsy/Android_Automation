@@ -50,6 +50,8 @@ public class Path extends BaseActions {
         clickSubSubPath();
         testAllTabs();
         threedotsPath();
+        navigateBackArrow();
+        navigateBackArrow();
     }
 
     /**
@@ -166,7 +168,7 @@ public class Path extends BaseActions {
         try {
             WebElement ebook = driver.findElement(By.xpath(EBOOK_XPATH));
             System.out.println("Ebook was found in the path");
-            if (ebook.isDisplayed() && ebook.isSelected ()) {
+            if (ebook.isDisplayed()) {
                 ebook.click();
                 // Perform all ebook module actions
                 ebookModule.clickingDownloadButton();
@@ -191,7 +193,7 @@ public class Path extends BaseActions {
         try {
             WebElement article = driver.findElement(By.xpath(ARTICLE_XPATH));
             System.out.println("Article was found in the path");
-            if (article.isDisplayed()  && article.isSelected ()) {
+            if (article.isDisplayed()) {
                 article.click();
                 // Perform all article module actions
                 articleModule.scrollArticleList ();
@@ -287,5 +289,21 @@ public class Path extends BaseActions {
         } catch (NoSuchElementException e) {
             System.out.println("Can't scroll the page - may be there is no content to scroll");
         }
+    }
+
+    private  void navigateBackArrow(){
+
+        try{
+
+            WebElement backArrow = driver.findElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/ivArrowBack\"]" ) );
+
+            if (backArrow.isDisplayed ()){
+                clickElement ( By.xpath ( "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/ivArrowBack\"]" ) );
+            }
+
+        }catch (NoSuchElementException e){
+            System.out.println ("Back Arrow was not found ");
+        }
+
     }
 }

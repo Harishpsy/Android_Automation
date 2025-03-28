@@ -1,16 +1,14 @@
 package AllCourse.NonSubscribedCourse.NonSubscribedCourseAction;
 
-import AllCourse.NonSubscribedCourse.PathTab.paths;
+import AllCourse.NonSubscribedCourse.PathTab.PathNonSubscribed;
 import AllCourse.NonSubscribedCourse.SubscribeNow.SubscribeNow;
 import AllCourse.SubscribedAndNonSubscribed.SubscribedAndNonSubscribed;
 import AllCourse.SubscribedCourse.DetailsTab.Details;
 import AllCourse.SubscribedCourse.FreeTab.Free;
-import AllCourse.SubscribedCourse.PathTab.Path;
 import Setup.BaseActions;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
 
@@ -20,7 +18,7 @@ public class NonSubscribed extends BaseActions {
       private SubscribedAndNonSubscribed course ;
       private Details detailModule;
       private Free freeModule;
-      private paths pathsModule;
+      private PathNonSubscribed pathsModule;
       private SubscribeNow SubscribeNowModule;
 
 
@@ -29,17 +27,15 @@ public class NonSubscribed extends BaseActions {
         course = new SubscribedAndNonSubscribed ( driver );
         detailModule = new Details ( driver );
         SubscribeNowModule = new SubscribeNow ( driver );
-        pathsModule = new paths ( driver );
+        pathsModule = new PathNonSubscribed ( driver );
         freeModule = new Free ( driver );
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
     }
 
     public void performNonSubscribedActions() throws InterruptedException {
         clickingCourse();
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         detailActions ();
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         pathActions ();
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         freeActions();
         navigateBack ();
     }

@@ -7,11 +7,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
-public class paths extends BaseActions {
+public class PathNonSubscribed extends BaseActions {
     private static final String EBOOK_XPATH = "(//android.widget.FrameLayout[@resource-id=\"com.affairscloud:id/cv_path_frequent\"]/following::*[@text = \"Ebook\"])[1]";
     private static final String ARTICLE_XPATH = "(//android.widget.FrameLayout[@resource-id=\"com.affairscloud:id/cv_path_frequent\"]/following::*[@text = \"Article\"])[1]";
     private Path pathModule;
-    public paths(AndroidDriver driver) {
+    public PathNonSubscribed(AndroidDriver driver) {
         super(driver);
         pathModule = new Path (driver);
     }

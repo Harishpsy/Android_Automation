@@ -43,6 +43,7 @@ public class subscribedcoursemodule extends BaseActions {
         threedots ();
         reportAction();
         tabsActions();
+        navigateBack ();
     }
 
     protected  void tabsActions() throws InterruptedException {
