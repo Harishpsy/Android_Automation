@@ -42,6 +42,7 @@ public class AllDoubts extends BaseActions {
     }
 
     private String enteringText() {
+        driver.manage ().timeouts ().implicitlyWait (Duration.ofSeconds ( 30 ));
         By textFieldLocator = By.xpath("//android.widget.EditText[@resource-id=\"com.affairscloud:id/et_answer\"]");
         WebElement textField = waitForElement(textFieldLocator);
 
@@ -141,6 +142,7 @@ public class AllDoubts extends BaseActions {
     }
 
     private void handleReplyActions() throws InterruptedException {
+        Thread.sleep ( 2000 );
         clickingReplyAnswerButton();
         enteringTextInReply();
         Thread.sleep ( 2000 );

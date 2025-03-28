@@ -28,6 +28,10 @@ public class Details extends BaseActions {
 
             scrollRight ();
             clickingDetailsTab ();
+            scrollToEnd ();
+            faqPlusIcon ();
+            faqPlusIcon ();
+            scrollToBeginning ();
             Thread.sleep ( 1000 );
             email ();
             Thread.sleep ( 2000 );
@@ -36,10 +40,9 @@ public class Details extends BaseActions {
             Thread.sleep ( 2000 );
             phone ();
             video.navigateBackToApp ();
-            scrollToEnd ();
-            faqPlusIcon ();
-            faqPlusIcon ();
-            scrollToBeginning ();
+
+            navigateBack ();
+
 
         } catch (NoSuchElementException e) {
             System.out.println ( "Error during the detailsActions" + e.getMessage () );

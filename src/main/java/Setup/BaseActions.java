@@ -1,5 +1,8 @@
 package Setup;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -7,7 +10,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -293,6 +296,7 @@ public class BaseActions extends Base {
             // Check if the "Reply" button is displayed
             if (clickingReply.isDisplayed ()) {
                 // Click the "Reply" button using its XPath
+                Thread.sleep ( 2000 );
                 clickElement ( xpath ( "(//android.widget.TextView[@resource-id=\"com.affairscloud:id/tv_replay\"])[1]" ) );
 
                 // Enter text into the reply input field using its class name
@@ -360,4 +364,13 @@ public class BaseActions extends Base {
             System.out.println ( "Error: Menu button is not displayed on the screen or already clicked." );
         }
     }
+
+
+
+
+
+
+
+
+
 }

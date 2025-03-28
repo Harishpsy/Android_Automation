@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import com.aventstack.extentreports.Status;
 
 import java.time.Duration;
 import java.util.Set;
@@ -35,47 +36,60 @@ public class LoginPage extends Base {
      * - Identifies and switches to WebView context for Google login interaction.
      * - Waits for specific elements inside the WebView and interacts with them.
      * - Switches back to Native App context after completing the WebView process.
-     * - Displays log messages for successful steps and errors, if any.
+     * - Logs detailed steps and results to Extent Reports.
      */
     public void loginWithGoogle() {
-
         try {
-            // Wait for the login button to be clickable
-            WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-            WebElement loginButton = wait.until ( ExpectedConditions.elementToBeClickable ( By.id ( "com.affairscloud:id/btn_login" ) ) );
+            test.log(Status.INFO, "Starting Google login process");
 
-            if (loginButton.isDisplayed ()) {
+            // Wait for the login button to be clickable
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            test.log(Status.INFO, "Waiting for login button to be clickable");
+
+            WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("com.affairscloud:id/btn_login")));
+            test.log(Status.INFO, "Login button located");
+
+            if (loginButton.isDisplayed()) {
                 // Click the login button
-                Thread.sleep ( 30 );
-                loginButton.click ();
-                System.out.println ( "Successfully clicked the login with google button" );
+                Thread.sleep(30);
+                loginButton.click();
+                test.log(Status.PASS, "Successfully clicked the login with Google button");
 
                 // Handling WebView (for login) context
-                Set<String> contextHandles = driver.getContextHandles ();
+                test.log(Status.INFO, "Checking for available contexts");
+                Set<String> contextHandles = driver.getContextHandles();
+
                 for (String context : contextHandles) {
-                    System.out.println ( "Available context: " + context );
                     // Check if it's a WebView context
-                    if (context.contains ( "WEBVIEW" )) {
-                        driver.context ( context ); // Switch to the WebView context
-                        System.out.println ( "Switched to WebView context: " + context );
+                    if (context.contains("WEBVIEW")) {
+                        driver.context(context); // Switch to the WebView context
+                        test.log(Status.PASS, "Switched to WebView context: " + context);
                     }
                 }
 
                 // Wait until the element is visible
-                WebElement element = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) ).until ( ExpectedConditions.elementToBeClickable ( new AppiumBy.ByAndroidUIAutomator ( "new UiSelector().resourceId(\"com.google.android.gms:id/container\").instance(0)" ) ) );
-                // Perform tap using TouchAction
-                element.click ();
+                test.log(Status.INFO, "Waiting for Google account selection");
+                WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30))
+                        .until(ExpectedConditions.elementToBeClickable(
+                                new AppiumBy.ByAndroidUIAutomator("new UiSelector().resourceId(\"com.google.android.gms:id/container\").instance(0)")));
 
-                driver.context ( "NATIVE_APP" ); // Switch back to the native app
-                System.out.println ( "Switched back to native app context." );
+                // Perform tap using TouchAction
+                element.click();
+                test.log(Status.PASS, "Successfully selected Google account");
+
+                driver.context("NATIVE_APP"); // Switch back to the native app
+                test.log(Status.INFO, "Switched back to native app context");
+
+                test.log(Status.PASS, "Google login process completed successfully");
 
             } else {
-                System.out.println ( "Login with Google Button Not Found" );
+                test.log(Status.FAIL, "Login with Google Button Not Found");
+                throw new RuntimeException("Login with Google Button Not Found");
             }
 
         } catch (Exception e) {
-            System.out.println ( "Error While Login: " + e.getMessage () );
+            test.log(Status.FAIL, "Error during Google login: " + e.getMessage());
+            throw new RuntimeException("Google login failed: " + e.getMessage(), e);
         }
-
     }
 }

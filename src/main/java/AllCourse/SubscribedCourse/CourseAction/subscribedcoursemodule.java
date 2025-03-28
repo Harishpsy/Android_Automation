@@ -24,13 +24,6 @@ public class subscribedcoursemodule extends BaseActions {
 
     public subscribedcoursemodule(AndroidDriver driver){
         super(driver);
-        ArticleModule = new Article(driver);
-        VideoModule = new Video ( driver );
-        QuizModule = new Quiz ( driver );
-        EbookModule = new Ebook ( driver );
-        FreeModule = new Free ( driver );
-        DetailsModule = new Details ( driver );
-        PathModule = new Path ( driver );
     }
 
     public void performingSubscribedCourseAction() throws InterruptedException {
@@ -42,25 +35,6 @@ public class subscribedcoursemodule extends BaseActions {
         share ();
         threedots ();
         reportAction();
-        tabsActions();
-        navigateBack ();
-    }
-
-    protected  void tabsActions() throws InterruptedException {
-        Thread.sleep ( 3000 );
-        PathModule.performPathAction();
-        Thread.sleep ( 3000 );
-        ArticleModule.performArticleActions();
-        Thread.sleep ( 3000 );
-        VideoModule.performingVideoAction();
-        Thread.sleep ( 3000 );
-        QuizModule.performQuizActions();
-        Thread.sleep ( 3000 );
-        EbookModule.performEbookActions ();
-        Thread.sleep ( 3000 );
-        FreeModule.performFreeActions ();
-        Thread.sleep ( 3000 );
-        DetailsModule.performDetailsActions ();
     }
 
     protected void clickingParticularCourse(){
