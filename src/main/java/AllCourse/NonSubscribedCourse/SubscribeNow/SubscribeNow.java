@@ -3,6 +3,8 @@ package AllCourse.NonSubscribedCourse.SubscribeNow;
 import Setup.BaseActions;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
@@ -71,18 +73,22 @@ public class SubscribeNow extends BaseActions {
     }
 
     private void clickRazorpayBackButton() {
+        new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
         clickElement ( By.xpath ( "//android.widget.Button[@text=\"Go back\"]" ) );
     }
 
     private void clickContinueButton() {
+        new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
         clickElement ( By.xpath ( "//android.widget.Button[@text=\"Continue to payment\"]" ) );
     }
 
     private void clickYesButton() {
+        new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
         clickElement ( By.xpath ( "//android.widget.Button[@text=\"Yes, exit\"]" ) );
     }
 
     private void clickingDismissButton() {
+        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         clickElement ( By.xpath ( "//android.widget.Button[@resource-id=\"com.affairscloud:id/btn_continue\"]" ) );
     }
 

@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="D:/Android Mobile Automation/Android 2025/Android_Automation/src/main/java/Setup/Base.java">
-        <classes/>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Android Automation Suite" verbose="1" parallel="tests" thread-count="1">
+
+    <!-- Primary Test Configuration -->
+        <test name="Android Test Execution">
+            <classes>
+                <class name="Tests.TestCases"/>
+            </classes>
+        </test>
+
+<!--
+     Optional: Parallel Execution
+     Uncomment to enable parallel test execution
+    <test name="Parallel Tests" parallel="methods" thread-count="3">
+        <packages>
+            <package name="org.affairscloud.Tests"/>
+        </packages>
     </test>
+-->
+
+    <!-- Test Listeners -->
+    <listeners>
+        <listener class-name="org.affairscloud.Utilities.TestListener"/>
+    </listeners>
+
 </suite>

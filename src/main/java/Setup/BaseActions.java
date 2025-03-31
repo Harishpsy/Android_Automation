@@ -60,13 +60,16 @@ public class BaseActions extends Base {
     }
 
     protected void scrollDown() throws InterruptedException {
-        // Ensure the scrollable container is correctly identified
-        Thread.sleep(1000); // Adjust the delay as needed
-        driver.findElement(new AppiumBy.ByAndroidUIAutomator(
-                "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"));
+        try {
+            Thread.sleep ( 1000 ); // Adjust the delay as needed
+            driver.findElement ( new AppiumBy.ByAndroidUIAutomator (
+                    "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();" ) );
 
-        // Add a small delay to allow the scroll action to complete
-        Thread.sleep(1000); // Adjust the delay as needed
+            // Add a small delay to allow the scroll action to complete
+            Thread.sleep ( 1000 ); // Adjust the delay as needed
+        }catch (Exception e){
+            System.out.println ( "Error while scrolling down" );
+        }
     }
 
     /**

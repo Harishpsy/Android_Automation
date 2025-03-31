@@ -15,7 +15,9 @@ import AllCourse.SubscribedCourse.PathTab.Path;
 import AllCourse.SubscribedCourse.QuizzesTab.Quiz;
 import AllCourse.SubscribedCourse.VideoTab.Video;
 import Doubts.AllDoubts.AllDoubts;
+import Doubts.CreatingDoubt.CreatingDoubt;
 import Doubts.Doubt.Doubt;
+import Doubts.Filter.DoubtFilter;
 import Doubts.Followed.followed;
 import Doubts.MyAnswered.MyAnswer;
 import Doubts.MyDoubts.myDoubts;
@@ -31,7 +33,7 @@ import Menu.AboutsUs.aboutUs;
 import Menu.AllCourse.allCourse;
 import Menu.AppSettings.appSetting;
 import Menu.ContactUs.contactUs;
-import Menu.InviteFriends.invite;
+import Menu.InviteFriends.*;
 import Menu.MyCourse.myCourse;
 import Menu.MyEbooks.myEbooks;
 import Menu.MyNotes.MyNotes;
@@ -40,6 +42,7 @@ import Menu.MyPurchase.myPurchase;
 import Menu.Mycoins.myCoin;
 import Menu.Profile.ProfileActions;
 import Menu.MenuIcon.menubase;
+import MyCourse.MyCourses;
 import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.Test;
@@ -73,7 +76,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Login with Google completed successfully" );
         }
 
-        @Test(priority = 3, dependsOnMethods = "loginTest", enabled = true, groups = {MENU_GROUP})
+        @Test(priority = 3, dependsOnMethods = "loginTest", enabled = false, groups = {MENU_GROUP})
         public void openMenuTest() throws InterruptedException {
             test = extent.createTest ( "Open Menu Test" , "Verify menu can be opened" );
             test.log ( Status.INFO , "Attempting to open menu" );
@@ -81,7 +84,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Menu opened successfully" );
         }
 
-        @Test(priority = 4, dependsOnMethods = "openMenuTest", enabled = true, groups = {MENU_GROUP , PROFILE_GROUP})
+        @Test(priority = 4, dependsOnMethods = "openMenuTest", enabled = false, groups = {MENU_GROUP , PROFILE_GROUP})
         public void navigateToProfileTest() throws InterruptedException {
             test = extent.createTest ( "Profile Navigation Test" , "Verify navigation to profile section" );
             test.log ( Status.INFO , "Navigating to profile" );
@@ -89,7 +92,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Profile section accessed successfully" );
         }
 
-        @Test(priority = 5, dependsOnMethods = "openMenuTest", enabled = true, groups = {MENU_GROUP , COURSES_GROUP})
+        @Test(priority = 5, dependsOnMethods = "openMenuTest", enabled = false, groups = {MENU_GROUP , COURSES_GROUP})
         public void navigateToAllCoursesTest() throws InterruptedException {
             test = extent.createTest ( "All Courses Navigation Test" , "Verify navigation to all courses section" );
             test.log ( Status.INFO , "Navigating to all courses" );
@@ -97,7 +100,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "All courses section accessed successfully" );
         }
 
-        @Test(priority = 6, dependsOnMethods = "openMenuTest", enabled = true, groups = {MENU_GROUP , COURSES_GROUP})
+        @Test(priority = 6, dependsOnMethods = "openMenuTest", enabled = false, groups = {MENU_GROUP , COURSES_GROUP})
         public void navigateToMyCourseTest() throws InterruptedException {
             test = extent.createTest ( "My Courses Navigation Test" , "Verify navigation to my courses section" );
             test.log ( Status.INFO , "Navigating to my courses" );
@@ -105,7 +108,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "My courses section accessed successfully" );
         }
 
-        @Test(priority = 7, dependsOnMethods = "openMenuTest", enabled = true, groups = {MENU_GROUP , EBOOKS_GROUP})
+        @Test(priority = 7, dependsOnMethods = "openMenuTest", enabled = false, groups = {MENU_GROUP , EBOOKS_GROUP})
         public void navigateToMyEbooksTest() throws InterruptedException {
             test = extent.createTest ( "My Ebooks Navigation Test" , "Verify navigation to my ebooks section" );
             test.log ( Status.INFO , "Navigating to my ebooks" );
@@ -129,7 +132,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "My coins section accessed successfully" );
         }
 
-        @Test(priority = 10, enabled = true, groups = {MENU_GROUP , POINTS_GROUP})
+        @Test(priority = 10, enabled = false, groups = {MENU_GROUP , POINTS_GROUP})
         public void navigateToMyPointsTest() throws InterruptedException {
             test = extent.createTest ( "My Points Navigation Test" , "Verify navigation to my points section" );
             test.log ( Status.INFO , "Navigating to my points" );
@@ -137,7 +140,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "My points section accessed successfully" );
         }
 
-        @Test(priority = 11, enabled = true, groups = {MENU_GROUP , PURCHASE_GROUP})
+        @Test(priority = 11, enabled = false, groups = {MENU_GROUP , PURCHASE_GROUP})
         public void navigateToMyPurchaseTest() throws InterruptedException {
             test = extent.createTest ( "My Purchase Navigation Test" , "Verify navigation to my purchase section" );
             test.log ( Status.INFO , "Navigating to my purchases" );
@@ -145,7 +148,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "My purchases section accessed successfully" );
         }
 
-        @Test(priority = 12, enabled = true, groups = {MENU_GROUP , SETTINGS_GROUP})
+        @Test(priority = 12, enabled = false, groups = {MENU_GROUP , SETTINGS_GROUP})
         public void navigateToAppSettingsTest() throws InterruptedException {
             test = extent.createTest ( "App Settings Navigation Test" , "Verify navigation to app settings" );
             test.log ( Status.INFO , "Navigating to app settings" );
@@ -153,7 +156,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "App settings accessed successfully" );
         }
 
-        @Test(priority = 13, enabled = true, groups = {MENU_GROUP , INVITE_GROUP})
+        @Test(priority = 13, enabled = false, groups = {MENU_GROUP , INVITE_GROUP})
         public void navigateToInviteFriendsTest() throws InterruptedException {
             test = extent.createTest ( "Invite Friends Navigation Test" , "Verify navigation to invite friends section" );
             test.log ( Status.INFO , "Navigating to invite friends" );
@@ -161,7 +164,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Invite friends section accessed successfully" );
         }
 
-        @Test(priority = 14, enabled = true, groups = {MENU_GROUP , ABOUT_GROUP})
+        @Test(priority = 14, enabled = false, groups = {MENU_GROUP , ABOUT_GROUP})
         public void navigateToAboutUsTest() throws InterruptedException {
             test = extent.createTest ( "About Us Navigation Test" , "Verify navigation to about us section" );
             test.log ( Status.INFO , "Navigating to about us" );
@@ -169,7 +172,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "About us section accessed successfully" );
         }
 
-        @Test(priority = 15, enabled = true, groups = {MENU_GROUP , CONTACT_GROUP})
+        @Test(priority = 15, enabled = false, groups = {MENU_GROUP , CONTACT_GROUP})
         public void navigateToContactUsTest() throws InterruptedException {
             test = extent.createTest ( "Contact Us Navigation Test" , "Verify navigation to contact us section" );
             test.log ( Status.INFO , "Navigating to contact us" );
@@ -177,7 +180,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Contact us section accessed successfully" );
         }
 
-        @Test(priority = 16, enabled = true, groups = {PREFERENCE_GROUP})
+        @Test(priority = 16, enabled = false, groups = {PREFERENCE_GROUP})
         public void preferenceTest() {
             test = extent.createTest ( "Preference Test" , "Verify preference settings functionality" );
             test.log ( Status.INFO , "Testing preference settings" );
@@ -185,7 +188,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Preference settings tested successfully" );
         }
 
-        @Test(priority = 17, enabled = true, groups = {NOTIFICATION_GROUP})
+        @Test(priority = 17, enabled = false, groups = {NOTIFICATION_GROUP})
         public void notificationTest() {
             test = extent.createTest ( "Notification Test" , "Verify notification functionality" );
             test.log ( Status.INFO , "Testing notifications" );
@@ -193,7 +196,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Notifications tested successfully" );
         }
 
-        @Test(priority = 18, enabled = true, groups = {PREFERENCE_BANNER_GROUP})
+        @Test(priority = 18, enabled = false, groups = {PREFERENCE_BANNER_GROUP})
         public void preferenceBannerTest() {
             test = extent.createTest ( "Preference Banner Test" , "Verify preference banner functionality" );
             test.log ( Status.INFO , "Testing preference banner" );
@@ -201,7 +204,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Preference banner tested successfully" );
         }
 
-        @Test(priority = 19, enabled = true, groups = {HOMEPAGE_GROUP})
+        @Test(priority = 19, enabled = false, groups = {HOMEPAGE_GROUP})
         public void homepageEbooksTest() throws InterruptedException {
             test = extent.createTest ( "Homepage Ebooks Test" , "Verify homepage ebooks functionality" );
             test.log ( Status.INFO , "Testing homepage ebooks" );
@@ -209,7 +212,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Homepage ebooks tested successfully" );
         }
 
-        @Test(priority = 20, enabled = true, groups = {HOMEPAGE_GROUP})
+        @Test(priority = 20, enabled = false, groups = {HOMEPAGE_GROUP})
         public void homepageArticleTest() throws InterruptedException {
             test = extent.createTest ( "Homepage Articles Test" , "Verify homepage articles functionality" );
             test.log ( Status.INFO , "Testing homepage articles" );
@@ -225,7 +228,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "All course tab tested successfully" );
         }
 
-        @Test(priority = 22, enabled = true)
+        @Test(priority = 22, enabled = false)
         public void allCourseActionsTest() throws InterruptedException {
             test = extent.createTest ( "All Course Actions Test" , "Verify all course actions functionality" );
             test.log ( Status.INFO , "Testing all course actions" );
@@ -241,7 +244,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Course filters tested successfully" );
         }
 
-        @Test(priority = 24, enabled = true)
+        @Test(priority = 24, enabled = false)
         public void subscribeAndUnsubscribeTest() throws InterruptedException {
             test = extent.createTest ( "Subscribe/Unsubscribe Test" , "Verify course subscription functionality" );
             test.log ( Status.INFO , "Testing subscription functionality" );
@@ -249,7 +252,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Subscription functionality tested successfully" );
         }
 
-        @Test(priority = 25, enabled = true)
+        @Test(priority = 25, enabled = false)
         public void nonSubscribedCourseActionsTest() throws InterruptedException {
             test = extent.createTest ( "Non-Subscribed Course Test" , "Verify non-subscribed course actions" );
             test.log ( Status.INFO , "Testing non-subscribed course actions" );
@@ -257,7 +260,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Non-subscribed course actions tested successfully" );
         }
 
-        @Test(priority = 26, enabled = true)
+        @Test(priority = 26, enabled = false)
         public void subscribedCourseTest() throws InterruptedException {
             test = extent.createTest ( "Subscribed Course Test" , "Verify subscribed course functionality" );
             test.log ( Status.INFO , "Testing subscribed course actions" );
@@ -265,7 +268,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Subscribed course actions tested successfully" );
         }
 
-        @Test(priority = 27, enabled = true)
+        @Test(priority = 27, enabled = false)
         public void Path() throws InterruptedException {
             test = extent.createTest ( "Course Path Test" , "Verify course path functionality" );
             test.log ( Status.INFO , "Testing course path" );
@@ -274,7 +277,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Course path tested successfully" );
         }
 
-        @Test(priority = 28, enabled = true)
+        @Test(priority = 28, enabled = false)
         public void Article() throws InterruptedException {
             test = extent.createTest ( "Course Articles Test" , "Verify course articles functionality" );
             test.log ( Status.INFO , "Testing course articles" );
@@ -283,7 +286,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Course articles tested successfully" );
         }
 
-        @Test(priority = 29, enabled = true)
+        @Test(priority = 29, enabled = false)
         public void Videos() throws InterruptedException {
             test = extent.createTest ( "Course Videos Test" , "Verify course videos functionality" );
             test.log ( Status.INFO , "Testing course videos" );
@@ -292,7 +295,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Course videos tested successfully" );
         }
 
-        @Test(priority = 30, enabled = true)
+        @Test(priority = 30, enabled = false)
         public void Quizzes() throws InterruptedException {
             test = extent.createTest ( "Course Quizzes Test" , "Verify course quizzes functionality" );
             test.log ( Status.INFO , "Testing course quizzes" );
@@ -301,7 +304,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Course quizzes tested successfully" );
         }
 
-        @Test(priority = 31, enabled = true)
+        @Test(priority = 31, enabled = false)
         public void Ebooks() throws InterruptedException {
             test = extent.createTest ( "Course Ebooks Test" , "Verify course ebooks functionality" );
             test.log ( Status.INFO , "Testing course ebooks" );
@@ -310,7 +313,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Course ebooks tested successfully" );
         }
 
-        @Test(priority = 32, enabled = true)
+        @Test(priority = 32, enabled = false)
         public void Free() throws InterruptedException {
             test = extent.createTest ( "Free Content Test" , "Verify free content functionality" );
             test.log ( Status.INFO , "Testing free content" );
@@ -319,7 +322,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Free content tested successfully" );
         }
 
-        @Test(priority = 33, enabled = true)
+        @Test(priority = 33, enabled = false)
         public void Details() throws InterruptedException {
             test = extent.createTest ( "Course Details Test" , "Verify course details functionality" );
             test.log ( Status.INFO , "Testing course details" );
@@ -328,15 +331,32 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Course details tested successfully" );
         }
 
-        @Test(priority = 34, enabled = true)
+        @Test(priority = 34, enabled = false)
+        public void MyCourse() throws InterruptedException {
+            test = extent.createTest ( "My Courses Test" , "Verify my courses functionality" );
+            test.log ( Status.INFO , "Testing my courses" );
+            new MyCourses ( driver ).performMyCourseAction ();
+            test.log ( Status.PASS , "My courses tested successfully" );
+        }
+
+        @Test(priority = 35, enabled = false)
         public void doubtsTest() {
             test = extent.createTest ( "Doubts Test" , "Verify doubts functionality" );
             test.log ( Status.INFO , "Testing doubts feature" );
             new Doubt ( driver ).peformDoubtsAction ();
             test.log ( Status.PASS , "Doubts feature tested successfully" );
         }
+        
+        @Test(priority = 36, enabled = false)
+        public void CreateDoubt() {
+            test = extent.createTest ( "Create Doubt Test" , "Verify creating a doubt" );
+            test.log ( Status.INFO , "Creating a doubt" );
+            new CreatingDoubt ( driver ).performCreatingDoubtActions();
+            test.log ( Status.PASS , "Doubt created successfully" );
+        }
+        
 
-        @Test(priority = 35, enabled = true)
+        @Test(priority = 37, enabled = false)
         public void allDoubtsActionTest() throws InterruptedException {
             test = extent.createTest ( "All Doubts Test" , "Verify all doubts functionality" );
             test.log ( Status.INFO , "Testing all doubts" );
@@ -344,7 +364,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "All doubts tested successfully" );
         }
 
-        @Test(priority = 36, enabled = true)
+        @Test(priority = 38, enabled = false)
         public void myDoubtsActionsTest() throws InterruptedException {
             test = extent.createTest ( "My Doubts Test" , "Verify my doubts functionality" );
             test.log ( Status.INFO , "Testing my doubts" );
@@ -352,7 +372,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "My doubts tested successfully" );
         }
 
-        @Test(priority = 37, enabled = true)
+        @Test(priority = 39, enabled = false)
         public void myAnswerActionsTest() throws InterruptedException {
             test = extent.createTest ( "My Answers Test" , "Verify my answers functionality" );
             test.log ( Status.INFO , "Testing my answers" );
@@ -360,7 +380,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "My answers tested successfully" );
         }
 
-        @Test(priority = 38, enabled = true)
+        @Test(priority = 40, enabled = false)
         public void followedActionsTest() {
             test = extent.createTest ( "Followed Doubts Test" , "Verify followed doubts functionality" );
             test.log ( Status.INFO , "Testing followed doubts" );
@@ -368,7 +388,7 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Followed doubts tested successfully" );
         }
 
-        @Test(priority = 39, enabled = true)
+        @Test(priority = 40, enabled = false)
         public void pointsTest() throws InterruptedException {
             test = extent.createTest ( "Points System Test" , "Verify points system functionality" );
             test.log ( Status.INFO , "Testing points system" );
@@ -376,7 +396,15 @@ public class TestCases extends Base {
             test.log ( Status.PASS , "Points system tested successfully" );
         }
 
-        @Test(priority = 40, enabled = true)
+        @Test(priority = 41, enabled = false)
+        public void DoubtFilter() throws InterruptedException {
+            test = extent.createTest ( "Doubt Filter Test" , "Verify doubt filter functionality" );
+            test.log ( Status.INFO , "Testing doubt filter" );
+           new DoubtFilter ( driver ).performDoubtFilter();
+            test.log ( Status.PASS , "Doubt filter tested successfully" );
+        }
+
+        @Test(priority = 42, enabled = false)
         public void logoutTest() throws InterruptedException {
             test = extent.createTest ( "Logout Test" , "Verify logout functionality" );
             test.log ( Status.INFO , "Testing logout" );

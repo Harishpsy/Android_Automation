@@ -21,11 +21,13 @@ public class MyAnswer extends BaseActions {
 
     public void performMyAnswerActions() throws InterruptedException {
         clickingMyAnswer();
-        driver.hideKeyboard ();
         myAnswerAction();
+        Thread.sleep ( 2000 );
+        driver.hideKeyboard ();
+        System.out.println ("Hide keyboard");
         gettingUserNameInAnswer();
         scrollToBeginning ();
-
+        navigateBack ();
     }
 
     private void clickingMyAnswer() {
@@ -42,7 +44,7 @@ public class MyAnswer extends BaseActions {
 //
 //        for (WebElement userNameElement : userNameElements) {
 //            String AllDoubtsUserName = userNameElement.getText();
-//            System.out.println ("My Doubts User Name: " + AllDoubtsUserName);
+//            System.out.println ("My Doubts UserName: " + AllDoubtsUserName);
 //
 //        }
 //    }
@@ -79,7 +81,7 @@ public class MyAnswer extends BaseActions {
         }
 
         // Print the count of unique courses
-        System.out.println("Total unique Ebooks Names: " + uniqueCourseCount);
+        System.out.println("Total unique User Names: " + uniqueCourseCount);
         return uniqueCourseCount;
     }
 

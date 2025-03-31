@@ -1,7 +1,6 @@
 package AllCourse.AllCourseTab;
 
 import Setup.BaseActions;
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
