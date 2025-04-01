@@ -36,7 +36,7 @@ public class Article extends BaseActions {
         storeArticleNameAfterClick();
         verifyArticleNames();
         scrollArticleList();
-        footerCommonActions ();
+//        footerCommonActions ();
         threeDotsActions ();
         navigateBack ();
         driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds (30) );

@@ -40,7 +40,6 @@ public class DoubtFilter extends BaseActions {
             clickCancelInFilter();
             clickFilter();
             clickClose();
-            navigateBack();
         } finally {
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30)); // Restore original
         }

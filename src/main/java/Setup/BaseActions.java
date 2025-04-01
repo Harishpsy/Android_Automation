@@ -299,7 +299,7 @@ public class BaseActions extends Base {
             // Check if the "Reply" button is displayed
             if (clickingReply.isDisplayed ()) {
                 // Click the "Reply" button using its XPath
-                Thread.sleep ( 2000 );
+                Thread.sleep ( 5000 );
                 clickElement ( xpath ( "(//android.widget.TextView[@resource-id=\"com.affairscloud:id/tv_replay\"])[1]" ) );
 
                 // Enter text into the reply input field using its class name
@@ -307,9 +307,11 @@ public class BaseActions extends Base {
                 enteringText ( className ( "android.widget.EditText" ) );
 
                 // Click the "Send" button using its ID to post the reply
+                Thread.sleep ( 3000 );
                 clickElement ( id ( "com.affairscloud:id/iv_send" ) );
 
                 // Navigate back to the previous screen after replying
+                Thread.sleep ( 2000 );
                 navigateBack ();
             } else {
                 // Log a message if the "Reply" button is not present
@@ -367,13 +369,5 @@ public class BaseActions extends Base {
             System.out.println ( "Error: Menu button is not displayed on the screen or already clicked." );
         }
     }
-
-
-
-
-
-
-
-
 
 }

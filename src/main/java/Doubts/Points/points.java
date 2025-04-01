@@ -36,7 +36,6 @@ public class points extends BaseActions {
         MyPointsModule.clickViewEarnedPoints();
         scrollList ();
         navigateBackInPoints();
-
     }
 
     private void clickingPoints(){

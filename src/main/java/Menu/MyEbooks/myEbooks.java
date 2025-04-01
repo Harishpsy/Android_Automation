@@ -233,6 +233,7 @@ public class myEbooks extends BaseActions {
         clickElement ( id ( "com.affairscloud:id/ivMore" ) );
 
         // Click the "Share" button using ID: com.affairscloud:id/title
+        WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
         clickElement ( id ( "com.affairscloud:id/title" ) );
 
         // Click the "Cancel" button using ID: android:id/button2

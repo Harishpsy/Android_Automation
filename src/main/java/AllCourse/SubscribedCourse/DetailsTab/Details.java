@@ -58,6 +58,7 @@ public class Details extends BaseActions {
             }
         } catch (NoSuchElementException | IllegalStateException e) {
             ebook.scrollHorizontalRight ( 1 ); // Scroll right once
+            System.out.println ("Successfully Scrolled Right");
         }
     }
 

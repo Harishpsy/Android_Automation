@@ -4,17 +4,18 @@ import Setup.BaseActions;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 
-public class myPurchase extends BaseActions {
+import java.util.concurrent.TimeUnit;
 
+public class myPurchase extends BaseActions {
 
     public myPurchase(AndroidDriver driver){
         super(driver);
+        driver.manage ().timeouts ().implicitlyWait ( 10, TimeUnit.MILLISECONDS );
     }
 
     public void navigateToMyPurchase() throws InterruptedException {
         clickMenu ();
         performingMyPurchaseActions();
-
     }
 
     protected void performingMyPurchaseActions() throws InterruptedException {
@@ -39,7 +40,7 @@ public class myPurchase extends BaseActions {
 
     private void clickNotification(){
         clickElement ( By.id ( "com.affairscloud:id/iv_notification" ) );
-        System.out.println ("Successfully Clicked The Notificatio Icon ");
+        System.out.println ("Successfully Clicked The Notification Icon ");
     }
 
     private void clickPromotion() {

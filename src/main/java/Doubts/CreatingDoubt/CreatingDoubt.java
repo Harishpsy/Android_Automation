@@ -31,7 +31,7 @@ public class CreatingDoubt extends BaseActions {
         super(driver);
     }
 
-    public void performCreatingDoubtActions() {
+    public void performCreatingDoubtActions() throws InterruptedException {
         createDoubt();
         clickCloseIcon();
         createDoubt();
@@ -47,7 +47,9 @@ public class CreatingDoubt extends BaseActions {
         enterQuestionText();
         handleImageUpload();
         clickNextButton();
+        Thread.sleep ( 2000 );
         navigateBack();
+        Thread.sleep ( 2000 );
         navigateBack();
         clickRules();
         navigateBack();
