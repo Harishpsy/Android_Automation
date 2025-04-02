@@ -1,6 +1,7 @@
 package AllCourse.Filter;
 
 import Setup.BaseActions;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.By.*;
 
@@ -22,6 +24,9 @@ public class filter extends BaseActions {
     private static final By FEATURED_COURSE = xpath("//android.widget.TextView[@resource-id=\"com.affairscloud:id/filter_item_tv\" and @text=\"Featured Course\"]");
     private static final By SUBJECTS = xpath("//android.widget.TextView[@resource-id=\"com.affairscloud:id/filter_item_tv\" and @text=\"Subjects\"]");
     private static final By EXAMS = xpath("(//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/cl_parent\"])[5]");
+    private static final By TAGS = xpath("//android.widget.TextView[@resource-id=\"com.affairscloud:id/filter_item_tv\" and @text=\"Tags\"]");
+    private static final By DATES = xpath("//android.widget.TextView[@resource-id=\"com.affairscloud:id/filter_item_tv\" and @text=\"Date\"]");
+
 
     public filter(AndroidDriver driver) {
         super ( driver );
@@ -120,6 +125,8 @@ public class filter extends BaseActions {
                 element.click();
                 System.out.println("Successfully clicked the " + elementName);
                 return true;
+            }else{
+                System.out.println ("Error:" + elementName + " not present or not clickable");
             }
         } catch (Exception e) {
             System.out.println(elementName + " not present or not clickable");
@@ -219,4 +226,109 @@ public class filter extends BaseActions {
         clickIfPresent(xpath("//android.widget.CheckBox[@resource-id=\"com.affairscloud:id/cb_filter\" and @text=\"Insurance\"]"),
                 "Insurance checkbox");
     }
+
+
+    /*==================MY COURSE FILTER ACTIONS =============*/
+    public void performMyCourseFilterAction() throws InterruptedException {
+        driver.manage ().timeouts ().implicitlyWait ( 30, TimeUnit.SECONDS );
+        clickiFilterIcon();
+        clickTags();
+        clickDaily();
+        clickingApplyButton();
+        clickiFilterIcon();
+        clickDaily();
+        clickSearch();
+        enteringText();
+        clickSearchedTag();
+        clickingApplyButton ();
+        clickiFilterIcon();
+        clickingResetButton ();
+        clickiFilterIcon();
+        clickDates();
+        clickingStartDate();
+        clickingEndDate();
+        clickingApplyButton ();
+        clickiFilterIcon();
+        clickingResetButton ();
+    }
+
+    protected void clickiFilterIcon() {
+        clickIfPresent ( FILTER_BUTTON, "Filter Button");
+    }
+
+    protected void clickTags() {
+        clickIfPresent ( TAGS, "Tags");
+    }
+
+    protected void clickDaily() throws InterruptedException {
+        clickElement ( xpath ( "//android.widget.CheckBox[@resource-id=\"com.affairscloud:id/cb_filter\" and @text=\"Daily\"]"));
+        System.out.println ("Successfully clicked the Daily");
+    }
+
+    private void clickSearch() {
+        clickElement ( xpath ( "//android.widget.EditText[@resource-id=\"com.affairscloud:id/et_search\"]" ));
+    }
+
+    private void enteringText(){
+
+        clickElement ( xpath ( "//android.widget.EditText[@resource-id=\"com.affairscloud:id/et_search\"]" ) );
+
+        WebElement enterText = driver.findElement (xpath ( "//android.widget.EditText[@resource-id=\"com.affairscloud:id/et_search\"]" ));
+        enterText.sendKeys ( "June" );
+
+    }
+
+    private void clickSearchedTag() {
+        clickElement ( xpath ( "//android.view.ViewGroup[@resource-id=\"com.affairscloud:id/cl_multi\"]" ) );
+    }
+
+    protected void clickDates() {
+        clickIfPresent ( DATES, "Dates" );
+    }
+
+    protected void clickingStartDate() {
+        clickElement ( xpath ( "//android.widget.TextView[@resource-id=\"com.affairscloud:id/frm_date\" and @text=\"Select From Date\"]" ) );
+
+        WebElement clickStartDate = driver.findElement ( new AppiumBy.ByAndroidUIAutomator ("new UiSelector().text(\"1\")") );
+        clickOkButton();
+    }
+
+    protected void clickOkButton() {
+        clickElement ( xpath ( "//android.widget.Button[@resource-id=\"android:id/button1\"]" ) );
+    }
+
+    protected  void clickingEndDate() {
+        clickElement ( xpath ( "//android.widget.TextView[@resource-id=\"com.affairscloud:id/frm_date\" and @text=\"Select To Date\"]" ) );
+
+        WebElement clickStartDate = driver.findElement ( new AppiumBy.ByAndroidUIAutomator ("new UiSelector().text(\"2\")") );
+
+        clickOkButton();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

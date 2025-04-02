@@ -50,15 +50,16 @@ import org.testng.annotations.Test;
 public class TestCases extends Base {
 
     // ================= MASTER CONTROL =================
-    private static final boolean RUN_ALL_TESTS = true; // Set to false to disable all tests
+    private static final boolean RUN_ALL_TESTS = false; // Set to false to disable all tests
+    private static final boolean RUN_ALL_TESTS_FALSE = true;
 
     // ================= GROUP CONTROLS =================
-    private static final boolean RUN_LOGIN_TESTS = RUN_ALL_TESTS;          // Login Tests
+    private static final boolean RUN_LOGIN_TESTS = RUN_ALL_TESTS_FALSE;          // Login Tests
     private static final boolean RUN_MENU_TESTS = RUN_ALL_TESTS;           // Menu Tests
     private static final boolean RUN_PROFILE_TESTS = RUN_ALL_TESTS;        // Profile Tests
     private static final boolean RUN_COURSES_TESTS = RUN_ALL_TESTS;        // Courses Tests
     private static final boolean RUN_EBOOKS_TESTS =RUN_ALL_TESTS;           // eBooks Tests
-    private static final boolean RUN_NOTES_TESTS = false;                  // Notes Tests
+    private static final boolean RUN_NOTES_TESTS = RUN_ALL_TESTS;                  // Notes Tests
     private static final boolean RUN_COINS_TESTS = false;                  // Coins Tests
     private static final boolean RUN_POINTS_TESTS = RUN_ALL_TESTS;         // Points Tests
     private static final boolean RUN_PURCHASE_TESTS = RUN_ALL_TESTS;       // Purchase Tests
@@ -72,6 +73,8 @@ public class TestCases extends Base {
     private static final boolean RUN_HOMEPAGE_TESTS = RUN_ALL_TESTS;       // Homepage Tests
     private static final boolean RUN_DOUBTS_TESTS = RUN_ALL_TESTS;         // Doubts Tests
     private static final boolean RUN_LOGOUT_TESTS = RUN_ALL_TESTS;         // Logout Tests
+    private static final boolean RUN_MYCOURSE_TESTS = RUN_ALL_TESTS_FALSE;         // Logout Tests
+
 
     // ================= TEST GROUPS =================
     private static final String LOGIN_GROUP = "login";                      // Login Group
@@ -358,7 +361,7 @@ public class TestCases extends Base {
         test.log(Status.PASS, "Course details tested successfully");
     }
 
-    @Test(priority = 34, groups = {COURSES_GROUP}, enabled = RUN_COURSES_TESTS)
+    @Test(priority = 34, groups = {COURSES_GROUP}, enabled = RUN_MYCOURSE_TESTS)
     public void MyCourse() throws InterruptedException {
         test = extent.createTest("My Courses Test", "Verify my courses functionality");
         test.log(Status.INFO, "Testing my courses");

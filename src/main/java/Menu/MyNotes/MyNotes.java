@@ -27,7 +27,7 @@ public class MyNotes extends BaseActions {
     public void navigateToMyNotes() throws InterruptedException {
 
         /* Calling the clickMenu Method */
-        clickMenu ();
+//        clickMenu ();
         System.out.println ( "Successfully Clicked The Menu Button" );
 
         /* Clicking The My Notes Button In The Menu */

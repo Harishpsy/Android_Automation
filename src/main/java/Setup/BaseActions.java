@@ -26,7 +26,11 @@ public class BaseActions extends Base {
 
         Base.driver = driver;
         driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ));
+
+
     }
+
+
 
     // Common Click Action From Here we are calling Click action to all
     protected void clickElement(By locator) {

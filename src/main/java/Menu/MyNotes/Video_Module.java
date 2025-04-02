@@ -27,7 +27,6 @@ public class Video_Module extends BaseActions {
         } catch (NoSuchElementException e) {
             System.out.println ( "No Video is present in the list page" );
         }
-
     }
 
     public void videoActions() throws InterruptedException {
@@ -73,6 +72,7 @@ public class Video_Module extends BaseActions {
     }
 
     public void navigateBackToApp() {
+
         /* Open Recent Apps */
         driver.pressKey ( new KeyEvent ( AndroidKey.APP_SWITCH ) );
         System.out.println ( "Opened Recent Apps" );
