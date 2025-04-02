@@ -42,9 +42,8 @@ import Menu.MyPurchase.myPurchase;
 import Menu.Mycoins.myCoin;
 import Menu.Profile.ProfileActions;
 import Menu.MenuIcon.menubase;
-import MyCourse.MyCourses;
+import MyCourse.Course.MyCourses;
 import com.aventstack.extentreports.Status;
-import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.Test;
 
 public class TestCases extends Base {

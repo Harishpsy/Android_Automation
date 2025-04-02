@@ -3,6 +3,9 @@ package Homepage.Notification;
 import Setup.BaseActions;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class notification extends BaseActions {
 
@@ -24,6 +27,7 @@ public class notification extends BaseActions {
     }
 
     private void clickPromotion() {
+        new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
         clickElement ( By.xpath ( "//*[@resource-id=\"com.affairscloud:id/tabTitle\" and @text=\"PROMOTION\"]" ) );
         System.out.println ("Successfully Clicked The Promotion");
     }
