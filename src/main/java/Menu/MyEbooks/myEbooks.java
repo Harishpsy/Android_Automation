@@ -181,8 +181,8 @@ public class myEbooks extends BaseActions {
         /*Three-Dot Actions Method*/
         threeDotsActions ();
 
-        System.out.println ( "Performing footer common actions..." );
-        footerCommonActions (); /* Calling The Footer Common Method */
+/*        System.out.println ( "Performing footer common actions..." );
+        footerCommonActions (); *//* Calling The Footer Common Method */
 
         System.out.println ( "Clicking three dots..." );
         threedots (); /* Calling The Threedots Method*/
@@ -243,7 +243,7 @@ public class myEbooks extends BaseActions {
         clickElement ( xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/pdfView\"]" ) );
 
         // Click the back arrow using ID: com.affairscloud:id/ivArrowBack
-        Thread.sleep ( 3000 );
+        Thread.sleep ( 2000 );
 
         try {
             WebElement backArrow = driver.findElement ( id ( "com.affairscloud:id/ivArrowBack" ) );
@@ -254,6 +254,7 @@ public class myEbooks extends BaseActions {
             }
         }catch (NoSuchElementException e ){
 
+            driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
             WebElement clickScreen = driver.findElement ( xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/pdfView\"]" ) );
             clickScreen.click ();
 

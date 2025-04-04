@@ -64,7 +64,7 @@ public class Free extends BaseActions {
             if(article.isDisplayed ()){
                 clickElement ( By.xpath ( "//*[@resource-id=\"com.affairscloud:id/rvFreeContentInPaid\"]/android.widget.RelativeLayout/child::*//android.widget.ImageView[@resource-id=\"com.affairscloud:id/img_article\"][1]" ) );
                 scrollList ();
-                footerCommonActions ();
+//                footerCommonActions ();
                 threeDotsActions ();
                 navigateBack ();
             }

@@ -68,19 +68,11 @@ public class Search extends BaseActions {
     }
 
     private void clickingSearchInTheKeyBoard() throws InterruptedException {
-
         driver.isKeyboardShown ();
 
         Thread.sleep ( 2000 );
         driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
         System.out.println ("Successfully Clicked The Search Button In The Keyboard");
     }
-
-
-
-
-
-
-
 
 }

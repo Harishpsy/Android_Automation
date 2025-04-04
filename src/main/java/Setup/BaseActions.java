@@ -30,8 +30,6 @@ public class BaseActions extends Base {
 
     }
 
-
-
     // Common Click Action From Here we are calling Click action to all
     protected void clickElement(By locator) {
         WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
@@ -261,7 +259,7 @@ public class BaseActions extends Base {
     }
 
     public void footerCommonActions() {
-        // Perform the "Like" action
+/*        // Perform the "Like" action
         performLikeAction (); // This method handles liking the content (e.g., a post or ebook)
         // Perform the "Comment" action
         performCommentAction (); // This method allows the user to add a comment to the content
@@ -274,7 +272,7 @@ public class BaseActions extends Base {
         navigateBack (); // This method navigates the user back to the previous screen or page
 
         // Call the share function
-        share (); // This method handles sharing the content with others (e.g., via social media or messaging apps)
+        share (); // This method handles sharing the content with others (e.g., via social media or messaging apps)*/
     }
 
     private void performLikeAction() {
