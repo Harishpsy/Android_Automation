@@ -1,6 +1,8 @@
 package Menu.MenuIcon;
 
 import Setup.Base;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -14,15 +16,17 @@ public class menubase extends Base {
 
     public void clickMenu() throws InterruptedException {
         Thread.sleep ( 7000 ); // Adding a delay for stability, consider using WebDriverWait for better synchronization
-        System.out.println ( "Attempting to open the Menu..." );
-
         WebElement menuButton = driver.findElement ( By.xpath ( "//android.widget.ImageButton[@resource-id='com.affairscloud:id/menu_btn']" ) );
         System.out.println ( "Attempting to open the Menu..." );
 
         if (menuButton.isDisplayed ()) {
             menuButton.click ();
             System.out.println ( "Successfully clicked the Menu button." );
+            test.log( Status.PASS, "Successfully clicked the Menu button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the Menu button")).build());
         } else {
+            test.log( Status.FAIL, "Error while clicking the Menu button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Error while clicking the Menu button")).build());
             System.out.println ( "Error: Menu button is not displayed on the screen or already clicked." );
         }
     }

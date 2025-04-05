@@ -2,6 +2,8 @@ package Menu.Profile;
 
 import Setup.Base;
 import Setup.BaseActions;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -25,13 +27,11 @@ public class ProfileActions extends BaseActions {
         Base.driver = driver;
     }
 
-
     public void performingProfile() throws InterruptedException {
-
         usernameedit ();
         userDetails();
-
     }
+
     @Test(enabled = true)
     public Object userDetails() throws InterruptedException {
         String userName = getElementText ( By.id ( "com.affairscloud:id/nav_user_first_name" ) );
@@ -53,10 +53,14 @@ public class ProfileActions extends BaseActions {
 
         //Cancel Button
         clickElement ( By.id ( "com.affairscloud:id/btn_cancel" ) );
+        test.log( Status.PASS, "Successfully Clicked the Cancel Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully Clicked the Cancel Button")).build());
         System.out.println ( "Successfully Clicked the Cancel Button" );
 
         wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         editProfile ();
+
+
         wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
 
         userprofiledetails ();
@@ -64,12 +68,18 @@ public class ProfileActions extends BaseActions {
 
         //Submit button
         clickElement ( By.id ( "com.affairscloud:id/btn_submit" ) );
+        test.log( Status.PASS, "Successfully Clicked the Submit Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully Clicked the Submit Button")).build());
         System.out.println ( "Successfully Clicked the Submit Button" );
 
         wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
         clickMenu ();
+        test.log( Status.PASS, "Successfully Clicked Menu",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully Clicked Menu")).build());
 
         editProfile ();
+        test.log( Status.PASS, "Successfully Clicked Edit Profile Again",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully Clicked Edit Profile Again")).build());
         System.out.println ( "---------------------------------------------------------" );
 
         wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
@@ -77,13 +87,16 @@ public class ProfileActions extends BaseActions {
 
         //Application Back Butoon
         clickElement ( By.id ( "com.affairscloud:id/btn_back" ) );
+        test.log( Status.PASS, "Successfully Clicked The Application Back Arrow",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully Clicked The Application Back Arrow")).build());
         System.out.println ( "Successfully Fully Clicked The Application Back Arrow" );
-
     }
 
     @Test(enabled = true)
     public void editProfile() throws InterruptedException {
         clickElement ( By.id ( "com.affairscloud:id/iv_edit" ) );
+        test.log( Status.PASS, "Successfully Clicked Edit Profile",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully Clicked Edit Profile")).build());
         System.out.println ( "Clicked on Edit Profile" );
     }
 
@@ -97,6 +110,9 @@ public class ProfileActions extends BaseActions {
         enterText ( By.xpath ( "//android.widget.AutoCompleteTextView[@resource-id=\"com.affairscloud:id/et_location\"]" ) , generateRandomPincode () );
 
         clickElement ( By.xpath ( "//android.widget.TextView[@resource-id=\"com.affairscloud:id/et_state\"]" ) );
+        test.log( Status.PASS, "Successfully Clicked State Field",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully Clicked State Field")).build());
+
         scrollToElement ( "Not Preparing for PSC" );
     }
 
@@ -132,12 +148,6 @@ public class ProfileActions extends BaseActions {
         return element.getText ();
     }
 
-    protected void clickElement(By locator) {
-        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 50 ) );
-        WebElement clickAction = wait.until ( ExpectedConditions.elementToBeClickable ( locator ) );
-        clickAction.click ();
-    }
-
     private void enterText(By locator , String text) {
         WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 50 ) );
         WebElement textfield = wait.until ( ExpectedConditions.elementToBeClickable ( locator ) );
@@ -152,6 +162,7 @@ public class ProfileActions extends BaseActions {
         try {
             WebElement scroll = driver.findElement ( new AppiumBy.ByAndroidUIAutomator ( "new UiScrollable(new UiSelector().scrollable(true))" + ".scrollIntoView(new UiSelector().textContains(\"" + text + "\"))" ) );
             scroll.click ();
+
         } catch (NoSuchElementException e) {
             System.out.println ( e.getMessage () + "Scroll is not available In the profile " );
         }
@@ -180,14 +191,18 @@ public class ProfileActions extends BaseActions {
     private void verifyUserDetails(Map<String, String> userDetailsAfter) {
         if (userDetailsBefore.equals ( userDetailsAfter )) {
             System.out.println ( "✅ User details match before and after submission." );
+            test.log( Status.PASS, "User details match before and after submission",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("User details match")).build());
         } else {
             System.out.println ( "❌ User details do NOT match! Differences:" );
+            test.log( Status.FAIL, "User details do NOT match",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("User details mismatch")).build());
             for (String key : userDetailsBefore.keySet ()) {
                 if (!userDetailsBefore.get ( key ).equals ( userDetailsAfter.get ( key ) )) {
                     System.out.println ( "🔹 " + key + " mismatch: Before [" + userDetailsBefore.get ( key ) + "], After [" + userDetailsAfter.get ( key ) + "]" );
+                    test.log( Status.INFO, key + " mismatch: Before [" + userDetailsBefore.get(key) + "], After [" + userDetailsAfter.get(key) + "]");
                 }
             }
         }
-
     }
 }

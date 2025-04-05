@@ -2,6 +2,8 @@ package Doubts.MyAnswered;
 
 import Doubts.AllDoubts.AllDoubts;
 import Setup.BaseActions;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -32,6 +34,8 @@ public class MyAnswer extends BaseActions {
 
     private void clickingMyAnswer() {
         clickElement ( By.xpath ( "//android.widget.LinearLayout[@content-desc=\"My Answered\"]" ) );
+        test.log( Status.PASS, "Successfully Clicked The My Answered Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The My Answered Button")).build());
     }
 
     private void myAnswerAction(){
@@ -84,16 +88,4 @@ public class MyAnswer extends BaseActions {
         System.out.println("Total unique User Names: " + uniqueCourseCount);
         return uniqueCourseCount;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

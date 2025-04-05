@@ -2,6 +2,8 @@ package Doubts.Followed;
 
 import Doubts.AllDoubts.AllDoubts;
 import Setup.BaseActions;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -30,6 +32,8 @@ public class followed extends BaseActions {
             WebElement noData = driver.findElement ( By.xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/rl_mypost\"]" ) );
 
             if (noData.isDisplayed ()) {
+                test.log( Status.PASS, "No Data In The Followed Page",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("No Data In The Followed Page")).build());
                 System.out.println ( "There Is No Data In The Followed Page" );
             }else {
                 scrollList ();
@@ -37,12 +41,15 @@ public class followed extends BaseActions {
             }
 
         }catch (NoSuchElementException e){
+            test.log( Status.FAIL, "Error In The Followed Page While performing Actions",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Error In The Followed Page")).build());
             System.out.println ("Error In The Followed Page While performing Actions");
         }
     }
 
     private void clickingFollowed() {
         clickElement ( By.xpath ( "//android.widget.LinearLayout[@content-desc=\"Followed\"]" ) );
+        test.log( Status.PASS, "Successfully Clicked The Followed Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Followed Button")).build());
     }
-
 }

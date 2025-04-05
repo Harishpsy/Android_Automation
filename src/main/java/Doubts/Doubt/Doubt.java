@@ -2,6 +2,8 @@ package Doubts.Doubt;
 
 import Doubts.CreatingDoubt.CreatingDoubt;
 import Setup.BaseActions;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 
 import static org.openqa.selenium.By.xpath;
@@ -22,6 +24,8 @@ public class Doubt extends BaseActions {
 
     private void clickingDoubtsButton() {
         clickElement ( xpath ( "//android.widget.FrameLayout[@content-desc=\"Doubts\"]" ) );
+        test.log( Status.PASS, "Successfully Clicked the Doubt Button In The Footer",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Doubt Button")).build());
         System.out.println ("Successfully Clicked The Doubt Button In The Footer");
     }
 

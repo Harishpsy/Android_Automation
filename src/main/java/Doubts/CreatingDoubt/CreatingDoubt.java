@@ -1,6 +1,8 @@
 package Doubts.CreatingDoubt;
 
 import Setup.BaseActions;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -29,6 +31,7 @@ public class CreatingDoubt extends BaseActions {
 
     public CreatingDoubt(AndroidDriver driver) {
         super(driver);
+        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
     }
 
     public void performCreatingDoubtActions() throws InterruptedException {
@@ -57,43 +60,61 @@ public class CreatingDoubt extends BaseActions {
 
     private void createDoubt() {
         clickElement(DOUBT_INPUT_FIELD);
+        test.log( Status.PASS, "",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("")).build());
     }
 
     private void clickCloseIcon() {
         clickElement(CLOSE_ICON);
+        test.log( Status.PASS, "",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("")).build());
     }
 
     private void clickSubject() {
         clickElement(SUBJECT_BUTTON);
+        test.log( Status.PASS, "",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("")).build());
     }
 
     private void clickExam() {
         clickElement(EXAM_BUTTON);
+        test.log( Status.PASS, "",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("")).build());
     }
 
     private void searchCourse() {
         clickElement(COURSE_SEARCH_FIELD);
         WebElement searchField = driver.findElement(COURSE_SEARCH_FIELD);
         searchField.sendKeys("Mock");
+        test.log( Status.PASS, "",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("")).build());
         driver.hideKeyboard();
     }
 
     private void selectCourse() {
         clickElement(COURSE_TITLE);
+        test.log( Status.PASS, "",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("")).build());
         System.out.println("Successfully clicked the searched course title");
     }
 
     public void clickCancel() {
         clickElement(CANCEL_BUTTON);
+        test.log( Status.PASS, "",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("")).build());
     }
 
     public void clickConfirm() {
         clickElement(CONFIRM_BUTTON);
+        test.log( Status.PASS, "",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("")).build());
     }
 
     private void enterQuestionText() {
         driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         enteringText ( QUESTION_FIELD );
+        test.log( Status.PASS, "",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("")).build());
     }
 
     private void handleImageUpload() {
@@ -112,37 +133,46 @@ public class CreatingDoubt extends BaseActions {
     }
 
     private void clickAddImage() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
+
         clickElement(ADD_IMAGE_BUTTON);
+        test.log( Status.PASS, "Successfully clicked The Add Image Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("clicked the add image button")).build());
     }
 
     public void selectFromGallery() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(GALLERY_OPTION);
+        test.log( Status.PASS, "Successfully clicked The Gallery Option",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Gallery Option Successfully")).build());
+
     }
 
     public void clickImage() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(IMAGE_THUMBNAIL);
+        test.log( Status.PASS, "Successfully clicked the image",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Image Successfully ")).build());
     }
 
     public void clickCrop() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(CROP_BUTTON);
+        test.log( Status.PASS, "Successfully Clicked the Crop Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Crop image clicked successfully")).build());
     }
 
     public void clickDeleteImage() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(DELETE_IMAGE_BUTTON);
+        test.log( Status.PASS, "Successfully Clicked the Delete Image Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Delete Image Button")).build());
     }
 
     private void clickNextButton() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(NEXT_BUTTON);
+        test.log( Status.PASS, "Successfully Clicked the Next Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Next Button Successfully")).build());
     }
 
     private void clickRules() {
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
         clickElement(RULES_LINK);
+        test.log( Status.PASS, "Successfully clicked the rules link",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("RulesLinkClicked")).build());
     }
 }

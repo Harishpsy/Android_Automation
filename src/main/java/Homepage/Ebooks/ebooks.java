@@ -2,19 +2,22 @@ package Homepage.Ebooks;
 
 import Menu.MyEbooks.myEbooks;
 import Setup.BaseActions;
-import io.appium.java_client.AppiumBy;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 
 public class ebooks extends BaseActions {
 
-    private myEbooks myEbookActions; // Instance of myEbooks
+    private myEbooks myEbookActions;
+    private static final String EBOOK_XPATH = "//android.widget.TextView[contains(@text, 'Ebook')][1]//following::*[@resource-id='com.affairscloud:id/iv_article'][1]";
+    private static final int MAX_SCROLL_ATTEMPTS = 15;
 
     public ebooks(AndroidDriver driver) {
-        super(driver);
-        myEbookActions = new myEbooks(driver); // Initializing myEbooks
+        super ( driver );
+        myEbookActions = new myEbooks ( driver );
     }
 
     public void performingEbooksActions() throws InterruptedException {
@@ -25,23 +28,26 @@ public class ebooks extends BaseActions {
     }
 
     private void clickingEbook() throws InterruptedException {
-        String targetXPath = "//android.widget.TextView[contains(@text, 'Ebook')][1]//following::*[@resource-id='com.affairscloud:id/iv_article'][1]";
-        int maxScrollAttempts = 15; // Define a reasonable limit to avoid infinite loops
         int attempts = 0;
 
-        while (attempts < maxScrollAttempts) {
+        while (attempts < MAX_SCROLL_ATTEMPTS) {
             try {
-                WebElement element = driver.findElement(By.xpath(targetXPath));
-                element.click();
-                System.out.println("Ebook clicked successfully.");
+                WebElement element = driver.findElement ( By.xpath ( EBOOK_XPATH ) );
+                element.click ();
+                test.log ( Status.PASS , "Ebook clicked successfully" ,
+                        MediaEntityBuilder.createScreenCaptureFromBase64String ( captureScreenshot ( "EbookClicked" ) ).build () );
+                System.out.println ( "Ebook clicked successfully." );
                 return; // Exit method after successful click
             } catch (NoSuchElementException e) {
-                System.out.println("Ebook not found, scrolling... Attempt: " + (attempts + 1));
+                test.log ( Status.INFO , "Ebook not found, scrolling... Attempt: " + (attempts + 1) );
+                System.out.println ( "Ebook not found, scrolling... Attempt: " + (attempts + 1) );
                 scrollDown(); // Scroll down dynamically
                 attempts++;
             }
         }
 
-        System.out.println("Ebook not found after " + maxScrollAttempts + " scroll attempts.");
+        test.log ( Status.WARNING , "Ebook not found after " + MAX_SCROLL_ATTEMPTS + " scroll attempts" );
+        System.out.println ( "Ebook not found after " + MAX_SCROLL_ATTEMPTS + " scroll attempts." );
     }
 }
+

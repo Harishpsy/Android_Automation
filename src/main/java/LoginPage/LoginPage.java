@@ -1,6 +1,7 @@
 package LoginPage;
 
 import Setup.Base;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -44,51 +45,45 @@ public class LoginPage extends Base {
 
             // Wait for the login button to be clickable
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-            test.log(Status.INFO, "Waiting for login button to be clickable");
-
             WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("com.affairscloud:id/btn_login")));
-            test.log(Status.INFO, "Login button located");
 
             if (loginButton.isDisplayed()) {
                 // Click the login button
                 Thread.sleep(30);
                 loginButton.click();
-                test.log(Status.PASS, "Successfully clicked the login with Google button");
+                test.log(Status.PASS, "Successfully clicked the login with Google button",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Login Button Click")).build());
 
                 // Handling WebView (for login) context
-                test.log(Status.INFO, "Checking for available contexts");
                 Set<String> contextHandles = driver.getContextHandles();
 
                 for (String context : contextHandles) {
                     // Check if it's a WebView context
                     if (context.contains("WEBVIEW")) {
                         driver.context(context); // Switch to the WebView context
-                        test.log(Status.PASS, "Switched to WebView context: " + context);
                     }
                 }
 
                 // Wait until the element is visible
-                test.log(Status.INFO, "Waiting for Google account selection");
                 WebElement element = new WebDriverWait(driver, Duration.ofSeconds(30))
                         .until(ExpectedConditions.elementToBeClickable(
                                 new AppiumBy.ByAndroidUIAutomator("new UiSelector().resourceId(\"com.google.android.gms:id/container\").instance(0)")));
 
                 // Perform tap using TouchAction
                 element.click();
-                test.log(Status.PASS, "Successfully selected Google account");
-
                 driver.context("NATIVE_APP"); // Switch back to the native app
-                test.log(Status.INFO, "Switched back to native app context");
-
-                test.log(Status.PASS, "Google login process completed successfully");
+                test.log(Status.PASS, "Google login process completed successfully",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Login Completed Successfully")).build());
 
             } else {
-                test.log(Status.FAIL, "Login with Google Button Not Found");
+                test.log(Status.FAIL, "Login with Google Button Not Found",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Login Button not found")).build());
                 throw new RuntimeException("Login with Google Button Not Found");
             }
 
         } catch (Exception e) {
-            test.log(Status.FAIL, "Error during Google login: " + e.getMessage());
+            test.log(Status.FAIL, "Google login failed",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Google Login Failed")).build());
             throw new RuntimeException("Google login failed: " + e.getMessage(), e);
         }
     }

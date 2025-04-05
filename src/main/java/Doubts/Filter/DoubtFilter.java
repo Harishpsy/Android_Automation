@@ -1,6 +1,8 @@
 package Doubts.Filter;
 
 import Setup.BaseActions;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,7 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class DoubtFilter extends BaseActions {
-    private final WebDriverWait wait;
 
     // XPath constants
     private static final String FILTER_BUTTON = "//android.widget.ImageView[@resource-id=\"com.affairscloud:id/iv_filter\"]";
@@ -47,22 +48,32 @@ public class DoubtFilter extends BaseActions {
 
     private void clickFilter() {
         clickWithWait(FILTER_BUTTON, "Filter Button");
+        test.log( Status.PASS, "Successfully clicked Filter Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked Filter Button")).build());
     }
 
     private void clickSubject() {
         clickWithWait(SUBJECT_BUTTON, "Subject Button");
+        test.log( Status.PASS, "Successfully clicked Subject Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked Subject Button")).build());
     }
 
     private void clickExam() {
         clickWithWait(EXAM_BUTTON, "Exam Button");
+        test.log( Status.PASS, "Successfully clicked the Exam Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Exam Button")).build());
     }
 
     private void clickAll() {
         clickWithWait(ALL_BUTTON, "All Button");
+        test.log( Status.PASS, "Successfully clicked The All Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked the All Button")).build());
     }
 
     private void clickCourse() {
         clickWithWait(COURSE_BUTTON, "Course Button");
+        test.log( Status.PASS, "Successfully clicked The Course Button In The Doubt List",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Course Button")).build());
     }
 
     private void clickSearch() {
@@ -70,24 +81,22 @@ public class DoubtFilter extends BaseActions {
         searchField.click();
         searchField.sendKeys("Mock");
         System.out.println("Successfully searched for 'Mock'");
+        test.log( Status.PASS, "Successfully clicked The Search Field",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Search Field")).build());
     }
 
     private void clickCancelInFilter() {
         clickWithWait(CANCEL_BUTTON, "Cancel Button In Filter");
+        test.log( Status.PASS, "Successfully clicked The Cancel Button In The Filter",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The cancel Button")).build());
     }
 
     private void clickClose() {
         clickWithWait(CLOSE_BUTTON, "Close Button");
+        test.log( Status.PASS, "Successfully clicked The Close Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Close Button")).build());
     }
 
-    private void clickWithWait(String xpath, String elementName) {
-        try {
-            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))).click();
-            System.out.println("Successfully Clicked The " + elementName);
-        } catch (Exception e) {
-            System.out.println("Failed to click " + elementName + ": " + e.getMessage());
-            throw e;
-        }
-    }
+
 
 }

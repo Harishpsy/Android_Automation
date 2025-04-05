@@ -2,6 +2,8 @@ package Menu.MyEbooks;
 
 import Setup.Base;
 import Setup.BaseActions;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -46,6 +48,8 @@ public class myEbooks extends BaseActions {
 
         // Click the "My Ebooks" button in the side drawer (using ID: com.affairscloud:id/item_my_ebooks)
         clickElement ( id ( "com.affairscloud:id/item_my_ebooks" ) );
+        test.log( Status.PASS, "Successfully clicked the My-ebook button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the My-ebook button")).build());
         System.out.println ( "Successfully clicked the My-ebook button and the list page is displayed." );
     }
 
@@ -118,8 +122,8 @@ public class myEbooks extends BaseActions {
         beforeClickingEbook ();
         Thread.sleep ( 7000 );
         clickElement ( xpath ( "(//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/root_rl\"])[1]" ) );
-        System.out.println ( "Successfully clicked the ebook." );
-
+        test.log( Status.PASS, "Successfully clicked the ebook.",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the ebook.")).build());
     }
 
     /**
@@ -210,8 +214,11 @@ public class myEbooks extends BaseActions {
             WebElement downloadButton = driver.findElement ( xpath ( "(//android.widget.ImageButton[@content-desc=\"Download\"])[1]" ) );
             if (downloadButton.isDisplayed ()) {
                 clickElement ( xpath ( "(//android.widget.ImageButton[@content-desc=\"Download\"])[1]" ) );
-                System.out.println ( "Successfully clicked the Download button." );
+                test.log( Status.PASS, "Successfully clicked the Download button",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the Download button")).build());
             } else {
+                test.log( Status.PASS, "Download button not found",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Download button not found")).build());
                 System.out.println ( "Download button not found." );
             }
         }catch (NoSuchElementException e){
@@ -231,16 +238,24 @@ public class myEbooks extends BaseActions {
 
         // Click the "More" button using ID: com.affairscloud:id/ivMore
         clickElement ( id ( "com.affairscloud:id/ivMore" ) );
+        test.log( Status.PASS, "Suceessfully Clicked The ThreeDots",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Suceessfully Clicked The ThreeDots")).build());
 
         // Click the "Share" button using ID: com.affairscloud:id/title
         WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
         clickElement ( id ( "com.affairscloud:id/title" ) );
+        test.log( Status.PASS, "Successfully clicked the Share button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the Share button")).build());
 
         // Click the "Cancel" button using ID: android:id/button2
         clickElement ( id ( "android:id/button2" ) );
+        test.log( Status.PASS, "Successfully clicked the Cancel button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the Cancel button")).build());
 
         // Click the PDF viewer using XPath: //android.widget.RelativeLayout[@resource-id="com.affairscloud:id/pdfView"]
         clickElement ( xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/pdfView\"]" ) );
+        test.log( Status.PASS, "Successfully clicked the PDF Viewer button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the PDF Viewer button")).build());
 
         // Click the back arrow using ID: com.affairscloud:id/ivArrowBack
         Thread.sleep ( 2000 );
@@ -249,17 +264,25 @@ public class myEbooks extends BaseActions {
             WebElement backArrow = driver.findElement ( id ( "com.affairscloud:id/ivArrowBack" ) );
             if (backArrow.isDisplayed ()) {
                 clickElement ( id ( "com.affairscloud:id/ivArrowBack" ) );
+                test.log( Status.PASS, "Successfully clicked the Back Arrow button",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the Back Arrow button")).build());
             } else {
                 System.out.println ( "The back arrow was not found." );
+                test.log( Status.PASS, "The back arrow was not found.",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("The back arrow was not found.")).build());
             }
         }catch (NoSuchElementException e ){
 
             driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
             WebElement clickScreen = driver.findElement ( xpath ( "//android.widget.RelativeLayout[@resource-id=\"com.affairscloud:id/pdfView\"]" ) );
             clickScreen.click ();
+            test.log( Status.PASS, "Successfully clicked the My-ebook Screen",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the My-ebook Screen")).build());
 
             Thread.sleep ( 3000 );
             clickElement ( id ( "com.affairscloud:id/ivArrowBack" ) );
+            test.log( Status.PASS, "Successfully clicked the Back Arrow button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the Back Arrow button")).build());
         }
     }
 
@@ -270,8 +293,12 @@ public class myEbooks extends BaseActions {
         // Click the orientation button using ID: com.affairscloud:id/orientation
         Thread.sleep ( 5000 );
         clickElement ( id ( "com.affairscloud:id/orientation" ) );
+        test.log( Status.PASS, "Successfully clicked the orientation Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the orientation Button")).build());
         Thread.sleep ( 5000 );
         clickElement ( id ( "com.affairscloud:id/orientation" ) );
+        test.log( Status.PASS, "Successfully clicked the orientation Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the orientation Button")).build());
 
     }
 
@@ -283,6 +310,8 @@ public class myEbooks extends BaseActions {
         Thread.sleep ( 5000 );
         // Click the read icon using ID: com.affairscloud:id/btn_read
         clickElement ( By.id ( "com.affairscloud:id/btn_read" ) );
+        test.log( Status.PASS, "Successfully clicked the Read icon",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Successfully clicked the Read icon")).build());
         System.out.println ( "Successfully clicked the Read icon." );
 
 

@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.MediaEntityBuilder;
 
 import java.time.Duration;
 import java.util.HashSet;
@@ -19,47 +21,76 @@ public class Video extends BaseActions {
     private static final String VIDEO_TITLE_XPATH = "//*[@resource-id=\"com.affairscloud:id/videos_list\"]/android.widget.RelativeLayout/child::*[@resource-id=\"com.affairscloud:id/txt_courses_title\"]";
 
     private Video_Module video;
+    private WebDriverWait wait;
 
-    public Video(AndroidDriver driver){
+    public Video(AndroidDriver driver) {
         super(driver);
-        video = new Video_Module(driver);   // Initialize the video_Module
+        video = new Video_Module(driver);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     }
 
     public void performingVideoAction() throws InterruptedException {
-        clickingVideoTab();
-//        threedotsAction();
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
-        getCourseNames();
-        verifyDuplicateCourseNames();
-        scrollToBeginning ();
-        clickingvideo();
+        try {
+            test.log(Status.INFO, "Starting Video Actions",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Video Start")).build());
+
+            clickingVideoTab();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+            getCourseNames();
+            verifyDuplicateCourseNames();
+            scrollToBeginning();
+            clickingvideo();
+
+            test.log(Status.PASS, "Successfully completed all video actions",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Video Complete")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Error performing video actions: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Video Error")).build());
+            throw e;
+        }
     }
 
-    protected void clickingVideoTab(){
-        clickElement ( By.xpath ( "//android.widget.LinearLayout[@content-desc=\"Videos\"]" ) );
+    protected void clickingVideoTab() {
+        clickElement(By.xpath("//android.widget.LinearLayout[@content-desc=\"Videos\"]"));
+        test.log(Status.PASS, "Successfully Clicked Video Tab",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Video Tab Clicked")).build());
+        System.out.println("Successfully Clicked Video Tab");
     }
 
     protected void clickingvideo() throws InterruptedException {
-        WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 60 ) );
-        clickElement ( By.xpath ( "//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.affairscloud:id/videos_list\"]/android.widget.RelativeLayout[1]" ) );
-        System.out.println ("Successfully Clicked The Video");
-        video.navigateBackToApp();
+        try {
+            clickElement(By.xpath("//androidx.recyclerview.widget.RecyclerView[@resource-id=\"com.affairscloud:id/videos_list\"]/android.widget.RelativeLayout[1]"));
+            test.log(Status.PASS, "Successfully Clicked Video",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Video Clicked")).build());
+            System.out.println("Successfully Clicked The Video");
+
+            video.navigateBackToApp();
+            test.log(Status.PASS, "Navigated Back From Video",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Video Back")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click video: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Video Click Failed")).build());
+            throw e;
+        }
     }
 
-    // Getting all course names
     protected int getCourseNames() throws InterruptedException {
-        Set<String> seenCourses = new HashSet<> (); // To track unique Video names
+        Set<String> seenCourses = new HashSet<>();
         int uniqueCourseCount = 0;
-        int scrollCount = 0; // Counter to track the number of scrolls
+        int scrollCount = 0;
 
-        while (scrollCount < 5) { // Scroll exactly five times
-            List<WebElement> courseElements = driver.findElements(By.xpath(VIDEO_TITLE_XPATH));
+        test.log(Status.INFO, "Starting to collect video names",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Video Names Start")).build());
+
+        while (scrollCount < 5) {
+            List<WebElement> courseElements = wait.until(d -> d.findElements(By.xpath(VIDEO_TITLE_XPATH)));
             boolean newDataFound = false;
 
             for (WebElement courseElement : courseElements) {
                 String courseName = courseElement.getText();
 
-                if (seenCourses.add(courseName)) { // Only adds if it's not already present
+                if (seenCourses.add(courseName)) {
+                    test.log(Status.INFO, "Found Video: " + courseName);
                     System.out.println("Video Name: " + courseName);
                     newDataFound = true;
                     uniqueCourseCount++;
@@ -67,28 +98,35 @@ public class Video extends BaseActions {
             }
 
             if (!newDataFound) {
-                break; // If no new data is found after scrolling, exit the loop
+                test.log(Status.INFO, "No new videos found after scroll",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("No New Videos")).build());
+                break;
             }
 
             scrollDown();
-            scrollCount++; // Increment the scroll counter
+            scrollCount++;
+            test.log(Status.INFO, "Scrolled Video List - Count: " + scrollCount,
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Scroll " + scrollCount)).build());
             System.out.println("No. Of Times Scrolled: " + scrollCount);
 
-            // Add a small delay to allow new content to load
-            Thread.sleep(2000); // Adjust the delay as needed
+            Thread.sleep(2000);
         }
 
-        // Print the count of unique courses
+        test.log(Status.INFO, "Total unique Video Names: " + uniqueCourseCount,
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Unique Videos")).build());
         System.out.println("Total unique Video Names: " + uniqueCourseCount);
+
         return uniqueCourseCount;
     }
 
     protected void verifyDuplicateCourseNames() {
         try {
-            List<WebElement> allCourseElements = driver.findElements(By.xpath(VIDEO_TITLE_XPATH));
+            List<WebElement> allCourseElements = wait.until(d -> d.findElements(By.xpath(VIDEO_TITLE_XPATH)));
 
             if (allCourseElements.isEmpty()) {
-                System.out.println("No Video elements found on the list page.");
+                test.log(Status.WARNING, "No video elements found on the list page",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("No Videos Found")).build());
+                System.out.println("No video elements found on the list page.");
                 return;
             }
 
@@ -98,18 +136,24 @@ public class Video extends BaseActions {
             for (WebElement element : allCourseElements) {
                 String courseName = element.getText();
 
-                if (!uniqueNames.add(courseName)) { // If the name is already in the set, it's a duplicate
+                if (!uniqueNames.add(courseName)) {
+                    test.log(Status.WARNING, "Duplicate Video Found: " + courseName,
+                            MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Duplicate Video")).build());
                     System.out.println("Duplicate Found In The Video List Page: " + courseName);
                     duplicateFound = true;
                 }
             }
 
             if (!duplicateFound) {
-                System.out.println("No duplicates found in the Video list page.");
+                test.log(Status.PASS, "No duplicates found in the video list page",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("No Duplicates")).build());
+                System.out.println("No duplicates found in the video list page.");
             }
 
         } catch (NoSuchElementException e) {
-            System.out.println("The Video elements were not found: " + e.getMessage());
+            test.log(Status.FAIL, "The video elements were not found: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Videos Not Found")).build());
+            System.out.println("The video elements were not found: " + e.getMessage());
         }
     }
 }

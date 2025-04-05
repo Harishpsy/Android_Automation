@@ -4,9 +4,13 @@ import com.aventstack.extentreports.*;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -17,7 +21,10 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Base64;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -38,6 +45,8 @@ public class Base {
         createDirectory(SCREENSHOT_DIR);
 
         ExtentSparkReporter sparkReporter = new ExtentSparkReporter(REPORT_DIR + REPORT_NAME);
+        // Add this configuration
+        sparkReporter.config().setCss(".r-img { width: 100%; }");
         sparkReporter.config().setDocumentTitle("Appium Automation Report");
         sparkReporter.config().setReportName("Android Test Execution");
         sparkReporter.config().setTheme(Theme.STANDARD);
@@ -86,12 +95,14 @@ public class Base {
     public void captureTestResult(ITestResult result) {
         try {
             test = extent.createTest(result.getName());
-            String screenshotPath = captureScreenshot(result.getName());
+            String screenshotBase64 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
 
             if (result.getStatus() == ITestResult.SUCCESS) {
-                test.pass("Test Passed", MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+                test.pass("Test Passed",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(screenshotBase64).build());
             } else if (result.getStatus() == ITestResult.FAILURE) {
-                test.fail(result.getThrowable(), MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+                test.fail(result.getThrowable(),
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(screenshotBase64).build());
             }
         } catch (Exception e) {
             LOGGER.warning("Failed to capture test result: " + e.getMessage());
@@ -100,7 +111,7 @@ public class Base {
             extent.flush();
         }
     }
-
+/*
     @AfterClass
     public void tearDown() {
         try {
@@ -117,20 +128,25 @@ public class Base {
                 extent.flush();
             }
         }
-    }
+    }*/
 
     protected String captureScreenshot(String testName) {
-        String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String fileName = testName + "_" + timestamp + ".png";
-        Path screenshotPath = Paths.get(SCREENSHOT_DIR, fileName);
-
         try {
-            File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            Files.copy(srcFile.toPath(), screenshotPath);
-            LOGGER.info("Screenshot captured: " + screenshotPath);
-            return screenshotPath.toString();
-        } catch (IOException e) {
+            // Take screenshot as Base64
+            String screenshotBase64 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+
+            // Also save to file (optional)
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String fileName = testName + "_" + timestamp + ".png";
+            Path screenshotPath = Paths.get(SCREENSHOT_DIR, fileName);
+            Files.createDirectories(Paths.get(SCREENSHOT_DIR));
+            byte[] screenshotBytes = Base64.getDecoder().decode(screenshotBase64);
+            Files.write(screenshotPath, screenshotBytes);
+
+            return screenshotBase64;
+        } catch (Exception e) {
             LOGGER.warning("Failed to capture screenshot: " + e.getMessage());
+            test.fail("Failed to capture screenshot: " + e.getMessage());
             return null;
         }
     }

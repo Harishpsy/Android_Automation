@@ -11,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.MediaEntityBuilder;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
@@ -21,355 +23,412 @@ import static org.openqa.selenium.By.xpath;
 
 public class BaseActions extends Base {
 
+    public WebDriverWait wait;
+    protected ExtentTest test;
 
     public BaseActions(AndroidDriver driver) {
-
         Base.driver = driver;
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ));
-
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
-    // Common Click Action From Here we are calling Click action to all
     protected void clickElement(By locator) {
-        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        WebElement clickAction = wait.until ( ExpectedConditions.elementToBeClickable ( locator ) );
-        clickAction.click ();
+        try {
+            WebElement clickAction = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            clickAction.click();
+            test.log(Status.PASS, "Clicked element: " + locator.toString(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Click_" + locator.toString())).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click element: " + locator.toString(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Click_Fail_" + locator.toString())).build());
+            throw e;
+        }
     }
 
-    // Common GetText Action From Here we are calling getText action to all
+    protected void clickWithWait(String xpath, String elementName) {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath))).click();
+            test.log(Status.PASS, "Successfully Clicked The " + elementName,
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked_" + elementName)).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click " + elementName + ": " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Click_Fail_" + elementName)).build());
+            throw e;
+        }
+    }
+
     protected String getText(By locator) {
-        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        WebElement gettingText = wait.until ( ExpectedConditions.elementToBeClickable ( locator ) );
-        String text = gettingText.getText ();
-        System.out.println ( "Text Name : " + text );
-        return text;
+        try {
+            WebElement gettingText = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            String text = gettingText.getText();
+            test.log(Status.INFO, "Got text: " + text + " from element: " + locator.toString(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("GetText_" + locator.toString())).build());
+            return text;
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to get text from element: " + locator.toString(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("GetText_Fail_" + locator.toString())).build());
+            throw e;
+        }
     }
 
     protected String enteringText(By locator) {
-        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
-        WebElement enteringText = wait.until ( ExpectedConditions.elementToBeClickable ( locator ) );
-        enteringText.sendKeys ( "Thanks for the valuable content" );
-        return "";
+        try {
+            WebElement enteringText = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            enteringText.sendKeys("Thanks for the valuable content");
+            test.log(Status.PASS, "Entered text in element: " + locator.toString(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("EnterText_" + locator.toString())).build());
+            return "";
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to enter text in element: " + locator.toString(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("EnterText_Fail_" + locator.toString())).build());
+            throw e;
+        }
     }
 
-    /**
-     * Scrolls the list to the bottom and then back to the top.
-     */
     public void scrollList() {
-        scrollToEnd ();
-        scrollToBeginning ();
+        try {
+            scrollToEnd();
+            scrollToBeginning();
+            test.log(Status.PASS, "Successfully scrolled list",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Scroll_List")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to scroll list: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Scroll_Fail")).build());
+        }
     }
 
     protected void scrollDown() throws InterruptedException {
         try {
-            Thread.sleep ( 1000 ); // Adjust the delay as needed
-            driver.findElement ( new AppiumBy.ByAndroidUIAutomator (
-                    "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();" ) );
-
-            // Add a small delay to allow the scroll action to complete
-            Thread.sleep ( 1000 ); // Adjust the delay as needed
-        }catch (Exception e){
-            System.out.println ( "Error while scrolling down" );
+            Thread.sleep(1000);
+            driver.findElement(new AppiumBy.ByAndroidUIAutomator(
+                    "new UiScrollable(new UiSelector().scrollable(true)).scrollForward();"));
+            Thread.sleep(1000);
+            test.log(Status.PASS, "Successfully scrolled down",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Scroll_Down")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Error while scrolling down: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Scroll_Down_Fail")).build());
         }
     }
 
-    /**
-     * Scrolls the list to the bottom.
-     */
     protected void scrollToEnd() {
         try {
-            // Scroll to the bottom of the list using UiScrollable
-            WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-            WebElement scrolldown = driver.findElement ( new AppiumBy.ByAndroidUIAutomator ( "new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(30)" ) );
-            System.out.println ( "Successfully scrolled to the bottom of the List page." );
+            driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToEnd(30)"));
+            test.log(Status.PASS, "Successfully scrolled to the bottom",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Scroll_End")).build());
         } catch (Exception e) {
-            System.out.println ( "Error while scrolling down" );
+            test.log(Status.FAIL, "Error while scrolling to bottom: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Scroll_End_Fail")).build());
         }
     }
 
-    /**
-     * Scrolls the list back to the top.
-     */
     protected void scrollToBeginning() {
         try {
-            // Scroll to the top of the list using UiScrollable
-            WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-            WebElement scrolltop = driver.findElement ( new AppiumBy.ByAndroidUIAutomator ( "new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(30)" ) );
-            System.out.println ( "Successfully scrolled back to the top of the List page." );
+            driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(30)"));
+            test.log(Status.PASS, "Successfully scrolled to the top",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Scroll_Top")).build());
         } catch (Exception e) {
-            System.out.println ( "Error while scrolling to the initial position" );
+            test.log(Status.FAIL, "Error while scrolling to top: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Scroll_Top_Fail")).build());
         }
     }
 
     public void threeDotsActions() throws InterruptedException {
+        try {
+            test.log(Status.INFO, "Starting three dots actions");
 
-        System.out.println ( "Clicking three dots..." );
-        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        threedots (); /* Calling The Threedots Method*/
+            threedots();
+            test.log(Status.PASS, "Clicked three dots",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots_Click")).build());
 
-        System.out.println ( "Sharing..." );
-        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        share (); /* Calling The Share Method */
+            share();
+            test.log(Status.PASS, "Shared content",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Share_Action")).build());
 
-        System.out.println ( "Clicking three dots..." );
-        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        threedots (); /* Calling The Threedots Method*/
+            threedots();
+            report();
+            test.log(Status.PASS, "Reported content",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Report_Action")).build());
 
-        System.out.println ( "Reporting..." );
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
-        report (); /* Calling The Report Method */
+            cancel();
+            test.log(Status.PASS, "Cancelled action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Cancel_Action")).build());
 
-        System.out.println ( "Canceling..." );
-        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        cancel (); /* Calling The Cancel Method */
+            threedots();
+            report();
+            reportButton();
+            test.log(Status.PASS, "Completed report action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Report_Complete")).build());
 
-        System.out.println ( "Clicking three dots..." );
-        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        threedots (); /* Calling The Threedots Method*/
+            threedots();
+            removedSaved();
+            test.log(Status.PASS, "Removed saved item",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Remove_Saved")).build());
 
-        System.out.println ( "Reporting..." );
-        driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 30 ) );
-        report (); /* Calling The Report Method */
-
-        System.out.println ( "Generating reports..." );
-        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        reportButton (); /* Calling The Report Method */
-
-        System.out.println ( "Clicking three dots..." );
-        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        threedots ();  //Calling The Threedots Method
-
-        System.out.println ( "Removing saved item..." );
-        new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        removedSaved (); // Calling The Remove Method
-
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Error in three dots actions: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots_Error")).build());
+            throw e;
+        }
     }
 
-    protected void threedotsTabAction(){
-        WebDriverWait wait = new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
-        clickElement ( By.xpath ( "(//android.widget.ImageView[@resource-id=\"com.affairscloud:id/ivMore\"])[1]" ) );
+    protected void threedotsTabAction() {
+        try {
+            clickElement(By.xpath("(//android.widget.ImageView[@resource-id=\"com.affairscloud:id/ivMore\"])[1]"));
+            test.log(Status.PASS, "Clicked three dots tab",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots_Tab")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click three dots tab",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots_Tab_Fail")).build());
+            throw e;
+        }
     }
-    protected void threedotsAction(){
-        threedotsTabAction();
-        removedSaved ();
-        threedotsTabAction();
-        share ();
-        threedotsTabAction();
-        report ();
-        reportButton ();
+
+    protected void threedotsAction() {
+        try {
+            threedotsTabAction();
+            removedSaved();
+            threedotsTabAction();
+            share();
+            threedotsTabAction();
+            report();
+            reportButton();
+            test.log(Status.PASS, "Completed three dots actions",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots_Actions_Complete")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Error in three dots actions",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots_Actions_Fail")).build());
+            throw e;
+        }
     }
 
     @Test(enabled = true)
     public void threedots() throws InterruptedException {
-        // Click the three dots menu using ID: com.affairscloud:id/iv_more
-
-        /*First*/
         try {
-            // Attempt to click the first back button using its ID
-            Thread.sleep ( 5000 );
-            WebElement threeDots1 = driver.findElement ( By.id ( "com.affairscloud:id/iv_more" ) );
-            if (threeDots1.isDisplayed ()) {
-                threeDots1.click ();
-                System.out.println ( "Clicked the first three dots button." );
-                return; // Exit after clicking the first button
+            /*First*/
+            try {
+                Thread.sleep(5000);
+                WebElement threeDots1 = driver.findElement(By.id("com.affairscloud:id/iv_more"));
+                if (threeDots1.isDisplayed()) {
+                    threeDots1.click();
+                    test.log(Status.PASS, "Clicked the first three dots button",
+                            MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots1_Click")).build());
+                    return;
+                }
+            } catch (NoSuchElementException e) {
+                test.log(Status.INFO, "First three dots button not found, trying second");
             }
-        } catch (NoSuchElementException e) {
-            System.out.println ( "First first three dots button not found. Trying the second three dots button..." );
-        }
 
-        /*Second*/
-        try {
-            // Attempt to click the first back button using its ID
-            Thread.sleep ( 5000 );
-            WebElement threeDots2 = driver.findElement ( By.id ( "com.affairscloud:id/more_btn" ) );
-            if (threeDots2.isDisplayed ()) {
-                threeDots2.click ();
-                System.out.println ( "Clicked the second three dots button." );
-                // Exit after clicking the second button
+            /*Second*/
+            try {
+                Thread.sleep(5000);
+                WebElement threeDots2 = driver.findElement(By.id("com.affairscloud:id/more_btn"));
+                if (threeDots2.isDisplayed()) {
+                    threeDots2.click();
+                    test.log(Status.PASS, "Clicked the second three dots button",
+                            MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots2_Click")).build());
+                }
+            } catch (NoSuchElementException e) {
+                test.log(Status.FAIL, "Neither three dots button could be clicked",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots_Fail")).build());
             }
-        } catch (NoSuchElementException e) {
-            System.out.println ( "First back button not found. Trying the second back button..." );
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Error in threedots method: " + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("ThreeDots_Error")).build());
+            throw e;
         }
-
     }
 
-    /**
-     * Clicks the remove form my-ebooks.
-     */
     public void removedSaved() {
-        clickElement ( xpath ( "(//*[@resource-id=\"com.affairscloud:id/content\"])[1]" ) );
-        System.out.println ( "Successfully Click the save or remove button" );
+        try {
+            clickElement(xpath("(//*[@resource-id=\"com.affairscloud:id/content\"])[1]"));
+            test.log(Status.PASS, "Successfully clicked save/remove button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Remove_Saved")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click save/remove button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Remove_Saved_Fail")).build());
+            throw e;
+        }
     }
 
-    /**
-     * Clicks the share button and then cancels the share action.
-     */
     public void share() {
-        // Click the "Share" button using XPath: //*[@text="Share"]
-        new WebDriverWait ( driver , Duration.ofSeconds ( 50 ) );
-        clickElement ( xpath ( "//*[@text=\"Share\"]" ) );
-        System.out.println ( "Successfully Clicked The Share Button" );
+        try {
+            clickElement(xpath("//*[@text=\"Share\"]"));
+            test.log(Status.PASS, "Successfully clicked share button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Share_Click")).build());
 
-        commonCancel();
-        System.out.println ( "Successfully Clicked The Cancel Buttons In The three Dots" );
+            commonCancel();
+            test.log(Status.PASS, "Cancelled share action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Share_Cancel")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Error in share action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Share_Error")).build());
+            throw e;
+        }
     }
 
-    /**
-     * Reports an issue with the ebook by selecting a checkbox, entering text, and canceling the action.
-     */
     public void report() {
-        // Click the "Report" button using XPath: //*[@text="Report"]
-        clickElement ( xpath ( "//*[@text=\"Report\"]" ) );
-
-        // Click the second checkbox using XPath: (//*[@resource-id="com.affairscloud:id/cbReport"])[2]
-        clickElement ( xpath ( "(//*[@resource-id=\"com.affairscloud:id/cbReport\"])[2]" ) );
-
-        // Enter text in the text field using ClassName: android.widget.EditText
-        enteringText ( By.className ( "android.widget.EditText" ) );
-        System.out.println ( "Successfully Clicked The Report send, Checkbox" );
-
+        try {
+            clickElement(xpath("//*[@text=\"Report\"]"));
+            clickElement(xpath("(//*[@resource-id=\"com.affairscloud:id/cbReport\"])[2]"));
+            enteringText(By.className("android.widget.EditText"));
+            test.log(Status.PASS, "Successfully completed report action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Report_Action")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Error in report action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Report_Error")).build());
+            throw e;
+        }
     }
 
     public void commonCancel() {
-        // Click the "Cancel" button using XPath: //*[@text="Cancel"]
-        clickElement ( xpath ( "//*[@text=\"Cancel\"]" ) );
+        try {
+            clickElement(xpath("//*[@text=\"Cancel\"]"));
+            test.log(Status.PASS, "Successfully clicked cancel button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Cancel_Click")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click cancel button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Cancel_Fail")).build());
+            throw e;
+        }
     }
 
     public void cancel() {
-        // Click the "Cancel" button using ID: com.affairscloud:id/tv_cancel
-        clickElement ( id ( "com.affairscloud:id/tv_cancel" ) );
-        System.out.println ( "Successfully Clicked The Cancel Button" );
-
+        try {
+            clickElement(id("com.affairscloud:id/tv_cancel"));
+            test.log(Status.PASS, "Successfully clicked cancel button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Cancel_Click")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click cancel button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Cancel_Fail")).build());
+            throw e;
+        }
     }
 
     public void reportButton() {
-
-        new WebDriverWait ( driver , Duration.ofSeconds ( 40 ) );
-
-        // Click the "Cancel" button using ID: com.affairscloud:id/tv_cancel
-        clickElement ( id ( "com.affairscloud:id/tv_report" ) );
-        System.out.println ( "Successfully Clicked The Report Button" );
-
+        try {
+            clickElement(id("com.affairscloud:id/tv_report"));
+            test.log(Status.PASS, "Successfully clicked report button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Report_Click")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to click report button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Report_Fail")).build());
+            throw e;
+        }
     }
 
     public void reportAction() {
-        report();
-        reportButton();
+        try {
+            report();
+            reportButton();
+            test.log(Status.PASS, "Completed report action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Report_Complete")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Error in report action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Report_Error")).build());
+            throw e;
+        }
     }
 
     public void footerCommonActions() {
-/*        // Perform the "Like" action
-        performLikeAction (); // This method handles liking the content (e.g., a post or ebook)
-        // Perform the "Comment" action
-        performCommentAction (); // This method allows the user to add a comment to the content
-
-        // Perform the "Reply" action if the reply button is present
-        performReplyActionIfPresent (); // This method checks for the presence of a reply button and performs the reply action if available
-
-        // Navigate back to the previous screen
-        WebDriverWait wait  = new WebDriverWait ( driver, Duration.ofSeconds ( 30 ) );
-        navigateBack (); // This method navigates the user back to the previous screen or page
-
-        // Call the share function
-        share (); // This method handles sharing the content with others (e.g., via social media or messaging apps)*/
+        // Implement if needed with logging
     }
 
     private void performLikeAction() {
-        // Click the "Like" button using its ID
-        clickElement ( id ( "com.affairscloud:id/like_layout" ) );
+        try {
+            clickElement(id("com.affairscloud:id/like_layout"));
+            test.log(Status.PASS, "Successfully performed like action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Like_Action")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to perform like action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Like_Fail")).build());
+            throw e;
+        }
     }
 
     protected void performCommentAction() {
-        // Click the "Comment" button using its ID
-        clickElement ( id ( "com.affairscloud:id/comment_layout" ) );
-
-        // Enter text into the comment input field using its class name
-        enteringText ( className ( "android.widget.EditText" ) );
-
-        // Click the "Send" button using its ID to post the comment
-        clickElement ( id ( "com.affairscloud:id/iv_send" ) );
+        try {
+            clickElement(id("com.affairscloud:id/comment_layout"));
+            enteringText(className("android.widget.EditText"));
+            clickElement(id("com.affairscloud:id/iv_send"));
+            test.log(Status.PASS, "Successfully performed comment action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Comment_Action")).build());
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Failed to perform comment action",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Comment_Fail")).build());
+            throw e;
+        }
     }
 
     protected void performReplyActionIfPresent() {
-        // Locate the "Reply" button using its XPath
-        WebDriverWait wait = new WebDriverWait ( driver , Duration.ofSeconds ( 30 ) );
-        WebElement clickingReply = driver.findElement ( xpath ( "(//android.widget.TextView[@resource-id=\"com.affairscloud:id/tv_replay\"])[1]" ) );
-
         try {
-
-            // Check if the "Reply" button is displayed
-            if (clickingReply.isDisplayed ()) {
-                // Click the "Reply" button using its XPath
-                Thread.sleep ( 5000 );
-                clickElement ( xpath ( "(//android.widget.TextView[@resource-id=\"com.affairscloud:id/tv_replay\"])[1]" ) );
-
-                // Enter text into the reply input field using its class name
-                Thread.sleep ( 5000 );
-                enteringText ( className ( "android.widget.EditText" ) );
-
-                // Click the "Send" button using its ID to post the reply
-                Thread.sleep ( 3000 );
-                clickElement ( id ( "com.affairscloud:id/iv_send" ) );
-
-                // Navigate back to the previous screen after replying
-                Thread.sleep ( 2000 );
-                navigateBack ();
+            WebElement clickingReply = driver.findElement(xpath("(//android.widget.TextView[@resource-id=\"com.affairscloud:id/tv_replay\"])[1]"));
+            if (clickingReply.isDisplayed()) {
+                Thread.sleep(5000);
+                clickElement(xpath("(//android.widget.TextView[@resource-id=\"com.affairscloud:id/tv_replay\"])[1]"));
+                Thread.sleep(5000);
+                enteringText(className("android.widget.EditText"));
+                Thread.sleep(3000);
+                clickElement(id("com.affairscloud:id/iv_send"));
+                Thread.sleep(2000);
+                navigateBack();
+                test.log(Status.PASS, "Successfully performed reply action",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Reply_Action")).build());
             } else {
-                // Log a message if the "Reply" button is not present
-                System.out.println ( "There is no reply button" );
+                test.log(Status.INFO, "No reply button present",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("No_Reply")).build());
             }
-        } catch (NoSuchElementException | InterruptedException e) {
-            System.out.println ( "There is no reply button" );
+        } catch (Exception e) {
+            test.log(Status.INFO, "No reply button present",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("No_Reply")).build());
         }
     }
 
     protected void navigateBack() {
         try {
-            // Attempt to click the first back button using its ID
-            driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 40 ) );
-            WebElement backButton1 = driver.findElement ( By.id ( "com.affairscloud:id/btn_back" ) );
-            if (backButton1.isDisplayed ()) {
-                driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 40 ) );
-                backButton1.click ();
-                System.out.println ( "Clicked the first back button." );
-                return; // Exit after clicking the first button
+            // Attempt to click the first back button
+            WebElement backButton1 = driver.findElement(By.id("com.affairscloud:id/btn_back"));
+            if (backButton1.isDisplayed()) {
+                backButton1.click();
+                test.log(Status.PASS, "Clicked the first back button",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Back1_Click")).build());
+                return;
             }
         } catch (NoSuchElementException e) {
-            System.out.println ( "First back button not found. Trying the second back button..." );
+            test.log(Status.INFO, "First back button not found, trying second");
         }
 
         try {
-            // Attempt to click the second back button using its XPath
-            driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 40 ) );
-            WebElement backButton2 = driver.findElement ( By.xpath ( "//*[@resource-id=\"com.affairscloud:id/img_back_press\"]" ) );
-            if (backButton2.isDisplayed ()) {
-                driver.manage ().timeouts ().implicitlyWait ( Duration.ofSeconds ( 40 ) );
-                backButton2.click ();
-                System.out.println ( "Clicked the second back button." );
-                return; // Exit after clicking the second button
+            // Attempt to click the second back button
+            WebElement backButton2 = driver.findElement(By.xpath("//*[@resource-id=\"com.affairscloud:id/img_back_press\"]"));
+            if (backButton2.isDisplayed()) {
+                backButton2.click();
+                test.log(Status.PASS, "Clicked the second back button",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Back2_Click")).build());
+                return;
             }
         } catch (NoSuchElementException e) {
-            System.out.println ( "Second back button not found." );
+            test.log(Status.FAIL, "Neither back button could be clicked",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Back_Fail")).build());
         }
-
-        // If neither button is found or clickable, log an error
-        System.out.println ( "Error: Neither back button could be clicked." );
     }
 
     public void clickMenu() throws InterruptedException {
-        Thread.sleep ( 5000 ); // Adding a delay for stability, consider using WebDriverWait for better synchronization
-        System.out.println ( "Attempting to open the Menu..." );
-
-        WebElement menuButton = driver.findElement ( By.xpath ( "//android.widget.ImageButton[@resource-id='com.affairscloud:id/menu_btn']" ) );
-        System.out.println ( "Attempting to open the Menu..." );
-
-        if (menuButton.isDisplayed ()) {
-            menuButton.click ();
-            System.out.println ( "Successfully clicked the Menu button." );
-        } else {
-            System.out.println ( "Error: Menu button is not displayed on the screen or already clicked." );
+        try {
+            Thread.sleep(5000);
+            WebElement menuButton = driver.findElement(By.xpath("//android.widget.ImageButton[@resource-id='com.affairscloud:id/menu_btn']"));
+            if (menuButton.isDisplayed()) {
+                menuButton.click();
+                test.log(Status.PASS, "Successfully clicked menu button",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Menu_Click")).build());
+            } else {
+                test.log(Status.FAIL, "Menu button not displayed",
+                        MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Menu_Not_Displayed")).build());
+            }
+        } catch (Exception e) {
+            test.log(Status.FAIL, "Error clicking menu button",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Menu_Error")).build());
+            throw e;
         }
     }
-
 }

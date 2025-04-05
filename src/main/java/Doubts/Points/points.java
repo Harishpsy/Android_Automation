@@ -3,6 +3,8 @@ package Doubts.Points;
 import AllCourse.SubscribedCourse.EbooksTab.Ebook;
 import Menu.MyPoints.myPoints;
 import Setup.BaseActions;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -40,6 +42,8 @@ public class points extends BaseActions {
 
     private void clickingPoints(){
         clickElement ( By.xpath ( "//android.widget.LinearLayout[@content-desc=\"Points\"]" ) );
+        test.log( Status.PASS, "Successfully clicked The Points Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Points Button")).build());
     }
 
     protected void scrollRight() {
@@ -56,7 +60,8 @@ public class points extends BaseActions {
 
     private void navigateBackInPoints(){
         clickElement ( xpath ( "//android.widget.ImageButton[@resource-id=\"com.affairscloud:id/img_back_press\"]" ) );
-
+        test.log( Status.PASS, "Successfully Clicked The Back Button",
+                MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Clicked The Back Button")).build());
     }
 
 
@@ -77,6 +82,8 @@ public class points extends BaseActions {
                 Thread.sleep(SWIPE_DELAY_MS); // Delay between swipes
             }
         } catch (Exception e) {
+            test.log( Status.FAIL, "Error performing horizontal scroll",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(captureScreenshot("Error performing horizontal scroll")).build());
             handleError("Error performing horizontal scroll: " + e.getMessage());
         }
     }
